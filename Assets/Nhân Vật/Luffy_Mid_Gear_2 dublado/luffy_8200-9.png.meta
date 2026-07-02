@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: 63f7bba019aeaf9479256848ca942050
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9129355764374312775
+    second: luffy_8200-9_0
+  - first:
+      213: 3232653767085706055
+    second: luffy_8200-9_1
+  - first:
+      213: 8812943400707337934
+    second: luffy_8200-9_2
+  - first:
+      213: -5580350562392416105
+    second: luffy_8200-9_3
+  - first:
+      213: 4954095492837499498
+    second: luffy_8200-9_4
+  - first:
+      213: -3411324834064020465
+    second: luffy_8200-9_5
+  - first:
+      213: -1049133643196062766
+    second: luffy_8200-9_6
+  - first:
+      213: -7543897405450007670
+    second: luffy_8200-9_7
+  - first:
+      213: 7645130413721070978
+    second: luffy_8200-9_8
+  - first:
+      213: -4676158259125089368
+    second: luffy_8200-9_9
+  - first:
+      213: -5602831955078222859
+    second: luffy_8200-9_10
+  - first:
+      213: -234342911311327964
+    second: luffy_8200-9_11
+  - first:
+      213: -3063019529692832441
+    second: luffy_8200-9_12
+  - first:
+      213: 3570793434854669493
+    second: luffy_8200-9_13
+  - first:
+      213: -1469523989083139102
+    second: luffy_8200-9_14
+  - first:
+      213: 6898932279925843163
+    second: luffy_8200-9_15
+  - first:
+      213: 2359244215601504512
+    second: luffy_8200-9_16
+  - first:
+      213: -7668282455146285603
+    second: luffy_8200-9_17
+  - first:
+      213: -4164035677522982884
+    second: luffy_8200-9_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: luffy_8200-9_0
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 59
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74712b3c2bcf1be70800000000000000
+      internalID: 9129355764374312775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_1
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 49
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74bc8fc4971bcdc20800000000000000
+      internalID: 3232653767085706055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_2
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 52
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecea8c8745ddd4a70800000000000000
+      internalID: 8812943400707337934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_3
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 51
+        width: 21
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 790e27ebabc9e82b0800000000000000
+      internalID: -5580350562392416105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_4
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6261f15a9b70c440800000000000000
+      internalID: 4954095492837499498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 49
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0c452c232a88a0d0800000000000000
+      internalID: -3411324834064020465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_6
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 48
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d32363928ab071f0800000000000000
+      internalID: -1049133643196062766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_7
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 41
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8b492e6741be4790800000000000000
+      internalID: -7543897405450007670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_8
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 36
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d216b0b95f81a60800000000000000
+      internalID: 7645130413721070978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_9
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 35
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ab0753b6d2fa1fb0800000000000000
+      internalID: -4676158259125089368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 25
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fbea5d950ebe32b0800000000000000
+      internalID: -5602831955078222859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_11
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 30
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42d48af1d527fbcf0800000000000000
+      internalID: -234342911311327964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_12
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 24
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74d139067f7fd75d0800000000000000
+      internalID: -3063019529692832441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_13
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 25
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bc3fcac5b10e8130800000000000000
+      internalID: 3570793434854669493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_14
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 4
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3d8c1c7b33b9be0800000000000000
+      internalID: -1469523989083139102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_15
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 53
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd4a4724b5eedbf50800000000000000
+      internalID: 6898932279925843163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_16
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 19
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 001a2514d18bdb020800000000000000
+      internalID: 2359244215601504512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_17
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 2
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd535af3cb9c49590800000000000000
+      internalID: -7668282455146285603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: luffy_8200-9_18
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 5
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1880310d9f5636c0800000000000000
+      internalID: -4164035677522982884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      luffy_8200-9_0: 9129355764374312775
+      luffy_8200-9_1: 3232653767085706055
+      luffy_8200-9_10: -5602831955078222859
+      luffy_8200-9_11: -234342911311327964
+      luffy_8200-9_12: -3063019529692832441
+      luffy_8200-9_13: 3570793434854669493
+      luffy_8200-9_14: -1469523989083139102
+      luffy_8200-9_15: 6898932279925843163
+      luffy_8200-9_16: 2359244215601504512
+      luffy_8200-9_17: -7668282455146285603
+      luffy_8200-9_18: -4164035677522982884
+      luffy_8200-9_2: 8812943400707337934
+      luffy_8200-9_3: -5580350562392416105
+      luffy_8200-9_4: 4954095492837499498
+      luffy_8200-9_5: -3411324834064020465
+      luffy_8200-9_6: -1049133643196062766
+      luffy_8200-9_7: -7543897405450007670
+      luffy_8200-9_8: 7645130413721070978
+      luffy_8200-9_9: -4676158259125089368
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
