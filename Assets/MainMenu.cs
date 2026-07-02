@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     public GameObject startMenuPanel;     // Màn hình Start ban đầu (ảnh nền chung + nút START)
     public GameObject modeMenuPanel;      // Màn hình Goku (chứa ảnh nền Goku)
     public GameObject difficultyPanel;    // Màn hình chọn độ khó (chữ SELECT + các nút độ khó)
+    public GameObject characterSelectPanel;
 
     [Header("Sub Containers")]
     public GameObject gokuButtonsContainer; // Nhóm chứa 4 nút cũ (New Game, Continue, Play More, BACK)
@@ -47,7 +48,9 @@ public class MainMenu : MonoBehaviour
         // Lưu lại độ khó người chơi chọn vào máy (Normal hoặc Hard)
         PlayerPrefs.SetString("GameDifficulty", difficulty);
         
-        // Chuyển sang màn chơi chính của bạn
-        SceneManager.LoadScene("SampleScene"); 
+        // CHUYỂN GIAO DIỆN CHỨ KHÔNG LOAD CẢNH NỮA
+        difficultyPanel.SetActive(false);        // Ẩn bảng độ khó đi
+        modeMenuPanel.SetActive(false);          // Ẩn luôn ảnh nền Goku cũ nếu đang bật
+        characterSelectPanel.SetActive(true);    // Kích hoạt màn hình chọn nhân vật lên!
     }
 }

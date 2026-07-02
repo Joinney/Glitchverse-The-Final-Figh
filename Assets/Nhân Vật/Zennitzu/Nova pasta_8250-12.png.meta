@@ -1,0 +1,715 @@
+fileFormatVersion: 2
+guid: 2e073a3c3c283bf4ba66216ebc5daa33
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -735010193806487036
+    second: Nova pasta_8250-12_0
+  - first:
+      213: -5338172245700916060
+    second: Nova pasta_8250-12_1
+  - first:
+      213: -1519129989108219785
+    second: Nova pasta_8250-12_2
+  - first:
+      213: -6788359232708302846
+    second: Nova pasta_8250-12_3
+  - first:
+      213: 2332662481648970502
+    second: Nova pasta_8250-12_4
+  - first:
+      213: 8748702845347660266
+    second: Nova pasta_8250-12_5
+  - first:
+      213: -6320085560886928687
+    second: Nova pasta_8250-12_6
+  - first:
+      213: -3324921433652789726
+    second: Nova pasta_8250-12_7
+  - first:
+      213: 2983723838083129605
+    second: Nova pasta_8250-12_8
+  - first:
+      213: -8832221439417775801
+    second: Nova pasta_8250-12_9
+  - first:
+      213: -4985718867861004205
+    second: Nova pasta_8250-12_10
+  - first:
+      213: -4835934597839057120
+    second: Nova pasta_8250-12_11
+  - first:
+      213: -6347841973372072827
+    second: Nova pasta_8250-12_12
+  - first:
+      213: 5056174818319129606
+    second: Nova pasta_8250-12_13
+  - first:
+      213: -170206662355460138
+    second: Nova pasta_8250-12_14
+  - first:
+      213: 4389086357371097253
+    second: Nova pasta_8250-12_15
+  - first:
+      213: -9081273144813274023
+    second: Nova pasta_8250-12_16
+  - first:
+      213: 4045264138921214438
+    second: Nova pasta_8250-12_17
+  - first:
+      213: -2475634536173545179
+    second: Nova pasta_8250-12_18
+  - first:
+      213: 5983265961312724363
+    second: Nova pasta_8250-12_19
+  - first:
+      213: 1105539771968971570
+    second: Nova pasta_8250-12_20
+  - first:
+      213: -8665426189486218734
+    second: Nova pasta_8250-12_21
+  - first:
+      213: -6688734346917730728
+    second: Nova pasta_8250-12_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 190
+        width: 191
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4029fdb7f18bcc5f0800000000000000
+      internalID: -735010193806487036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 433
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4acc52910a00be5b0800000000000000
+      internalID: -5338172245700916060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_2
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 429
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 770cf87d257faeae0800000000000000
+      internalID: -1519129989108219785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 426
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 208adae7e37eac1a0800000000000000
+      internalID: -6788359232708302846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_4
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 354
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b61970b284f5020800000000000000
+      internalID: 2332662481648970502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_5
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 335
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae1856e92e2a96970800000000000000
+      internalID: 8748702845347660266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_6
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 294
+        width: 66
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da5249eaab8a48a0800000000000000
+      internalID: -6320085560886928687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_7
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 319
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22efa0182918bd1d0800000000000000
+      internalID: -3324921433652789726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_8
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 315
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5016fc4b501586920800000000000000
+      internalID: 2983723838083129605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_9
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 320
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7490aed5565ad6580800000000000000
+      internalID: -8832221439417775801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_10
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 308
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350ae2bea1b2fcab0800000000000000
+      internalID: -4985718867861004205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_11
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 292
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02f08caea1f43ecb0800000000000000
+      internalID: -4835934597839057120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_12
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 283
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cc7d68b5fe7e7a0800000000000000
+      internalID: -6347841973372072827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_13
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 284
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60cdf2065342b2640800000000000000
+      internalID: 5056174818319129606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_14
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 285
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dfd5ef31fd43adf0800000000000000
+      internalID: -170206662355460138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_15
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 264
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a01e93a9ca29ec30800000000000000
+      internalID: 4389086357371097253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_16
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 247
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95c3c1f7036d8f180800000000000000
+      internalID: -9081273144813274023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_17
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 179
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e186073d4aa32830800000000000000
+      internalID: 4045264138921214438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_18
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 178
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 529dfad7187c4add0800000000000000
+      internalID: -2475634536173545179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_19
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 189
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b852bbce0b4d80350800000000000000
+      internalID: 5983265961312724363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_20
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 181
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 233e641b09aa75f00800000000000000
+      internalID: 1105539771968971570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_21
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 175
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 212ae44cac83eb780800000000000000
+      internalID: -8665426189486218734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nova pasta_8250-12_22
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 174
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 856a307cc87dc23a0800000000000000
+      internalID: -6688734346917730728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Nova pasta_8250-12_0: -735010193806487036
+      Nova pasta_8250-12_1: -5338172245700916060
+      Nova pasta_8250-12_10: -4985718867861004205
+      Nova pasta_8250-12_11: -4835934597839057120
+      Nova pasta_8250-12_12: -6347841973372072827
+      Nova pasta_8250-12_13: 5056174818319129606
+      Nova pasta_8250-12_14: -170206662355460138
+      Nova pasta_8250-12_15: 4389086357371097253
+      Nova pasta_8250-12_16: -9081273144813274023
+      Nova pasta_8250-12_17: 4045264138921214438
+      Nova pasta_8250-12_18: -2475634536173545179
+      Nova pasta_8250-12_19: 5983265961312724363
+      Nova pasta_8250-12_2: -1519129989108219785
+      Nova pasta_8250-12_20: 1105539771968971570
+      Nova pasta_8250-12_21: -8665426189486218734
+      Nova pasta_8250-12_22: -6688734346917730728
+      Nova pasta_8250-12_3: -6788359232708302846
+      Nova pasta_8250-12_4: 2332662481648970502
+      Nova pasta_8250-12_5: 8748702845347660266
+      Nova pasta_8250-12_6: -6320085560886928687
+      Nova pasta_8250-12_7: -3324921433652789726
+      Nova pasta_8250-12_8: 2983723838083129605
+      Nova pasta_8250-12_9: -8832221439417775801
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
