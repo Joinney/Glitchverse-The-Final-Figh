@@ -13,11 +13,11 @@ public class CharacterSelection : MonoBehaviour
     [Header("UI Previews")]
     public Image p1PreviewImage; 
     public Image p2PreviewImage; 
+    public GameObject startBattleButton;
 
     [Header("Characters List")]
     public CharacterData[] characters; 
 
-    // Quản lý trạng thái chọn của 2 người chơi
     private int p1SelectedIndex = -1;
     private int p2SelectedIndex = -1;
     private bool isP1Locked = false;
@@ -25,7 +25,6 @@ public class CharacterSelection : MonoBehaviour
 
     void Start()
     {
-        // Lúc mới vào game, đặt 2 khung Preview về trạng thái trong suốt (không bị ô trắng che)
         SetImageAlpha(p1PreviewImage, 0f);
         SetImageAlpha(p2PreviewImage, 0f);
     }
@@ -38,99 +37,81 @@ public class CharacterSelection : MonoBehaviour
         if (characterIndex < 0 || characterIndex >= characters.Length) return;
         Sprite previewSprite = characters[characterIndex].portraitSprite;
 
-        // Nếu P1 chưa chốt, hiển thị ảnh xem trước cho P1
+        // Nếu P1 chưa chốt, hiển thị ảnh xem trước mờ mờ cho P1
         if (!isP1Locked)
         {
             p1PreviewImage.sprite = previewSprite;
-            SetImageAlpha(p1PreviewImage, 0.6f); // Hiện mờ mờ 60% khi đang xem thử
+            SetImageAlpha(p1PreviewImage, 0.6f); 
         }
-        // Nếu P1 chốt rồi và P2 chưa chốt, hiển thị ảnh xem trước cho P2
+        // Nếu P1 chốt rồi và P2 chưa chốt, hiển thị ảnh xem trước mờ mờ cho P2
         else if (!isP2Locked) 
-{
-    Debug.Log("Đang cố gắng gán cho P2..."); // Thêm dòng này để kiểm tra
-    
-    if (p2PreviewImage == null) Debug.LogError("P2 Preview Image chưa được gán trong Inspector!");
-    
-    p2SelectedIndex = characterIndex;
-    p2PreviewImage.sprite = characters[characterIndex].portraitSprite;
-    SetImageAlpha(p2PreviewImage, 1f); 
-    isP2Locked = true;
-
-    PlayerPrefs.SetString("P2_Selection", characters[characterIndex].characterName);
-    Debug.Log("P2 ĐÃ KHÓA: " + characters[characterIndex].characterName);
-}
+        {
+            p2PreviewImage.sprite = previewSprite;
+            SetImageAlpha(p2PreviewImage, 0.6f); 
+        }
     }
 
-// ==========================================
+    // ==========================================
     // LOGIC 2: CLICK CHUỘT ĐỂ CHỐT CHỌN (LOCK IN)
     // ==========================================
     public void SelectCharacter(int characterIndex)
     {
-        // ÉP UNITY IN RA LOG NGAY KHI VỪA CLICK CHUỘT
-        Debug.Log("HÀM SELECT CHARACTER ĐÃ ĐƯỢC KÍCH HOẠT! Index truyền vào là: " + characterIndex);
+        Debug.Log("==> LỆNH CLICK ĐÃ NHẬN! Index nhân vật là: " + characterIndex);
 
-        if (characterIndex < 0 || characterIndex >= characters.Length) 
-        {
-            Debug.LogError("LỖI: Index bị vượt quá danh sách nhân vật!");
-            return;
-        }
+        if (characterIndex < 0 || characterIndex >= characters.Length) return;
+
+        // LƯỢT CỦA PLAYER 1
         if (!isP1Locked)
         {
             p1SelectedIndex = characterIndex;
             p1PreviewImage.sprite = characters[characterIndex].portraitSprite;
-            SetImageAlpha(p1PreviewImage, 1f); // Hiện rõ nét 100% khi đã chốt
+            SetImageAlpha(p1PreviewImage, 1f); // Sáng rõ 100%
             isP1Locked = true;
             
             PlayerPrefs.SetString("P1_Selection", characters[characterIndex].characterName);
-            Debug.Log("P1 ĐÃ KHÓA: " + characters[characterIndex].characterName);
+            Debug.Log("P1 đã khóa thành công: " + characters[characterIndex].characterName);
+            return; 
         }
-        else if (!isP2Locked && characterIndex != p1SelectedIndex) // Tránh P2 chọn trùng ô P1 vừa chọn nếu muốn
+        
+        // LƯỢT CỦA PLAYER 2
+        if (!isP2Locked)
         {
             p2SelectedIndex = characterIndex;
             p2PreviewImage.sprite = characters[characterIndex].portraitSprite;
-            SetImageAlpha(p2PreviewImage, 1f); // Hiện rõ nét 100% khi đã chốt
+            SetImageAlpha(p2PreviewImage, 1f); // Sáng rõ 100%
             isP2Locked = true;
 
             PlayerPrefs.SetString("P2_Selection", characters[characterIndex].characterName);
-            Debug.Log("P2 ĐÃ KHÓA: " + characters[characterIndex].characterName);
-            
-            // Cả 2 chọn xong -> Kích hoạt nút START trận đấu tại đây
-        }
-    }
+            Debug.Log("P2 đã khóa thành công: " + characters[characterIndex].characterName);
 
-    // ==========================================
-    // LOGIC 3: HỦY CHỌN ĐỂ CHỌN LẠI (CANCEL)
-    // ==========================================
-    void Update()
-    {
-        // Người chơi bấm nút ESC hoặc chuột phải để HỦY CHỌN quay lại lượt trước
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
-        {
-            CancelSelection();
+            // BẬT NÚT START
+            if (startBattleButton != null)
+            {
+                startBattleButton.SetActive(true);
+                Debug.Log("Nút START trận đấu đã được kích hoạt thành công!");
+            }
         }
     }
 
     public void CancelSelection()
     {
-        // Nếu P2 đã khóa -> Hủy khóa P2 trước
         if (isP2Locked)
         {
             isP2Locked = false;
             p2SelectedIndex = -1;
-            SetImageAlpha(p2PreviewImage, 0f); // Trở lại trong suốt
+            SetImageAlpha(p2PreviewImage, 0f);
+            if (startBattleButton != null) startBattleButton.SetActive(false);
             Debug.Log("P2 đã hủy chọn!");
         }
-        // Nếu P2 chưa khóa nhưng P1 đã khóa -> Hủy khóa P1
         else if (isP1Locked)
         {
             isP1Locked = false;
             p1SelectedIndex = -1;
-            SetImageAlpha(p1PreviewImage, 0f); // Trở lại trong suốt
+            SetImageAlpha(p1PreviewImage, 0f);
             Debug.Log("P1 đã hủy chọn!");
         }
     }
 
-    // Hàm phụ trợ xử lý độ trong suốt (Alpha) của ảnh UI
     private void SetImageAlpha(Image img, float alpha)
     {
         if (img != null)
@@ -139,5 +120,11 @@ public class CharacterSelection : MonoBehaviour
             c.a = alpha;
             img.color = c;
         }
+    }
+
+    public void LoadBattleScene(string sceneName)
+    {
+        Debug.Log("Đang tải sàn đấu: " + sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 }
