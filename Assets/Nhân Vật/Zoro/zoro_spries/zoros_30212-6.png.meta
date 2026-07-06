@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: d4634e0e2650fdb479d51323c13e05ef
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7378512152995019754
+    second: zoros_30212-6_0
+  - first:
+      213: -3845090297195790146
+    second: zoros_30212-6_1
+  - first:
+      213: 6269664221585691843
+    second: zoros_30212-6_2
+  - first:
+      213: 408990166845739370
+    second: zoros_30212-6_3
+  - first:
+      213: -5094768837704324423
+    second: zoros_30212-6_4
+  - first:
+      213: 9169182071360533923
+    second: zoros_30212-6_5
+  - first:
+      213: -5289090071266554930
+    second: zoros_30212-6_6
+  - first:
+      213: 7572518700002449808
+    second: zoros_30212-6_7
+  - first:
+      213: -5318527694247007412
+    second: zoros_30212-6_8
+  - first:
+      213: -775293280077778654
+    second: zoros_30212-6_9
+  - first:
+      213: -6955145737295075708
+    second: zoros_30212-6_10
+  - first:
+      213: -2468191596553260919
+    second: zoros_30212-6_11
+  - first:
+      213: -7309299425713349608
+    second: zoros_30212-6_12
+  - first:
+      213: 64942460589958531
+    second: zoros_30212-6_13
+  - first:
+      213: -4274496386778696470
+    second: zoros_30212-6_14
+  - first:
+      213: -753826369280314885
+    second: zoros_30212-6_15
+  - first:
+      213: 122784471666909657
+    second: zoros_30212-6_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: zoros_30212-6_0
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 284
+        width: 48
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61444d53a424a9990800000000000000
+      internalID: -7378512152995019754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_1
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 273
+        width: 84
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb008523fbe73aac0800000000000000
+      internalID: -3845090297195790146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 251
+        width: 213
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c457943462520750800000000000000
+      internalID: 6269664221585691843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_3
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 259
+        width: 48
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a61d77bc3660da500800000000000000
+      internalID: 408990166845739370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_4
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 243
+        width: 55
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ba67ef3cbebb49b0800000000000000
+      internalID: -5094768837704324423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_5
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 238
+        width: 88
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a53354738a7f3f70800000000000000
+      internalID: 9169182071360533923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_6
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 202
+        width: 187
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecb8c1d5a906996b0800000000000000
+      internalID: -5289090071266554930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_7
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 226
+        width: 108
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09916a003adf61960800000000000000
+      internalID: 7572518700002449808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 118
+        width: 356
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4b6458ad3bc036b0800000000000000
+      internalID: -5318527694247007412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_9
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 89
+        width: 298
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22177349eda9d35f0800000000000000
+      internalID: -775293280077778654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_10
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 63
+        width: 243
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48664774dcb5a7f90800000000000000
+      internalID: -6955145737295075708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_11
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 81
+        width: 179
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 980b6d9e1d83fbdd0800000000000000
+      internalID: -2468191596553260919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_12
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 57
+        width: 146
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c936d06e6209a90800000000000000
+      internalID: -7309299425713349608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_13
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 49
+        width: 134
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 385ed46e2d8b6e000800000000000000
+      internalID: 64942460589958531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_14
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 7
+        width: 194
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae47d58fe20fda4c0800000000000000
+      internalID: -4274496386778696470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_15
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 22
+        width: 126
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf179bc39eed985f0800000000000000
+      internalID: -753826369280314885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zoros_30212-6_16
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 0
+        width: 80
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d1e3a193d734b100800000000000000
+      internalID: 122784471666909657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      zoros_30212-6_0: -7378512152995019754
+      zoros_30212-6_1: -3845090297195790146
+      zoros_30212-6_10: -6955145737295075708
+      zoros_30212-6_11: -2468191596553260919
+      zoros_30212-6_12: -7309299425713349608
+      zoros_30212-6_13: 64942460589958531
+      zoros_30212-6_14: -4274496386778696470
+      zoros_30212-6_15: -753826369280314885
+      zoros_30212-6_16: 122784471666909657
+      zoros_30212-6_2: 6269664221585691843
+      zoros_30212-6_3: 408990166845739370
+      zoros_30212-6_4: -5094768837704324423
+      zoros_30212-6_5: 9169182071360533923
+      zoros_30212-6_6: -5289090071266554930
+      zoros_30212-6_7: 7572518700002449808
+      zoros_30212-6_8: -5318527694247007412
+      zoros_30212-6_9: -775293280077778654
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
