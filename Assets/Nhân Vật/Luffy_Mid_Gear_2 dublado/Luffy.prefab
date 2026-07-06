@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6235145880067768877}
   - component: {fileID: 5606328193417409599}
   - component: {fileID: 2087975146894764725}
+  - component: {fileID: 8164445306922666010}
   m_Layer: 6
   m_Name: Luffy
   m_TagString: Player
@@ -191,6 +192,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8164445306922666010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62438678644378553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2af28f7f5b9cb94fb1ba24cfae02a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  moveSpeed: 5
+  comboResetWindow: 1
+  hitboxAttack: {fileID: 0}
 --- !u!1 &8895123431592584201
 GameObject:
   m_ObjectHideFlags: 0

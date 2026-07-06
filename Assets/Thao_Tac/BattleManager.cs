@@ -6,10 +6,13 @@ public class BattleManager : MonoBehaviour
     public Transform p1SpawnPoint;
     public Transform aiSpawnPoint;
 
-    [Header("Character Prefabs")]
+    [Header("Character Prefabs (Bản Người Chơi Bấm Phím)")]
     public GameObject luffyPrefab;
     public GameObject zenitsuPrefab;
     public GameObject zoroPrefab;
+
+    [Header("AI Prefabs (Bản Đối Thủ Tự Động)")]
+    public GameObject zenitsuEnemyAIPrefab; 
 
     void Start()
     {
@@ -24,41 +27,32 @@ public class BattleManager : MonoBehaviour
 
         if (p1PrefabToSpawn != null && p1SpawnPoint != null)
         {
-            // Sinh ra thể xác người chơi
+            // Sinh ra người chơi (Giữ nguyên script gốc chuẩn của từng Prefab)
             GameObject p1 = Instantiate(p1PrefabToSpawn, p1SpawnPoint.position, Quaternion.identity);
-            p1.name = "Player_" + p1Name.ToLower(); // Đặt tên chuẩn theo chuỗi nhận được
-            p1.tag = "Player"; // Gán tag tự động để AI tìm mục tiêu
-
-            // 🔥 TỰ ĐỘNG GÁN SCRIPT ĐIỀU KHIỂN BẰNG TAY CHO NGƯỜI CHƠI (Nếu chưa có)
-            if (p1.GetComponent<PlayerMovement>() == null)
-            {
-                p1.AddComponent<PlayerMovement>();
-            }
+            p1.name = "Player_" + p1Name;
+            p1.tag = "Player"; // Gán tag tự động để AI quét radar tìm mục tiêu
             
-            Debug.Log($"[HỆ THỐNG] Đã gán quyền điều khiển bằng tay cho: {p1.name}");
+            Debug.Log($"[HỆ THỐNG] Đã sinh ra Người chơi: {p1.name}");
         }
         else
         {
             Debug.LogError("[HỆ THỐNG LỖI] Không tìm thấy Prefab người chơi hoặc P1 Spawn Point!");
         }
 
-        // 2. ẢI 1 CỐ ĐỊNH ĐỐI THỦ LÀ ZENITSU
-        if (zenitsuPrefab != null && aiSpawnPoint != null)
+        // 2. ẢI 1 CỐ ĐỊNH ĐỐI THỦ LÀ ZENITSU AI XỊN
+        GameObject enemyPrefabToSpawn = zenitsuEnemyAIPrefab != null ? zenitsuEnemyAIPrefab : zenitsuPrefab;
+
+        if (enemyPrefabToSpawn != null && aiSpawnPoint != null)
         {
-            // Sinh ra thể xác đối thủ Zenitsu
-            GameObject ai = Instantiate(zenitsuPrefab, aiSpawnPoint.position, Quaternion.identity);
+            // Sinh ra đối thủ Zenitsu AI đã được cấu hình tích sẵn ô "Is AI" và gài Hitbox đầy đủ
+            GameObject ai = Instantiate(enemyPrefabToSpawn, aiSpawnPoint.position, Quaternion.identity);
             ai.name = "AI_Zenitsu";
+            ai.tag = "Enemy";
             
             // Lật mặt đối thủ hướng về phía Player (bên trái)
             ai.transform.localScale = new Vector3(-Mathf.Abs(ai.transform.localScale.x), ai.transform.localScale.y, ai.transform.localScale.z);
             
-            // 🔥 TỰ ĐỘNG GÁN SCRIPT AI TỰ ĐỘNG CHO ĐỐI THỦ (Nếu chưa có)
-            if (ai.GetComponent<SimpleAI>() == null)
-            {
-                ai.AddComponent<SimpleAI>();
-            }
-
-            Debug.Log("[HỆ THỐNG] Đã gán bộ não tự động AI cho: AI_Zenitsu");
+            Debug.Log("[HỆ THỐNG] Đã sinh ra Đối thủ AI: AI_Zenitsu");
         }
         else
         {
