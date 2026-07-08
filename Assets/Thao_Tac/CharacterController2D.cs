@@ -13,13 +13,19 @@ public class CharacterController2D : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 12f;
     public float dashForce = 16f;
-    public float attackRange = 2f; 
+    public float attackRange = 2f; // Tầm nhìn AI bắt đầu dừng lại xả chiêu
     public float timeBetweenActions = 2f; 
 
-    [Header("Cấu HÌnh Hiệu Ứng Phóng Chiêu")]
+    [Header("Cấu Hình Cận Chiến (Skill 1)")]
+    public Transform attackPoint;      // Điểm vung đòn (Kéo Object Melee_AttackPoint vào đây)
+    public float meleeHitRange = 0.8f; // Bán kính (độ to) của Hitbox cận chiến
+    public LayerMask enemyLayers;      // Layer của Kẻ địch (Để đánh không bị trượt)
+    public int meleeDamage = 15;       // Sát thương Chiêu 1
+
+    [Header("Cấu Hình Hiệu Ứng Phóng Chiêu (Skill 2, 3, 4)")]
     public Transform castPoint; // Kéo Object tay nhân vật vào đây
     public GameObject skill2ProjectilePrefab; // Prefab đạn Skill 2 (Rasengan)
-    public GameObject skill3ProjectilePrefab; // Prefab đạn Skill 3 (Nếu có)
+    public GameObject skill3ProjectilePrefab; // Prefab đạn Skill 3
     public GameObject skill4ProjectilePrefab; // Prefab đạn Skill 4 (Ultimate)
 
     [Header("Trạng Thái Chiến Đấu")]
@@ -159,19 +165,43 @@ public class CharacterController2D : MonoBehaviour
     // 🎬 ANIMATION EVENTS (GỌI TỰ ĐỘNG KHI VUNG TAY NÉM CHIÊU)
     // =================================================================
     
-    // Gài hàm này vào Frame vung tay của hoạt ảnh "Skill2_Release"
+    // --- SKILL 1: CẬN CHIẾN (Gài Event vào hoạt ảnh chém/đấm) ---
+    public void TriggerMeleeHitbox()
+    {
+        if (attackPoint == null) return;
+
+        // Tung ra một vòng tròn tàng hình quét trúng ai nằm trong Layer địch
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, meleeHitRange, enemyLayers);
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            // Nếu bạn đấm AI -> Trừ máu AI
+            enemy.GetComponent<EnemyHealth>()?.TakeDamage(meleeDamage);
+            
+            // Nếu AI đấm bạn -> Trừ máu bạn
+            enemy.GetComponent<PlayerHealth>()?.TakeDamage(meleeDamage);
+        }
+    }
+
+    // Hàm vẽ vòng tròn Hitbox màu đỏ trên Scene để căn chỉnh cho dễ
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, meleeHitRange);
+    }
+
+    // --- SKILL 2, 3, 4: BẮN ĐẠN XA ---
     public void SpawnSkill2Projectile()
     {
         SpawnBullet(skill2ProjectilePrefab);
     }
 
-    // Gài hàm này vào Frame vung tay của hoạt ảnh "Skill3_Release"
     public void SpawnSkill3Projectile()
     {
         SpawnBullet(skill3ProjectilePrefab);
     }
 
-    // Gài hàm này vào Frame vung tay của hoạt ảnh "Skill4_Release"
     public void SpawnSkill4Projectile()
     {
         SpawnBullet(skill4ProjectilePrefab);
@@ -195,7 +225,7 @@ public class CharacterController2D : MonoBehaviour
                 // Nếu Naruto quay trái: Ép tốc độ đạn mang dấu ÂM để bay sang trái
                 projectileScript.speed = -Mathf.Abs(projectileScript.speed);
                 
-                // Lật ngược hình ảnh quả cầu lại cho đúng hướng (nếu quả cầu có hình mũi tên/tia lửa)
+                // Lật ngược hình ảnh quả cầu lại cho đúng hướng
                 bullet.transform.localScale = new Vector3(-Mathf.Abs(bullet.transform.localScale.x), bullet.transform.localScale.y, bullet.transform.localScale.z);
             }
             else

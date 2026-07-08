@@ -15,10 +15,9 @@ GameObject:
   - component: {fileID: 4403060490169041076}
   - component: {fileID: 216401033213477336}
   - component: {fileID: 596025064682096092}
-  - component: {fileID: 2730685812762475400}
-  m_Layer: 6
-  m_Name: Naruto_Sprite
-  m_TagString: Player
+  m_Layer: 7
+  m_Name: Naruto_AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -244,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e9d78ea7218f34ba06cd9a5c4ee451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
-  isAI: 0
+  isAI: 1
   moveSpeed: 5
   jumpForce: 10
   dashForce: 15
@@ -254,26 +253,12 @@ MonoBehaviour:
   meleeHitRange: 0.8
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   meleeDamage: 15
   castPoint: {fileID: 6942775035125639759}
   skill2ProjectilePrefab: {fileID: 2775957959194282656, guid: b147d97e1aa4a1d4d86da6faf9182967, type: 3}
   skill3ProjectilePrefab: {fileID: 2775957959194282656, guid: 3e0ce890aefa2f7489f1df70ae64a400, type: 3}
   skill4ProjectilePrefab: {fileID: 2775957959194282656, guid: e9d921882feb66a40a5220728884c160, type: 3}
---- !u!114 &2730685812762475400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2193080800126834739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83fba153a4fe3aa4c8d13040659f6a66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 100
-  stunDuration: 0.5
 --- !u!1 &2709398229450699986
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6942775035125639759}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: CastPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2380316859300889115}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Melee_AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

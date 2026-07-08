@@ -30,6 +30,8 @@ public class Projectile : MonoBehaviour
             (gameObject.CompareTag("Enemy") && other.CompareTag("Player")))
         {
             Debug.Log($"[TRÚNG CHIÊU] Chiêu thức bắn trúng {other.name}!");
+            other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+            other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
 
             // 1. Phanh gấp! Ép vận tốc viên đạn về 0 để đứng im tại vị trí trúng
             Rigidbody2D rb = GetComponent<Rigidbody2D>();

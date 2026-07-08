@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3607469381813375472}
   - component: {fileID: 8882807344572299107}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Zenitsu_Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,8 @@ GameObject:
   - component: {fileID: 5878835692228460203}
   - component: {fileID: 4423094932029264245}
   - component: {fileID: -8531076518482898351}
-  m_Layer: 6
+  - component: {fileID: -7496052069410843050}
+  m_Layer: 7
   m_Name: Zenitsu_EnemyAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -315,18 +316,38 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8817680510428579180}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88e9d78ea7218f34ba06cd9a5c4ee451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 1
-  moveSpeed: 5
+  moveSpeed: 0
   jumpForce: 10
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  attackPoint: {fileID: 0}
+  meleeHitRange: 0.8
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  meleeDamage: 15
   castPoint: {fileID: 0}
   skill2ProjectilePrefab: {fileID: 0}
   skill3ProjectilePrefab: {fileID: 0}
   skill4ProjectilePrefab: {fileID: 0}
+--- !u!114 &-7496052069410843050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817680510428579180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7dcf176f529ccc41b9e96338b30e21a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
+  stunDuration: 0.6
