@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 4bb8fef5a6ea62c48b65f1d7ae110e05
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6620209029257631887
+    second: Naruto_Sprites_0-408_0
+  - first:
+      213: 6231626694266446510
+    second: Naruto_Sprites_0-408_1
+  - first:
+      213: 7869175388828985480
+    second: Naruto_Sprites_0-408_2
+  - first:
+      213: -3953308564070565530
+    second: Naruto_Sprites_0-408_3
+  - first:
+      213: 8903335858285556111
+    second: Naruto_Sprites_0-408_4
+  - first:
+      213: -3225772427888315223
+    second: Naruto_Sprites_0-408_5
+  - first:
+      213: 2153283415199662415
+    second: Naruto_Sprites_0-408_6
+  - first:
+      213: -863127746110903458
+    second: Naruto_Sprites_0-408_7
+  - first:
+      213: -7248471950945568306
+    second: Naruto_Sprites_0-408_8
+  - first:
+      213: 2297796203652545757
+    second: Naruto_Sprites_0-408_9
+  - first:
+      213: 7251515304234327465
+    second: Naruto_Sprites_0-408_10
+  - first:
+      213: 282867771652388175
+    second: Naruto_Sprites_0-408_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_0
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 461
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f881cb76905bfdb50800000000000000
+      internalID: 6620209029257631887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_1
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 453
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea2e79c367f2b7650800000000000000
+      internalID: 6231626694266446510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_2
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 445
+        width: 38
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 888e56ec25de43d60800000000000000
+      internalID: 7869175388828985480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_3
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 48
+        width: 393
+        height: 401
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66970177ec60329c0800000000000000
+      internalID: -3953308564070565530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_4
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 441
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f81bb1d8ac00f8b70800000000000000
+      internalID: 8903335858285556111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_5
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 443
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a4b7755111cb33d0800000000000000
+      internalID: -3225772427888315223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_6
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 443
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4147b78bdff1ed10800000000000000
+      internalID: 2153283415199662415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_7
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 324
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ba64153ed8504f0800000000000000
+      internalID: -863127746110903458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_8
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 313
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec9b1872a21486b90800000000000000
+      internalID: -7248471950945568306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_9
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 319
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddc73f4197963ef10800000000000000
+      internalID: 2297796203652545757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_10
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 228
+        width: 24
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ad1230cfbe82a460800000000000000
+      internalID: 7251515304234327465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Naruto_Sprites_0-408_11
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 11
+        width: 34
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f453fb75db2fce300800000000000000
+      internalID: 282867771652388175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Naruto_Sprites_0-408_0: 6620209029257631887
+      Naruto_Sprites_0-408_1: 6231626694266446510
+      Naruto_Sprites_0-408_10: 7251515304234327465
+      Naruto_Sprites_0-408_11: 282867771652388175
+      Naruto_Sprites_0-408_2: 7869175388828985480
+      Naruto_Sprites_0-408_3: -3953308564070565530
+      Naruto_Sprites_0-408_4: 8903335858285556111
+      Naruto_Sprites_0-408_5: -3225772427888315223
+      Naruto_Sprites_0-408_6: 2153283415199662415
+      Naruto_Sprites_0-408_7: -863127746110903458
+      Naruto_Sprites_0-408_8: -7248471950945568306
+      Naruto_Sprites_0-408_9: 2297796203652545757
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

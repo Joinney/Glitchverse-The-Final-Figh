@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2910797803781983340}
   - component: {fileID: 5878835692228460203}
   - component: {fileID: 4423094932029264245}
-  - component: {fileID: 2336590571558892301}
+  - component: {fileID: 6931493891185560916}
   m_Layer: 6
   m_Name: Zenitsu
   m_TagString: Player
@@ -308,7 +308,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.009088397, y: 0}
   m_Size: {x: 2.3412282, y: 2.3412282}
   m_Direction: 0
---- !u!114 &2336590571558892301
+--- !u!114 &6931493891185560916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,12 +317,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8817680510428579180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fbd706090807dc40a14a924dc3dd663, type: 3}
+  m_Script: {fileID: 11500000, guid: 88e9d78ea7218f34ba06cd9a5c4ee451, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZenitsuController
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 0
   moveSpeed: 5
   jumpForce: 10
   dashForce: 15
-  hitboxSword: {fileID: 724162681911051881}
+  attackRange: 2
   timeBetweenActions: 2.5

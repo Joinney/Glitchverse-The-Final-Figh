@@ -10,6 +10,7 @@ public class BattleManager : MonoBehaviour
     public GameObject luffyPrefab;
     public GameObject zenitsuPrefab;
     public GameObject zoroPrefab;
+    public GameObject narutoPrefab;
 
     [Header("AI Prefabs (Bản Đối Thủ Tự Động)")]
     public GameObject zenitsuEnemyAIPrefab; 
@@ -19,18 +20,24 @@ public class BattleManager : MonoBehaviour
         SpawnPlayers();
     }
 
-    void SpawnPlayers()
+void SpawnPlayers()
     {
-        // 1. ĐỌC NHÂN VẬT BẠN ĐÃ CHỌN TỪ MENU (Mặc định nếu trống là Luffy)
+        // 1. ĐỌC NHÂN VẬT BẠN ĐÃ CHỌN TỪ MENU
         string p1Name = PlayerPrefs.GetString("P1_Selection", "Luffy");
         GameObject p1PrefabToSpawn = GetPrefabByName(p1Name);
 
         if (p1PrefabToSpawn != null && p1SpawnPoint != null)
         {
-            // Sinh ra người chơi (Giữ nguyên script gốc chuẩn của từng Prefab)
             GameObject p1 = Instantiate(p1PrefabToSpawn, p1SpawnPoint.position, Quaternion.identity);
             p1.name = "Player_" + p1Name;
-            p1.tag = "Player"; // Gán tag tự động để AI quét radar tìm mục tiêu
+            p1.tag = "Player"; 
+
+            // 🔥 ÉP BUỘC PHE TA PHẢI TẮT AI ĐỂ ĐIỀU KHIỂN BẰNG TAY
+            CharacterController2D controller = p1.GetComponent<CharacterController2D>();
+            if (controller != null)
+            {
+                controller.isAI = false;
+            }
             
             Debug.Log($"[HỆ THỐNG] Đã sinh ra Người chơi: {p1.name}");
         }
@@ -39,20 +46,25 @@ public class BattleManager : MonoBehaviour
             Debug.LogError("[HỆ THỐNG LỖI] Không tìm thấy Prefab người chơi hoặc P1 Spawn Point!");
         }
 
-        // 2. ẢI 1 CỐ ĐỊNH ĐỐI THỦ LÀ ZENITSU AI XỊN
+        // 2. SỬ THẾ ĐỐI THỦ AI
         GameObject enemyPrefabToSpawn = zenitsuEnemyAIPrefab != null ? zenitsuEnemyAIPrefab : zenitsuPrefab;
 
         if (enemyPrefabToSpawn != null && aiSpawnPoint != null)
         {
-            // Sinh ra đối thủ Zenitsu AI đã được cấu hình tích sẵn ô "Is AI" và gài Hitbox đầy đủ
             GameObject ai = Instantiate(enemyPrefabToSpawn, aiSpawnPoint.position, Quaternion.identity);
             ai.name = "AI_Zenitsu";
             ai.tag = "Enemy";
             
-            // Lật mặt đối thủ hướng về phía Player (bên trái)
+            // 🔥 ÉP BUỘC ĐỐI THỦ PHẢI BẬT AI ĐỂ TỰ ĐỘNG CHẠY/ĐÁNH
+            CharacterController2D controller = ai.GetComponent<CharacterController2D>();
+            if (controller != null)
+            {
+                controller.isAI = true;
+            }
+
             ai.transform.localScale = new Vector3(-Mathf.Abs(ai.transform.localScale.x), ai.transform.localScale.y, ai.transform.localScale.z);
             
-            Debug.Log("[HỆ THỐNG] Đã sinh ra Đối thủ AI: AI_Zenitsu");
+            Debug.Log("[HỆ THỐNG] Đã sinh ra Đối thủ AI và ép kích hoạt bộ não tự động.");
         }
         else
         {
@@ -73,6 +85,7 @@ public class BattleManager : MonoBehaviour
         if (lowerName == "luffy") return luffyPrefab;
         if (lowerName == "zenitsu") return zenitsuPrefab;
         if (lowerName == "zoro") return zoroPrefab;
+        if (lowerName == "naruto") return narutoPrefab;
 
         // Nếu người chơi lưu một tên lạ hoắc không có trong danh sách, mặc định trả về Luffy
         Debug.LogWarning($"[HỆ THỐNG] Không tìm thấy prefab cho tên '{name}'. Tự động chọn Luffy.");
