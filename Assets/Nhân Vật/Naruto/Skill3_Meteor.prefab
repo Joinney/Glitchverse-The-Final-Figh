@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 860791971788462988}
   - component: {fileID: 3925357742664740680}
   - component: {fileID: 3525280519511592521}
-  - component: {fileID: 2295866816358647369}
+  - component: {fileID: 3425711487590413233}
   m_Layer: 0
-  m_Name: Rasengan_Ball
+  m_Name: Skill3_Meteor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2425928153726693758, guid: 53df4981e702dce48bad4eb301ba405e, type: 3}
+  m_Sprite: {fileID: 3685798505825063464, guid: 2ecd8462ad892a5438f0e6e16289a8ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   speed: 12
   lifeTime: 3
   damage: 10
---- !u!95 &2295866816358647369
+--- !u!95 &3425711487590413233
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ Animator:
   m_GameObject: {fileID: 2775957959194282656}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0d39af40d0a65b640a898ddb5b53eaf2, type: 2}
+  m_Controller: {fileID: 9100000, guid: df8c73ff21c38d24ea9dc22706bb28d3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
