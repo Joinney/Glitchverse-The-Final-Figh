@@ -256,7 +256,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
-  meleeDamage: 15
+  meleeDamage: 1500
   castPoint: {fileID: 6942775035125639759}
   skill2ProjectilePrefab: {fileID: 2775957959194282656, guid: b147d97e1aa4a1d4d86da6faf9182967, type: 3}
   skill3ProjectilePrefab: {fileID: 2775957959194282656, guid: 3e0ce890aefa2f7489f1df70ae64a400, type: 3}
@@ -273,7 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83fba153a4fe3aa4c8d13040659f6a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  characterFace: {fileID: -7317713785352289777, guid: c072733924483b346ab0f18c38e6be2f, type: 3}
+  characterName: Uzumaki Naruto
   maxHealth: 3800
+  healthBar: {fileID: 0}
   hitSounds:
   - {fileID: 8300000, guid: 4b08abff87ae6f34f92ff64ae863d9d2, type: 3}
   stunDuration: 0.5

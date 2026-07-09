@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 1000; // Có thể đổi thành 1000 hoặc giữ nguyên tuỳ bạn cân bằng với Naruto
+    [Header("Thông tin UI")]
+    public Sprite characterFace;
+    public string characterName = "Name NV";
+    public int maxHealth = 1000; 
+    public HealthBarUI healthBar;
     private int currentHealth;
     
     private Animator anim;
@@ -27,11 +31,18 @@ public class EnemyHealth : MonoBehaviour
         aiScript = GetComponent<CharacterController2D>(); // Lấy bộ não AI của nhân vật
         
         audioSource = GetComponent<AudioSource>(); // Tự động kết nối với Cái loa trên người AI
+        healthBar = GameObject.Find("HealthBar_P2").GetComponent<HealthBarUI>();
+        if (healthBar != null && characterFace != null)
+        {
+            healthBar.SetAvatar(characterFace);
+            healthBar.SetCharacterName(characterName);
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth); // Cập nhật UI
 
         // PHÁT ÂM THANH KHI AI BỊ ĐÁNH:
         if (audioSource != null && hitSounds.Length > 0)

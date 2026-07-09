@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Thông tin UI")]
+    public Sprite characterFace;
+    public string characterName = "Name NV"; 
     public int maxHealth = 3800;
+    public HealthBarUI healthBar;
     private int currentHealth;
     [Header("Âm Thanh Đau Đớn")]
     private AudioSource audioSource;
@@ -24,11 +28,18 @@ public class PlayerHealth : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerScript = GetComponent<CharacterController2D>();
+        healthBar = GameObject.Find("HealthBar_P1").GetComponent<HealthBarUI>();
+        if (healthBar != null && characterFace != null)
+        {
+            healthBar.SetAvatar(characterFace);
+            healthBar.SetCharacterName(characterName);
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth); // Cập nhật UI
         if (audioSource != null && hitSounds.Length > 0)
         {
             // Chọn ngẫu nhiên 1 âm thanh trong danh sách kéo vào để nghe đỡ chán

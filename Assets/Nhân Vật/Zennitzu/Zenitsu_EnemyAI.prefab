@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3607469381813375472}
   - component: {fileID: 8882807344572299107}
+  - component: {fileID: 3284265836383963715}
   m_Layer: 7
   m_Name: Zenitsu_Hitbox
   m_TagString: Untagged
@@ -66,7 +67,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0066742897, y: -0.005005598}
+  m_Offset: {x: 0.09739733, y: -0.028131545}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,8 +77,22 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.34592515, y: 0.4493758}
+  m_Size: {x: 2.034195, y: 2.3920403}
   m_EdgeRadius: 0
+--- !u!114 &3284265836383963715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724162681911051881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73564777e5aaf9e46bd95a2c1e57dedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeAttack
+  damage: 1000
+  targetTag: Player
 --- !u!1 &8817680510428579180
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,8 +107,8 @@ GameObject:
   - component: {fileID: 2910797803781983340}
   - component: {fileID: 5878835692228460203}
   - component: {fileID: 4423094932029264245}
-  - component: {fileID: -8531076518482898351}
-  - component: {fileID: -7496052069410843050}
+  - component: {fileID: 6931493891185560916}
+  - component: {fileID: 8585186084491431671}
   m_Layer: 7
   m_Name: Zenitsu_EnemyAI
   m_TagString: Enemy
@@ -109,14 +124,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8817680510428579180}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0053264946, y: -0, z: -0, w: 0.9999858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3607469381813375472}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.61, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4771089524257783275
 SpriteRenderer:
   serializedVersion: 3
@@ -238,7 +253,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.078777075, y: -0.029845953}
+  m_Offset: {x: -0.036135793, y: 0.0061309934}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -248,7 +263,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.8857474, y: 2.2912936}
+  m_Size: {x: 1.8267705, y: 2.3094501}
   m_EdgeRadius: 0
 --- !u!95 &5878835692228460203
 Animator:
@@ -306,10 +321,10 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.03764212, y: 0}
-  m_Size: {x: 2.134536, y: 2.2959878}
+  m_Offset: {x: -0.009088397, y: 0}
+  m_Size: {x: 2.3412282, y: 2.3412282}
   m_Direction: 0
---- !u!114 &-8531076518482898351
+--- !u!114 &6931493891185560916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -322,22 +337,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 1
-  moveSpeed: 0
+  moveSpeed: 5
   jumpForce: 10
   dashForce: 15
-  attackRange: 2
+  attackRange: 500
   timeBetweenActions: 2.5
   attackPoint: {fileID: 0}
   meleeHitRange: 0.8
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 64
-  meleeDamage: 15
+    m_Bits: 192
+  meleeDamage: 350
   castPoint: {fileID: 0}
   skill2ProjectilePrefab: {fileID: 0}
   skill3ProjectilePrefab: {fileID: 0}
   skill4ProjectilePrefab: {fileID: 0}
---- !u!114 &-7496052069410843050
+--- !u!114 &8585186084491431671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,8 +361,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8817680510428579180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7dcf176f529ccc41b9e96338b30e21a, type: 3}
+  m_Script: {fileID: 11500000, guid: 83fba153a4fe3aa4c8d13040659f6a66, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 5000
-  stunDuration: 0.6
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  characterFace: {fileID: -8521216810787373871, guid: b2e1639531ee4b943bbdd1f003208f74, type: 3}
+  characterName: Zenitsu
+  maxHealth: 3800
+  healthBar: {fileID: 0}
+  hitSounds: []
+  stunDuration: 0.5

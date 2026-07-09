@@ -370,7 +370,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dcf176f529ccc41b9e96338b30e21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  characterFace: {fileID: -7317713785352289777, guid: c072733924483b346ab0f18c38e6be2f, type: 3}
+  characterName: Uzumaki Naruto
   maxHealth: 3800
+  healthBar: {fileID: 0}
   stunDuration: 0.6
   hitSounds:
   - {fileID: 8300000, guid: 4b08abff87ae6f34f92ff64ae863d9d2, type: 3}

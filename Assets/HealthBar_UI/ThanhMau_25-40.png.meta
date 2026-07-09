@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: 26ccc2613389b0747b98d0d07aeffb01
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1102966721772375837
+    second: ThanhMau_25-40_0
+  - first:
+      213: -2052530562907058078
+    second: ThanhMau_25-40_1
+  - first:
+      213: 3378294447240553702
+    second: ThanhMau_25-40_2
+  - first:
+      213: 4964531817730670331
+    second: ThanhMau_25-40_3
+  - first:
+      213: 6173153735455228165
+    second: ThanhMau_25-40_4
+  - first:
+      213: -5783669780707939613
+    second: ThanhMau_25-40_5
+  - first:
+      213: -8495690316538690365
+    second: ThanhMau_25-40_6
+  - first:
+      213: -1268621800008512923
+    second: ThanhMau_25-40_7
+  - first:
+      213: -8250546600818353348
+    second: ThanhMau_25-40_8
+  - first:
+      213: 4167196293614061755
+    second: ThanhMau_25-40_9
+  - first:
+      213: 6984138940648473228
+    second: ThanhMau_25-40_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ThanhMau_25-40_0
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 417
+        width: 457
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e03ead3c9971b0f0800000000000000
+      internalID: -1102966721772375837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_1
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 451
+        width: 69
+        height: 269
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 260da4be352f383e0800000000000000
+      internalID: -2052530562907058078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_2
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 417
+        width: 457
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e4a27a96ec12ee20800000000000000
+      internalID: 3378294447240553702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_3
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 306
+        width: 91
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfef5ff826f85e440800000000000000
+      internalID: 4964531817730670331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_4
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 293
+        width: 133
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5014fa99d927ba550800000000000000
+      internalID: 6173153735455228165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_5
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 276
+        width: 156
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eaedb64af64cbfa0800000000000000
+      internalID: -5783669780707939613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_6
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 293
+        width: 133
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c44cf05bae391a80800000000000000
+      internalID: -8495690316538690365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_7
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 306
+        width: 91
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a0d20c133f46ee0800000000000000
+      internalID: -1268621800008512923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_8
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 5
+        width: 448
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3b5a6f649b208d80800000000000000
+      internalID: -8250546600818353348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_9
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 0
+        width: 69
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb8c03643fad4d930800000000000000
+      internalID: 4167196293614061755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhMau_25-40_10
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 5
+        width: 448
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c82435bec55ace060800000000000000
+      internalID: 6984138940648473228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ThanhMau_25-40_0: -1102966721772375837
+      ThanhMau_25-40_1: -2052530562907058078
+      ThanhMau_25-40_10: 6984138940648473228
+      ThanhMau_25-40_2: 3378294447240553702
+      ThanhMau_25-40_3: 4964531817730670331
+      ThanhMau_25-40_4: 6173153735455228165
+      ThanhMau_25-40_5: -5783669780707939613
+      ThanhMau_25-40_6: -8495690316538690365
+      ThanhMau_25-40_7: -1268621800008512923
+      ThanhMau_25-40_8: -8250546600818353348
+      ThanhMau_25-40_9: 4167196293614061755
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

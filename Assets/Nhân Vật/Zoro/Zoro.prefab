@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9016129930361654572}
   - component: {fileID: 6228115702757167289}
   - component: {fileID: 6740651762975168279}
+  - component: {fileID: 8227367587030349323}
   m_Layer: 6
   m_Name: Zoro
   m_TagString: Player
@@ -247,3 +248,31 @@ MonoBehaviour:
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  attackPoint: {fileID: 0}
+  meleeHitRange: 0.8
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  meleeDamage: 35
+  castPoint: {fileID: 0}
+  skill2ProjectilePrefab: {fileID: 0}
+  skill3ProjectilePrefab: {fileID: 0}
+  skill4ProjectilePrefab: {fileID: 0}
+--- !u!114 &8227367587030349323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259156623076760062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83fba153a4fe3aa4c8d13040659f6a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  characterFace: {fileID: 3797060297842685893, guid: cd27f57e5a72791488fcf2fdb366a1cc, type: 3}
+  characterName: Roronoa Zoro
+  maxHealth: 3800
+  healthBar: {fileID: 0}
+  hitSounds: []
+  stunDuration: 0.5
