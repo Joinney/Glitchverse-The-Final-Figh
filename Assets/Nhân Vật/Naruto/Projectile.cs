@@ -10,6 +10,11 @@ public class Projectile : MonoBehaviour
     [Header("Thời gian chờ xóa đạn (khớp với hoạt ảnh Nổ)")]
     public float hitAnimationDuration = 0.5f;
 
+    [Header("Hệ Thống Âm Thanh")]
+    private AudioSource audioSource;
+    public AudioClip castSound; // Tiếng khi đạn phóng ra (ví dụ: tiếng gồng, sấm sét)
+    public AudioClip hitSound;  // Tiếng khi đạn nổ trúng đích (ví dụ: tiếng bùm, kiếm chém)
+
     void Start()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -17,6 +22,13 @@ public class Projectile : MonoBehaviour
         {
             // Đẩy lực thẳng theo trục X
             rb.linearVelocity = new Vector2(speed, 0f);
+        }
+
+        // LẤY LOA VÀ PHÁT ÂM THANH XẢ CHIÊU:
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && castSound != null)
+        {
+            audioSource.PlayOneShot(castSound);
         }
         
         // Tự hủy sau một khoảng thời gian (nếu bay trượt ra ngoài màn hình)
@@ -33,11 +45,19 @@ public class Projectile : MonoBehaviour
             other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
             other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
 
-            // 1. Phanh gấp! Ép vận tốc viên đạn về 0 để đứng im tại vị trí trúng
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb != null) 
+            // PHÁT ÂM THANH NỔ/TRÚNG ĐÒN:
+            if (audioSource != null && hitSound != null)
             {
-                rb.linearVelocity = Vector2.zero;
+                // Dùng PlayOneShot để âm thanh nổ không bị ngắt giữa chừng khi đạn bị Destroy
+                audioSource.PlayOneShot(hitSound);
+            }
+
+            // 1. Phanh gấp! Ép vận tốc viên đạn về 0 để đứng im tại vị trí trúng
+           
+            Rigidbody2D realRb = GetComponent<Rigidbody2D>();
+            if (realRb != null) 
+            {
+                realRb.linearVelocity = Vector2.zero;
             }
 
             // 2. Tắt vòng Collider để không trừ máu địch thêm lần nào nữa (chống bug double-hit)

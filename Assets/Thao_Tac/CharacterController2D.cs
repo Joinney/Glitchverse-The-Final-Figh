@@ -20,7 +20,7 @@ public class CharacterController2D : MonoBehaviour
     public Transform attackPoint;      // Điểm vung đòn (Kéo Object Melee_AttackPoint vào đây)
     public float meleeHitRange = 0.8f; // Bán kính (độ to) của Hitbox cận chiến
     public LayerMask enemyLayers;      // Layer của Kẻ địch (Để đánh không bị trượt)
-    public int meleeDamage = 15;       // Sát thương Chiêu 1
+    public int meleeDamage = 35;       // Sát thương Chiêu 1
 
     [Header("Cấu Hình Hiệu Ứng Phóng Chiêu (Skill 2, 3, 4)")]
     public Transform castPoint; // Kéo Object tay nhân vật vào đây

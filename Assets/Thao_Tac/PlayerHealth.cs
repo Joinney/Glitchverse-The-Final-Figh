@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth = 3800;
     private int currentHealth;
-    
+    [Header("Âm Thanh Đau Đớn")]
+    private AudioSource audioSource;
+    public AudioClip[] hitSounds;
     private Animator anim;
     private Rigidbody2D rb;
     private CharacterController2D playerScript;
@@ -18,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerScript = GetComponent<CharacterController2D>();
@@ -26,6 +29,12 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if (audioSource != null && hitSounds.Length > 0)
+        {
+            // Chọn ngẫu nhiên 1 âm thanh trong danh sách kéo vào để nghe đỡ chán
+            AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
+            audioSource.PlayOneShot(randomClip);
+        }
 
         if (anim != null) anim.SetTrigger("Hit");
 

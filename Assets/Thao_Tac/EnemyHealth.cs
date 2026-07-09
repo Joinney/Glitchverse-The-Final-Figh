@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth = 1000; // Có thể đổi thành 1000 hoặc giữ nguyên tuỳ bạn cân bằng với Naruto
     private int currentHealth;
     
     private Animator anim;
@@ -15,17 +15,31 @@ public class EnemyHealth : MonoBehaviour
 
     private Coroutine stunCoroutine; // Biến ghi nhớ trạng thái đang bị choáng
 
+    [Header("Âm Thanh Đau Đớn Của AI")]
+    private AudioSource audioSource;
+    public AudioClip[] hitSounds; // Nơi chứa các file .wav tiếng kêu của Zenitsu ngoài Inspector
+
     void Start()
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         aiScript = GetComponent<CharacterController2D>(); // Lấy bộ não AI của nhân vật
+        
+        audioSource = GetComponent<AudioSource>(); // Tự động kết nối với Cái loa trên người AI
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        // PHÁT ÂM THANH KHI AI BỊ ĐÁNH:
+        if (audioSource != null && hitSounds.Length > 0)
+        {
+            // Chọn ngẫu nhiên 1 âm thanh gầm gừ/đau đớn của Zenitsu trong danh sách kéo vào
+            AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
+            audioSource.PlayOneShot(randomClip);
+        }
 
         // 1. Chạy hoạt ảnh giật nảy mình
         if (anim != null) anim.SetTrigger("Hit");
@@ -81,11 +95,11 @@ public class EnemyHealth : MonoBehaviour
         if (aiScript != null) aiScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
         
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
+        Rigidbody2D targetRb = GetComponent<Rigidbody2D>();
+        if (targetRb != null)
         {
-            rb.linearVelocity = Vector2.zero;
-            rb.simulated = false; // Ngừng giả lập vật lý trọng lực hoàn toàn ngay tại chỗ
+            targetRb.linearVelocity = Vector2.zero;
+            targetRb.simulated = false; // Ngừng giả lập vật lý trọng lực hoàn toàn ngay tại chỗ
         }
         
         this.enabled = false; 
