@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 4423094932029264245}
   - component: {fileID: 6931493891185560916}
   - component: {fileID: 8585186084491431671}
+  - component: {fileID: 1936521401050035521}
   m_Layer: 6
   m_Name: Zenitsu
   m_TagString: Player
@@ -342,12 +343,17 @@ MonoBehaviour:
   dashForce: 15
   attackRange: 500
   timeBetweenActions: 2.5
+  skill1Cost: 0
+  skill2Cost: 25
+  skill3Cost: 50
+  skill4Cost: 100
+  energyGainOnHit: 15
   attackPoint: {fileID: 0}
   meleeHitRange: 0.8
   enemyLayers:
     serializedVersion: 2
     m_Bits: 192
-  meleeDamage: 350
+  meleeDamage: 50
   castPoint: {fileID: 0}
   skill2ProjectilePrefab: {fileID: 0}
   skill3ProjectilePrefab: {fileID: 0}
@@ -370,3 +376,18 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   hitSounds: []
   stunDuration: 0.5
+--- !u!114 &1936521401050035521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817680510428579180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29321bd91e91f0041b8722ddce772ecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnergySystem
+  maxEnergy: 100
+  currentEnergy: 50
+  energyUIName: Energy_Fill_P1

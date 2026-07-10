@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: e4a4479f422fcd7448f75d556b9feff7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1451237036555319937
+    second: Mihawk_30305-7_0
+  - first:
+      213: -1939078504999958115
+    second: Mihawk_30305-7_1
+  - first:
+      213: 4486008880556942045
+    second: Mihawk_30305-7_2
+  - first:
+      213: -8643508124981015563
+    second: Mihawk_30305-7_3
+  - first:
+      213: 3903128649191601278
+    second: Mihawk_30305-7_4
+  - first:
+      213: -1214177615860229694
+    second: Mihawk_30305-7_5
+  - first:
+      213: 8105444642205845694
+    second: Mihawk_30305-7_6
+  - first:
+      213: -1725463855678650683
+    second: Mihawk_30305-7_7
+  - first:
+      213: 265246820239918286
+    second: Mihawk_30305-7_8
+  - first:
+      213: 4812976562416393585
+    second: Mihawk_30305-7_9
+  - first:
+      213: 1656321410443306286
+    second: Mihawk_30305-7_10
+  - first:
+      213: 3067577549891620999
+    second: Mihawk_30305-7_11
+  - first:
+      213: 7409688457881938042
+    second: Mihawk_30305-7_12
+  - first:
+      213: -7859424541081193759
+    second: Mihawk_30305-7_13
+  - first:
+      213: 7562643598996078915
+    second: Mihawk_30305-7_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Mihawk_30305-7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 94
+        width: 115
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f75ca3faa9b2cdbe0800000000000000
+      internalID: -1451237036555319937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_1
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 217
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d99c1e59f520715e0800000000000000
+      internalID: -1939078504999958115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_2
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 181
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd228d81f41814e30800000000000000
+      internalID: 4486008880556942045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_3
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 166
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fbcd45d7271c0880800000000000000
+      internalID: -8643508124981015563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_4
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 146
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7437b7a3d2ba2630800000000000000
+      internalID: 3903128649191601278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 131
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c99b6034ef562fe0800000000000000
+      internalID: -1214177615860229694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_6
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 93
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb8c54525f25c7070800000000000000
+      internalID: 8105444642205845694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_7
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 85
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c68f71e3cbed08e0800000000000000
+      internalID: -1725463855678650683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_8
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 67
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec4c332e3985ea300800000000000000
+      internalID: 265246820239918286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_9
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 73
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d1c1beea02bc240800000000000000
+      internalID: 4812976562416393585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_10
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 46
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e25e8571c8f6cf610800000000000000
+      internalID: 1656321410443306286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_11
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 54
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 780d0466789329a20800000000000000
+      internalID: 3067577549891620999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_12
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 41
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a786d5ce46084d660800000000000000
+      internalID: 7409688457881938042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_13
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e23ed95507bde290800000000000000
+      internalID: -7859424541081193759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mihawk_30305-7_14
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 9
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3410b01e848e3f860800000000000000
+      internalID: 7562643598996078915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Mihawk_30305-7_0: -1451237036555319937
+      Mihawk_30305-7_1: -1939078504999958115
+      Mihawk_30305-7_10: 1656321410443306286
+      Mihawk_30305-7_11: 3067577549891620999
+      Mihawk_30305-7_12: 7409688457881938042
+      Mihawk_30305-7_13: -7859424541081193759
+      Mihawk_30305-7_14: 7562643598996078915
+      Mihawk_30305-7_2: 4486008880556942045
+      Mihawk_30305-7_3: -8643508124981015563
+      Mihawk_30305-7_4: 3903128649191601278
+      Mihawk_30305-7_5: -1214177615860229694
+      Mihawk_30305-7_6: 8105444642205845694
+      Mihawk_30305-7_7: -1725463855678650683
+      Mihawk_30305-7_8: 265246820239918286
+      Mihawk_30305-7_9: 4812976562416393585
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

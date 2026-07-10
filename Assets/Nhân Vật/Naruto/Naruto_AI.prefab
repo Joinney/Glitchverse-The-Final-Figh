@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 596025064682096092}
   - component: {fileID: 3977120578961968770}
   - component: {fileID: 7139893471459804277}
+  - component: {fileID: 1643331587256665630}
   m_Layer: 7
   m_Name: Naruto_AI
   m_TagString: Enemy
@@ -246,17 +247,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 1
-  moveSpeed: 0
+  moveSpeed: 3
   jumpForce: 10
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  skill1Cost: 0
+  skill2Cost: 25
+  skill3Cost: 50
+  skill4Cost: 100
+  energyGainOnHit: 15
   attackPoint: {fileID: 2380316859300889115}
   meleeHitRange: 0.8
   enemyLayers:
     serializedVersion: 2
     m_Bits: 192
-  meleeDamage: 15
+  meleeDamage: 50
   castPoint: {fileID: 6942775035125639759}
   skill2ProjectilePrefab: {fileID: 2775957959194282656, guid: b147d97e1aa4a1d4d86da6faf9182967, type: 3}
   skill3ProjectilePrefab: {fileID: 2775957959194282656, guid: 3e0ce890aefa2f7489f1df70ae64a400, type: 3}
@@ -372,11 +378,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   characterFace: {fileID: -7317713785352289777, guid: c072733924483b346ab0f18c38e6be2f, type: 3}
   characterName: Uzumaki Naruto
-  maxHealth: 3800
+  maxHealth: 10000
   healthBar: {fileID: 0}
   stunDuration: 0.6
   hitSounds:
   - {fileID: 8300000, guid: 4b08abff87ae6f34f92ff64ae863d9d2, type: 3}
+--- !u!114 &1643331587256665630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193080800126834739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29321bd91e91f0041b8722ddce772ecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnergySystem
+  maxEnergy: 100
+  currentEnergy: 50
+  energyUIName: Energy_Fill_P2
 --- !u!1 &2709398229450699986
 GameObject:
   m_ObjectHideFlags: 0
