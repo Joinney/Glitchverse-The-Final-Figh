@@ -13,16 +13,16 @@ public class CharacterController2D : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 12f;
     public float dashForce = 16f;
-    public float attackRange = 2f; // Tầm nhìn AI bắt đầu dừng lại xả chiêu
+    public float attackRange = 2f; 
     public float timeBetweenActions = 2f; 
 
-    [Header("Năng Lượng Tiêu Hao & Hồi Phục (NEW)")]
-    public int skill1Cost = 0;   // Đánh thường không tốn năng lượng
-    public int skill2Cost = 25;  // Tốn 25 Mana
-    public int skill3Cost = 50;  // Tốn 50 Mana
-    public int skill4Cost = 100; // Chiêu cuối tốn 100 Mana (Đầy thanh)
-    public int energyGainOnHit = 15; // Đánh thường (Skill 1) TRÚNG ĐỊCH sẽ hồi 15 Mana
-    private EnergySystem energySys; // Liên kết với file EnergySystem
+    [Header("Năng Lượng Tiêu Hao & Hồi Phục")]
+    public int skill1Cost = 0;   
+    public int skill2Cost = 25;  
+    public int skill3Cost = 50;  
+    public int skill4Cost = 100; 
+    public int energyGainOnHit = 15; 
+    private EnergySystem energySys; 
 
     [Header("Cấu Hình Cận Chiến (Skill 1)")]
     public Transform attackPoint;      
@@ -31,7 +31,16 @@ public class CharacterController2D : MonoBehaviour
     public int meleeDamage = 35;       
 
     [Header("Cấu Hình Hiệu Ứng Phóng Chiêu (Skill 2, 3, 4)")]
+    [Tooltip("Điểm bắn chung mặc định cho các nhân vật cũ")]
     public Transform castPoint; 
+    
+    [Tooltip("Chỉ kéo vào nếu muốn Skill 2 có điểm xuất hiện riêng")]
+    public Transform castPointSkill2; 
+    [Tooltip("Chỉ kéo vào nếu muốn Skill 3 có điểm xuất hiện riêng")]
+    public Transform castPointSkill3; 
+    [Tooltip("Chỉ kéo vào nếu muốn Skill 4 có điểm xuất hiện riêng")]
+    public Transform castPointSkill4; 
+
     public GameObject skill2ProjectilePrefab; 
     public GameObject skill3ProjectilePrefab; 
     public GameObject skill4ProjectilePrefab; 
@@ -45,33 +54,18 @@ public class CharacterController2D : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        
-        // Bắt lấy hệ thống Năng Lượng đang gắn trên người nhân vật
         energySys = GetComponent<EnergySystem>(); 
-
         originalScale = transform.localScale; 
 
-        if (isAI)
-        {
-            FindEnemyTarget();
-        }
+        if (isAI) FindEnemyTarget();
     }
 
     void Update()
     {
-        if (!isAI)
-        {
-            HandlePlayerInput();
-        }
-        else
-        {
-            HandleAILogic();
-        }
+        if (!isAI) HandlePlayerInput();
+        else HandleAILogic();
     }
 
-    // =================================================================
-    // 🎮 ĐIỀU KHIỂN BẰNG TAY (CHO NGƯỜI CHƠI)
-    // =================================================================
     void HandlePlayerInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -97,16 +91,12 @@ public class CharacterController2D : MonoBehaviour
             if (anim != null) anim.SetTrigger("Dash");
         }
 
-        // Đã sửa: Thay vì xả chiêu ngay, sẽ đưa vào hàm TryUseSkill để check Mana trước
         if (Input.GetKeyDown(KeyCode.U)) TryUseSkill("Skill1", skill1Cost);
         if (Input.GetKeyDown(KeyCode.I)) TryUseSkill("Skill2", skill2Cost);
         if (Input.GetKeyDown(KeyCode.O)) TryUseSkill("Skill3", skill3Cost);
         if (Input.GetKeyDown(KeyCode.P)) TryUseSkill("Skill4", skill4Cost);
     }
 
-    // =================================================================
-    // 🤖 ĐIỀU KHIỂN TỰ ĐỘNG (CHO AI ĐỐI THỦ)
-    // =================================================================
     void HandleAILogic()
     {
         if (enemyTarget == null)
@@ -137,11 +127,9 @@ public class CharacterController2D : MonoBehaviour
             actionTimer += Time.deltaTime;
             if (actionTimer >= timeBetweenActions)
             {
-                // Máy ngẫu nhiên chọn chiêu
                 int randomSkillIndex = Random.Range(1, 5); 
                 int cost = 0;
                 
-                // Trích xuất đúng số mana cần thiết cho chiêu đó
                 switch(randomSkillIndex)
                 {
                     case 1: cost = skill1Cost; break;
@@ -150,7 +138,6 @@ public class CharacterController2D : MonoBehaviour
                     case 4: cost = skill4Cost; break;
                 }
 
-                // Nếu có đủ Mana thì xả chiêu, nếu thiếu Mana máy sẽ đứng im chờ lượt sau (hoặc bạn có thể cho nó tự động xài Skill 1 thay thế)
                 TryUseSkill("Skill" + randomSkillIndex, cost);
                 actionTimer = 0f;
             }
@@ -162,42 +149,26 @@ public class CharacterController2D : MonoBehaviour
         string targetTag = gameObject.CompareTag("Enemy") ? "Player" : "Enemy";
         GameObject targetObj = GameObject.FindWithTag(targetTag);
         
-        if (targetObj != null)
-        {
-            enemyTarget = targetObj.transform;
-        }
+        if (targetObj != null) enemyTarget = targetObj.transform;
     }
 
-    // --- HÀM MỚI: KIỂM TRA MÀNG LỌC NĂNG LƯỢNG TRƯỚC KHI ĐÁNH ---
     void TryUseSkill(string skillParameterName, int cost)
     {
-        // Nếu nhân vật có gắn ống Năng lượng
         if (energySys != null)
         {
-            // Hàm UseEnergy sẽ trả về TRUE nếu trừ mana thành công
-            if (energySys.UseEnergy(cost))
-            {
-                anim.SetTrigger(skillParameterName);
-            }
+            if (energySys.UseEnergy(cost)) anim.SetTrigger(skillParameterName);
         }
         else
         {
-            // Nếu lỡ quên gắn ống năng lượng thì vẫn cho xả chiêu bình thường để không bị lỗi game
             anim.SetTrigger(skillParameterName);
         }
     }
 
-    // =================================================================
-    // 🎬 ANIMATION EVENTS (GỌI TỰ ĐỘNG KHI VUNG TAY NÉM CHIÊU)
-    // =================================================================
-    
     public void TriggerMeleeHitbox()
     {
         if (attackPoint == null) return;
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, meleeHitRange, enemyLayers);
-        
-        // Đếm xem có chém trúng ai không
         bool hitSomeone = false;
 
         foreach(Collider2D enemy in hitEnemies)
@@ -217,11 +188,7 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
-        // NẾU ĐÁNH TRÚNG ĐỊCH -> HỒI NĂNG LƯỢNG!
-        if (hitSomeone && energySys != null)
-        {
-            energySys.AddEnergy(energyGainOnHit);
-        }
+        if (hitSomeone && energySys != null) energySys.AddEnergy(energyGainOnHit);
     }
 
     void OnDrawGizmosSelected()
@@ -231,15 +198,20 @@ public class CharacterController2D : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, meleeHitRange);
     }
 
-    public void SpawnSkill2Projectile() { SpawnBullet(skill2ProjectilePrefab); }
-    public void SpawnSkill3Projectile() { SpawnBullet(skill3ProjectilePrefab); }
-    public void SpawnSkill4Projectile() { SpawnBullet(skill4ProjectilePrefab); }
+    // GỌI HÀM VỚI ĐIỂM SPAWN TƯƠNG ỨNG
+    public void SpawnSkill2Projectile() { SpawnBullet(skill2ProjectilePrefab, castPointSkill2); }
+    public void SpawnSkill3Projectile() { SpawnBullet(skill3ProjectilePrefab, castPointSkill3); }
+    public void SpawnSkill4Projectile() { SpawnBullet(skill4ProjectilePrefab, castPointSkill4); }
 
-    private void SpawnBullet(GameObject bulletPrefab)
+    // ĐÃ NÂNG CẤP: NHẬN THÊM BIẾN specificCastPoint
+    private void SpawnBullet(GameObject bulletPrefab, Transform specificCastPoint)
     {
-        if (bulletPrefab == null || castPoint == null) return;
+        // LOGIC FALLBACK: Nếu có điểm riêng thì xài điểm riêng, không có thì xài điểm chung (castPoint)
+        Transform finalSpawnPoint = specificCastPoint != null ? specificCastPoint : castPoint;
 
-        GameObject bullet = Instantiate(bulletPrefab, castPoint.position, Quaternion.identity);
+        if (bulletPrefab == null || finalSpawnPoint == null) return;
+
+        GameObject bullet = Instantiate(bulletPrefab, finalSpawnPoint.position, Quaternion.identity);
         
         Projectile projNaruto = bullet.GetComponent<Projectile>();
         if (projNaruto != null)

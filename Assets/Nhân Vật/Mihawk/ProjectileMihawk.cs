@@ -68,7 +68,8 @@ public class ProjectileMihawk : MonoBehaviour
 
             // Bước 3: Ép kiếm khí chuyển sang frame vỡ vụn (Nếu có gắn Animator)
             Animator anim = GetComponent<Animator>();
-            if (anim != null) anim.SetTrigger("Hit");
+            if (anim != null) 
+            //anim.SetTrigger("Hit");
 
             // Xóa viên đạn sau khi diễn xong hiệu ứng
             Destroy(gameObject, hitAnimationDuration);

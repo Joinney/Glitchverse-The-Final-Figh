@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 8eab10b20c04d064eae67eecfa7dcc56
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7812736695634060031
+    second: Tom_8200-8_0
+  - first:
+      213: 1110509126825918605
+    second: Tom_8200-8_1
+  - first:
+      213: 5723768424418438140
+    second: Tom_8200-8_2
+  - first:
+      213: -5034755742358642914
+    second: Tom_8200-8_3
+  - first:
+      213: -7250885432976356540
+    second: Tom_8200-8_4
+  - first:
+      213: -4733549517914554808
+    second: Tom_8200-8_5
+  - first:
+      213: 892127478533837524
+    second: Tom_8200-8_6
+  - first:
+      213: 7450239520223028981
+    second: Tom_8200-8_7
+  - first:
+      213: -7862285288085450490
+    second: Tom_8200-8_8
+  - first:
+      213: -339869885577175260
+    second: Tom_8200-8_9
+  - first:
+      213: -2597132862335782363
+    second: Tom_8200-8_10
+  - first:
+      213: -1266424559783748546
+    second: Tom_8200-8_11
+  - first:
+      213: 4421539583690224499
+    second: Tom_8200-8_12
+  - first:
+      213: 1828222750862122117
+    second: Tom_8200-8_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tom_8200-8_0
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 64
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff26dea81aa6c6c60800000000000000
+      internalID: 7812736695634060031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_1
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 75
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d80c948ca22596f00800000000000000
+      internalID: 1110509126825918605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_2
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 77
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfbee026e09ee6f40800000000000000
+      internalID: 5723768424418438140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_3
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 43
+        width: 134
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1fdaddd354f02ab0800000000000000
+      internalID: -5034755742358642914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_4
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 67
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44bc3649d1eaf5b90800000000000000
+      internalID: -7250885432976356540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_5
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 40
+        width: 65
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e3bf9facd0f4eb0800000000000000
+      internalID: -4733549517914554808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_6
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 49
+        width: 22
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d2df5c0739716c00800000000000000
+      internalID: 892127478533837524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_7
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 19
+        width: 59
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f6687ede51946760800000000000000
+      internalID: 7450239520223028981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 24
+        width: 36
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60113e8cf2d83e290800000000000000
+      internalID: -7862285288085450490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_9
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 21
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42fd158c32a884bf0800000000000000
+      internalID: -339869885577175260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_10
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 117
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5227bf10c6125fbd0800000000000000
+      internalID: -2597132862335782363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_11
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 33
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c524b9291cc6ee0800000000000000
+      internalID: -1266424559783748546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_12
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 27
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3733f2633d67c5d30800000000000000
+      internalID: 4421539583690224499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tom_8200-8_13
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 9
+        width: 21
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58c9c63d7e62f5910800000000000000
+      internalID: 1828222750862122117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Tom_8200-8_0: 7812736695634060031
+      Tom_8200-8_1: 1110509126825918605
+      Tom_8200-8_10: -2597132862335782363
+      Tom_8200-8_11: -1266424559783748546
+      Tom_8200-8_12: 4421539583690224499
+      Tom_8200-8_13: 1828222750862122117
+      Tom_8200-8_2: 5723768424418438140
+      Tom_8200-8_3: -5034755742358642914
+      Tom_8200-8_4: -7250885432976356540
+      Tom_8200-8_5: -4733549517914554808
+      Tom_8200-8_6: 892127478533837524
+      Tom_8200-8_7: 7450239520223028981
+      Tom_8200-8_8: -7862285288085450490
+      Tom_8200-8_9: -339869885577175260
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

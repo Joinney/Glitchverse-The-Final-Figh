@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: b09e3c4ecfdf4c74387d9d4f1b1f8665
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4254608896959138820
+    second: Gojo_Sprites_7048-6_0
+  - first:
+      213: -2026802329622493625
+    second: Gojo_Sprites_7048-6_1
+  - first:
+      213: 7026121831236263490
+    second: Gojo_Sprites_7048-6_2
+  - first:
+      213: -6063170577402536046
+    second: Gojo_Sprites_7048-6_3
+  - first:
+      213: -5652707539932280171
+    second: Gojo_Sprites_7048-6_4
+  - first:
+      213: 6904210922930335070
+    second: Gojo_Sprites_7048-6_5
+  - first:
+      213: -3284968795094007866
+    second: Gojo_Sprites_7048-6_6
+  - first:
+      213: -5733257801838823724
+    second: Gojo_Sprites_7048-6_7
+  - first:
+      213: -5154069121627961960
+    second: Gojo_Sprites_7048-6_8
+  - first:
+      213: 6775104249205022911
+    second: Gojo_Sprites_7048-6_9
+  - first:
+      213: 8446532893117969931
+    second: Gojo_Sprites_7048-6_10
+  - first:
+      213: 4360985564031784519
+    second: Gojo_Sprites_7048-6_11
+  - first:
+      213: -398791421222553622
+    second: Gojo_Sprites_7048-6_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_0
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 604
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c4779ff386b0b30800000000000000
+      internalID: 4254608896959138820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_1
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 576
+        width: 67
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 746cae8050a5fd3e0800000000000000
+      internalID: -2026802329622493625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_2
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 582
+        width: 39
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24e547b549cc18160800000000000000
+      internalID: 7026121831236263490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 591
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29f5251eb7a4bdba0800000000000000
+      internalID: -6063170577402536046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_4
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 558
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59a0a27117c8d81b0800000000000000
+      internalID: -5652707539932280171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_5
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 509
+        width: 89
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5d62ab114fa0df50800000000000000
+      internalID: 6904210922930335070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_6
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 44
+        width: 890
+        height: 537
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cfbd2e09427962d0800000000000000
+      internalID: -3284968795094007866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_7
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 32
+        width: 136
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d6f8a3c7606f60b0800000000000000
+      internalID: -5733257801838823724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_8
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 135
+        width: 25
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8954e89f0711978b0800000000000000
+      internalID: -5154069121627961960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_9
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 69
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb0ea1a2b61060e50800000000000000
+      internalID: 6775104249205022911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_10
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 7
+        width: 90
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b06f2f52aec183570800000000000000
+      internalID: 8446532893117969931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_11
+      rect:
+        serializedVersion: 2
+        x: 1005
+        y: 48
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74698b6d345558c30800000000000000
+      internalID: 4360985564031784519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gojo_Sprites_7048-6_12
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 43
+        width: 42
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae77e86b055377af0800000000000000
+      internalID: -398791421222553622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Gojo_Sprites_7048-6_0: 4254608896959138820
+      Gojo_Sprites_7048-6_1: -2026802329622493625
+      Gojo_Sprites_7048-6_10: 8446532893117969931
+      Gojo_Sprites_7048-6_11: 4360985564031784519
+      Gojo_Sprites_7048-6_12: -398791421222553622
+      Gojo_Sprites_7048-6_2: 7026121831236263490
+      Gojo_Sprites_7048-6_3: -6063170577402536046
+      Gojo_Sprites_7048-6_4: -5652707539932280171
+      Gojo_Sprites_7048-6_5: 6904210922930335070
+      Gojo_Sprites_7048-6_6: -3284968795094007866
+      Gojo_Sprites_7048-6_7: -5733257801838823724
+      Gojo_Sprites_7048-6_8: -5154069121627961960
+      Gojo_Sprites_7048-6_9: 6775104249205022911
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
