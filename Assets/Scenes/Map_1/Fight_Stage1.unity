@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 255455286}
   m_Layer: 0
   m_Name: Wall_Right
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1397,7 +1397,7 @@ GameObject:
   - component: {fileID: 1050314330}
   m_Layer: 0
   m_Name: Wall_Left
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2044,6 +2044,7 @@ MonoBehaviour:
   mihawkPrefab: {fileID: 5311229867572298421, guid: a1b4d8bc99fca4240a287220bdc550a1, type: 3}
   gojoPrefab: {fileID: 5245287016966390507, guid: 36d20cd08cf7414458a9792acfdbe3f0, type: 3}
   tomPrefab: {fileID: 2701001394860751720, guid: a0ff347161e0a5846abb1ddb718a45f7, type: 3}
+  tatsumakiPrefab: {fileID: 7952637622976372527, guid: c972f11119b2eb142ab6b1f277bb9a97, type: 3}
   zenitsuEnemyAIPrefab: {fileID: 2701001394860751720, guid: e0010237adb460e48bde2727e2aaf708, type: 3}
 --- !u!1 &1800324922
 GameObject:

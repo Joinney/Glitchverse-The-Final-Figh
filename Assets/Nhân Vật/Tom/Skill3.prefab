@@ -186,8 +186,8 @@ MonoBehaviour:
   damage: 500
   hitAnimationDuration: 0.5
   impactEffect: {fileID: 0}
-  castSound: {fileID: 0}
-  hitSound: {fileID: 0}
+  castSound: {fileID: 8300000, guid: 2deaab0445fc76d49b0f117fc422b363, type: 3}
+  hitSound: {fileID: 8300000, guid: 9a850634c089ffc4c987f1846fcf43f9, type: 3}
 --- !u!95 &3090437011313637467
 Animator:
   serializedVersion: 7

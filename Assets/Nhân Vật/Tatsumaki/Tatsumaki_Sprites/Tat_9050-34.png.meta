@@ -1,0 +1,923 @@
+fileFormatVersion: 2
+guid: efbe86646c1669a458668ad559d38951
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7418470912614434352
+    second: Tat_9050-34_0
+  - first:
+      213: 3564831112875356558
+    second: Tat_9050-34_1
+  - first:
+      213: 8339909220002465032
+    second: Tat_9050-34_2
+  - first:
+      213: 908286639308227814
+    second: Tat_9050-34_3
+  - first:
+      213: -1079568985170016938
+    second: Tat_9050-34_4
+  - first:
+      213: 5721771655492810863
+    second: Tat_9050-34_5
+  - first:
+      213: -8985235414241747552
+    second: Tat_9050-34_6
+  - first:
+      213: -485574740216600930
+    second: Tat_9050-34_7
+  - first:
+      213: 6227055394230060100
+    second: Tat_9050-34_8
+  - first:
+      213: -4575252026659673202
+    second: Tat_9050-34_9
+  - first:
+      213: 4651387046597501683
+    second: Tat_9050-34_10
+  - first:
+      213: 1593943850046664425
+    second: Tat_9050-34_11
+  - first:
+      213: -3133809395423886775
+    second: Tat_9050-34_12
+  - first:
+      213: 3611201942406600497
+    second: Tat_9050-34_13
+  - first:
+      213: -4769597451085085089
+    second: Tat_9050-34_14
+  - first:
+      213: 8088691208438407318
+    second: Tat_9050-34_15
+  - first:
+      213: 7669091874658630401
+    second: Tat_9050-34_16
+  - first:
+      213: -496048355780724098
+    second: Tat_9050-34_17
+  - first:
+      213: 3550670503870291315
+    second: Tat_9050-34_18
+  - first:
+      213: 4846395498064820693
+    second: Tat_9050-34_19
+  - first:
+      213: 3302440480458711422
+    second: Tat_9050-34_20
+  - first:
+      213: -5645107004786129180
+    second: Tat_9050-34_21
+  - first:
+      213: 7502208589390889079
+    second: Tat_9050-34_22
+  - first:
+      213: -4368193404686407755
+    second: Tat_9050-34_23
+  - first:
+      213: -6229741642657949756
+    second: Tat_9050-34_24
+  - first:
+      213: 5510619184208920827
+    second: Tat_9050-34_25
+  - first:
+      213: -995377371838265677
+    second: Tat_9050-34_26
+  - first:
+      213: 5546949131436657587
+    second: Tat_9050-34_27
+  - first:
+      213: 3026366468590090803
+    second: Tat_9050-34_28
+  - first:
+      213: 6919215665334984779
+    second: Tat_9050-34_29
+  - first:
+      213: 486347324682170440
+    second: Tat_9050-34_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tat_9050-34_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 295
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d97c0d720c4c0990800000000000000
+      internalID: -7418470912614434352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 300
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8132378203d87130800000000000000
+      internalID: 3564831112875356558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_2
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 285
+        width: 23
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8058045bf3f4db370800000000000000
+      internalID: 8339909220002465032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_3
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 296
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e4433ad2e1ea9c00800000000000000
+      internalID: 908286639308227814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_4
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 280
+        width: 29
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65589605ab99401f0800000000000000
+      internalID: -1079568985170016938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_5
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 289
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f683c836101d76f40800000000000000
+      internalID: 5721771655492810863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_6
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 280
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ad5cde1ff70e4380800000000000000
+      internalID: -8985235414241747552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_7
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 276
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e96ac71b854e249f0800000000000000
+      internalID: -485574740216600930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_8
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 279
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44443c183e1fa6650800000000000000
+      internalID: 6227055394230060100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_9
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 280
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8b6011c5807180c0800000000000000
+      internalID: -4575252026659673202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_10
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 272
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f22c41ffdb0d8040800000000000000
+      internalID: 4651387046597501683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_11
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 273
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ee23fd8c73de1610800000000000000
+      internalID: 1593943850046664425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_12
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 266
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9424aff55f87284d0800000000000000
+      internalID: -3133809395423886775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_13
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 254
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 137985d98019d1230800000000000000
+      internalID: 3611201942406600497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_14
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 252
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f56077e736cfecdb0800000000000000
+      internalID: -4769597451085085089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_15
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 229
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 690ebc06ccdc04070800000000000000
+      internalID: 8088691208438407318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_16
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 233
+        width: 23
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10bbcda6d661e6a60800000000000000
+      internalID: 7669091874658630401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_17
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 256
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7af54a06aead19f0800000000000000
+      internalID: -496048355780724098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_18
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 246
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37d55a1d204864130800000000000000
+      internalID: 3550670503870291315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_19
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 236
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d9b437370bd14340800000000000000
+      internalID: 4846395498064820693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_20
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 228
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e71ac91be10a4dd20800000000000000
+      internalID: 3302440480458711422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_21
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 183
+        width: 89
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e647a4961d88a1b0800000000000000
+      internalID: -5645107004786129180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 85
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7704781b6f23d1860800000000000000
+      internalID: 7502208589390889079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_23
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 92
+        width: 63
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b7667bfd3f0163c0800000000000000
+      internalID: -4368193404686407755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_24
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 58
+        width: 22
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c71aea8bf28b89a0800000000000000
+      internalID: -6229741642657949756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_25
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 88
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf0c93793f6a97c40800000000000000
+      internalID: 5510619184208920827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_26
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 0
+        width: 284
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b64e16dd85bf22f0800000000000000
+      internalID: -995377371838265677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_27
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 112
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bb817698d8bafc40800000000000000
+      internalID: 5546949131436657587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_28
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 10
+        width: 81
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33a3770d440dff920800000000000000
+      internalID: 3026366468590090803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_29
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 79
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b402c90fcfdf50060800000000000000
+      internalID: 6919215665334984779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tat_9050-34_30
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 21
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8407425a05adfb600800000000000000
+      internalID: 486347324682170440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Tat_9050-34_0: -7418470912614434352
+      Tat_9050-34_1: 3564831112875356558
+      Tat_9050-34_10: 4651387046597501683
+      Tat_9050-34_11: 1593943850046664425
+      Tat_9050-34_12: -3133809395423886775
+      Tat_9050-34_13: 3611201942406600497
+      Tat_9050-34_14: -4769597451085085089
+      Tat_9050-34_15: 8088691208438407318
+      Tat_9050-34_16: 7669091874658630401
+      Tat_9050-34_17: -496048355780724098
+      Tat_9050-34_18: 3550670503870291315
+      Tat_9050-34_19: 4846395498064820693
+      Tat_9050-34_2: 8339909220002465032
+      Tat_9050-34_20: 3302440480458711422
+      Tat_9050-34_21: -5645107004786129180
+      Tat_9050-34_22: 7502208589390889079
+      Tat_9050-34_23: -4368193404686407755
+      Tat_9050-34_24: -6229741642657949756
+      Tat_9050-34_25: 5510619184208920827
+      Tat_9050-34_26: -995377371838265677
+      Tat_9050-34_27: 5546949131436657587
+      Tat_9050-34_28: 3026366468590090803
+      Tat_9050-34_29: 6919215665334984779
+      Tat_9050-34_3: 908286639308227814
+      Tat_9050-34_30: 486347324682170440
+      Tat_9050-34_4: -1079568985170016938
+      Tat_9050-34_5: 5721771655492810863
+      Tat_9050-34_6: -8985235414241747552
+      Tat_9050-34_7: -485574740216600930
+      Tat_9050-34_8: 6227055394230060100
+      Tat_9050-34_9: -4575252026659673202
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

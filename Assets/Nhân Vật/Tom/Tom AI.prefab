@@ -199,15 +199,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 1
-  moveSpeed: 0
+  moveSpeed: 4
   jumpForce: 10
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
   skill1Cost: 0
-  skill2Cost: 0
-  skill3Cost: 0
-  skill4Cost: 0
+  skill2Cost: 25
+  skill3Cost: 50
+  skill4Cost: 100
   energyGainOnHit: 25
   attackPoint: {fileID: 4993838805102499447}
   meleeHitRange: 0.8
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnergySystem
   maxEnergy: 100
-  currentEnergy: 0
+  currentEnergy: 50
   energyUIName: Energy_Fill_P1
 --- !u!212 &6754354430736616238
 SpriteRenderer:
@@ -433,7 +433,8 @@ MonoBehaviour:
   maxHealth: 10000
   healthBar: {fileID: 0}
   stunDuration: 1
-  hitSounds: []
+  hitSounds:
+  - {fileID: 8300000, guid: 9a850634c089ffc4c987f1846fcf43f9, type: 3}
 --- !u!1 &2713061545636998610
 GameObject:
   m_ObjectHideFlags: 0

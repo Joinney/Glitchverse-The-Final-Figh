@@ -205,9 +205,9 @@ MonoBehaviour:
   attackRange: 2
   timeBetweenActions: 2.5
   skill1Cost: 0
-  skill2Cost: 0
-  skill3Cost: 0
-  skill4Cost: 0
+  skill2Cost: 25
+  skill3Cost: 50
+  skill4Cost: 100
   energyGainOnHit: 25
   attackPoint: {fileID: 4993838805102499447}
   meleeHitRange: 0.8
@@ -238,8 +238,9 @@ MonoBehaviour:
   characterName: Tom
   maxHealth: 3800
   healthBar: {fileID: 0}
-  hitSounds: []
-  stunDuration: 0.5
+  hitSounds:
+  - {fileID: 8300000, guid: 9a850634c089ffc4c987f1846fcf43f9, type: 3}
+  stunDuration: 1
 --- !u!82 &1639237251072188429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -350,7 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnergySystem
   maxEnergy: 100
-  currentEnergy: 0
+  currentEnergy: 50
   energyUIName: Energy_Fill_P1
 --- !u!212 &6754354430736616238
 SpriteRenderer:

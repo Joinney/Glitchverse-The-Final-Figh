@@ -14,6 +14,7 @@ public class BattleManager : MonoBehaviour
     public GameObject mihawkPrefab;
     public GameObject gojoPrefab;
     public GameObject tomPrefab;
+    public GameObject tatsumakiPrefab;
 
     [Header("AI Prefabs (Bản Đối Thủ Tự Động)")]
     public GameObject zenitsuEnemyAIPrefab; 
@@ -92,6 +93,7 @@ void SpawnPlayers()
         if (lowerName == "mihawk") return mihawkPrefab;
         if (lowerName == "gojo") return gojoPrefab;
         if (lowerName == "tom") return tomPrefab;
+        if (lowerName == "tatsumaki") return tatsumakiPrefab;  
         // Nếu người chơi lưu một tên lạ hoắc không có trong danh sách, mặc định trả về Luffy
         Debug.LogWarning($"[HỆ THỐNG] Không tìm thấy prefab cho tên '{name}'. Tự động chọn Luffy.");
         return luffyPrefab;
