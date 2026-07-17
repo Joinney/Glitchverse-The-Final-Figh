@@ -17,14 +17,14 @@ public class BattleManager : MonoBehaviour
     public GameObject tatsumakiPrefab;
 
     [Header("AI Prefabs (Bản Đối Thủ Tự Động)")]
-    public GameObject zenitsuEnemyAIPrefab; 
+    public GameObject zenitsuEnemyAIPrefab;
 
     void Start()
     {
         SpawnPlayers();
     }
 
-void SpawnPlayers()
+    void SpawnPlayers()
     {
         // 1. ĐỌC NHÂN VẬT BẠN ĐÃ CHỌN TỪ MENU
         string p1Name = PlayerPrefs.GetString("P1_Selection", "Luffy");
@@ -34,7 +34,7 @@ void SpawnPlayers()
         {
             GameObject p1 = Instantiate(p1PrefabToSpawn, p1SpawnPoint.position, Quaternion.identity);
             p1.name = "Player_" + p1Name;
-            p1.tag = "Player"; 
+            p1.tag = "Player";
 
             // 🔥 ÉP BUỘC PHE TA PHẢI TẮT AI ĐỂ ĐIỀU KHIỂN BẰNG TAY
             CharacterController2D controller = p1.GetComponent<CharacterController2D>();
@@ -42,7 +42,7 @@ void SpawnPlayers()
             {
                 controller.isAI = false;
             }
-            
+
             Debug.Log($"[HỆ THỐNG] Đã sinh ra Người chơi: {p1.name}");
         }
         else
@@ -58,7 +58,7 @@ void SpawnPlayers()
             GameObject ai = Instantiate(enemyPrefabToSpawn, aiSpawnPoint.position, Quaternion.identity);
             ai.name = "AI_Zenitsu";
             ai.tag = "Enemy";
-            
+
             // 🔥 ÉP BUỘC ĐỐI THỦ PHẢI BẬT AI ĐỂ TỰ ĐỘNG CHẠY/ĐÁNH
             CharacterController2D controller = ai.GetComponent<CharacterController2D>();
             if (controller != null)
@@ -67,7 +67,7 @@ void SpawnPlayers()
             }
 
             ai.transform.localScale = new Vector3(-Mathf.Abs(ai.transform.localScale.x), ai.transform.localScale.y, ai.transform.localScale.z);
-            
+
             Debug.Log("[HỆ THỐNG] Đã sinh ra Đối thủ AI và ép kích hoạt bộ não tự động.");
         }
         else
@@ -84,7 +84,7 @@ void SpawnPlayers()
         if (string.IsNullOrEmpty(name)) return luffyPrefab;
 
         // Chuyển hết chuỗi truyền vào thành chữ thường để so sánh chính xác 100%
-        string lowerName = name.ToLower().Trim(); 
+        string lowerName = name.ToLower().Trim();
 
         if (lowerName == "luffy") return luffyPrefab;
         if (lowerName == "zenitsu") return zenitsuPrefab;
@@ -93,7 +93,7 @@ void SpawnPlayers()
         if (lowerName == "mihawk") return mihawkPrefab;
         if (lowerName == "gojo") return gojoPrefab;
         if (lowerName == "tom") return tomPrefab;
-        if (lowerName == "tatsumaki") return tatsumakiPrefab;  
+        if (lowerName == "tatsumaki") return tatsumakiPrefab;
         // Nếu người chơi lưu một tên lạ hoắc không có trong danh sách, mặc định trả về Luffy
         Debug.LogWarning($"[HỆ THỐNG] Không tìm thấy prefab cho tên '{name}'. Tự động chọn Luffy.");
         return luffyPrefab;

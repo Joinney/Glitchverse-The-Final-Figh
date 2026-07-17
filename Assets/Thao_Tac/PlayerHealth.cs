@@ -5,10 +5,11 @@ public class PlayerHealth : MonoBehaviour
 {
     [Header("Thông tin UI")]
     public Sprite characterFace;
-    public string characterName = "Name NV"; 
+    public string characterName = "Name NV";
     public int maxHealth = 3800;
     public HealthBarUI healthBar;
     private int currentHealth;
+
     [Header("Âm Thanh Đau Đớn")]
     private AudioSource audioSource;
     public AudioClip[] hitSounds;
@@ -23,12 +24,17 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+        // CẬP NHẬT TỈ LỆ MÁU TỪ SETTINGS
+        float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
+        maxHealth = Mathf.RoundToInt(maxHealth * tyLeMau);
+
         currentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerScript = GetComponent<CharacterController2D>();
         healthBar = GameObject.Find("HealthBar_P1").GetComponent<HealthBarUI>();
+
         if (healthBar != null && characterFace != null)
         {
             healthBar.SetAvatar(characterFace);
@@ -39,10 +45,10 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth); // Cập nhật UI
+        if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth);
+
         if (audioSource != null && hitSounds.Length > 0)
         {
-            // Chọn ngẫu nhiên 1 âm thanh trong danh sách kéo vào để nghe đỡ chán
             AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
             audioSource.PlayOneShot(randomClip);
         }
@@ -57,21 +63,23 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator StunRoutine()
     {
-        // Khóa phím, không cho Player bấm nút di chuyển hay ném chiêu
         if (playerScript != null) playerScript.enabled = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(stunDuration);
 
-        // Hết choáng -> Mở khóa bàn phím
         if (currentHealth > 0 && playerScript != null) playerScript.enabled = true;
     }
 
     void Die()
     {
+        // --- GỌI TRỌNG TÀI BÁO THUA ---
+        MatchController match = FindAnyObjectByType<MatchController>();
+        if (match != null) match.EndMatch(false);
+        // ------------------------------
+
         Debug.Log(gameObject.name + " đã tử trận!");
-        
-        // Tự động quét xem Animator đang xài biến tên gì để gọi cho đúng
+
         if (anim != null)
         {
             foreach (AnimatorControllerParameter param in anim.parameters)
@@ -81,17 +89,16 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // Tắt bàn phím và vật lý của Người chơi
         if (playerScript != null) playerScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
-        
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
-            rb.simulated = false; // Ngừng giả lập vật lý trọng lực hoàn toàn ngay tại chỗ
+            rb.simulated = false;
         }
-        
-        this.enabled = false; 
+
+        this.enabled = false;
     }
 }

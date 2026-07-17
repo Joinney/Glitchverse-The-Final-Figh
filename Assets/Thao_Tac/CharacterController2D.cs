@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections; 
+using System.Collections;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -8,60 +8,60 @@ public class CharacterController2D : MonoBehaviour
     private Transform enemyTarget;
 
     [Header("Cấu Hình Phân Loại")]
-    public bool isAI = false; 
+    public bool isAI = false;
+    public int playerIndex = 1; // 1 = P1 (WASD), 2 = P2 (Mũi tên)
 
     [Header("Thông Số Thuộc Tính")]
     public float moveSpeed = 5f;
     public float jumpForce = 12f;
-    public float dashForce = 25f; 
-    public float attackRange = 2f; 
-    public float timeBetweenActions = 2f; 
+    public float dashForce = 25f;
+    public float attackRange = 2f;
+    public float timeBetweenActions = 2f;
 
     [Header("Cấu Hình Lướt (Né Đòn)")]
-    public float dashDuration = 0.25f; 
-    public bool isDashing = false;     
+    public float dashDuration = 0.25f;
+    public bool isDashing = false;
 
     [Header("Năng Lượng Tiêu Hao & Hồi Phục")]
-    public int skill1Cost = 0;   
-    public int skill2Cost = 25;  
-    public int skill3Cost = 50;  
-    public int skill4Cost = 100; 
-    public int energyGainOnHit = 15; 
-    private EnergySystem energySys; 
+    public int skill1Cost = 0;
+    public int skill2Cost = 25;
+    public int skill3Cost = 50;
+    public int skill4Cost = 100;
+    public int energyGainOnHit = 15;
+    private EnergySystem energySys;
 
     [Header("Cấu Hình Cận Chiến (Skill 1)")]
-    public Transform attackPoint;      
-    public float meleeHitRange = 0.8f; 
-    public LayerMask enemyLayers;      
-    public int meleeDamage = 35;       
+    public Transform attackPoint;
+    public float meleeHitRange = 0.8f;
+    public LayerMask enemyLayers;
+    public int meleeDamage = 35;
 
     [Header("Cấu Hình Hiệu Ứng Phóng Chiêu (Skill 2, 3, 4)")]
-    public Transform castPoint; 
-    public Transform castPointSkill2; 
-    public Transform castPointSkill3; 
-    public Transform castPointSkill4; 
+    public Transform castPoint;
+    public Transform castPointSkill2;
+    public Transform castPointSkill3;
+    public Transform castPointSkill4;
 
-    public GameObject skill2ProjectilePrefab; 
-    public GameObject skill3ProjectilePrefab; 
-    public GameObject skill4ProjectilePrefab; 
+    public GameObject skill2ProjectilePrefab;
+    public GameObject skill3ProjectilePrefab;
+    public GameObject skill4ProjectilePrefab;
 
     [Header("Trạng Thái Chiến Đấu")]
     private float actionTimer = 0f;
     private float horizontalInput;
-    private Vector3 originalScale; 
-    
-    // --- BIẾN MỚI: CHOÁNG ---
-    public bool isStunned = false; 
+    private Vector3 originalScale;
 
-    private int aiCurrentStrategy = 0; 
-    private bool aiIsRepositioning = false; 
+    public bool isStunned = false;
+
+    private int aiCurrentStrategy = 0;
+    private bool aiIsRepositioning = false;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        energySys = GetComponent<EnergySystem>(); 
-        originalScale = transform.localScale; 
+        energySys = GetComponent<EnergySystem>();
+        originalScale = transform.localScale;
 
         if (isAI) FindEnemyTarget();
     }
@@ -74,40 +74,78 @@ public class CharacterController2D : MonoBehaviour
 
     void HandlePlayerInput()
     {
-        // 🔒 KHÓA ĐIỀU KHIỂN: Khi đang lướt hoặc BỊ CHOÁNG (Hất tung)
-        if (isDashing || isStunned) return; 
+        // 🔒 KHÓA ĐIỀU KHIỂN
+        if (isDashing || isStunned) return;
 
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        bool keyLeft = false, keyRight = false, keyJump = false, keyDash = false;
+        bool keyS1 = false, keyS2 = false, keyS3 = false, keyS4 = false;
+
+        // ===============================================
+        // CÀI ĐẶT NÚT BẤM (ĐÃ CHỈNH LẠI THEO Ý BẠN)
+        // ===============================================
+        if (playerIndex == 1)
+        {
+            // --- PLAYER 1 ---
+            keyLeft = Input.GetKey(KeyCode.A);
+            keyRight = Input.GetKey(KeyCode.D);
+            keyJump = Input.GetKeyDown(KeyCode.W);
+
+            keyDash = Input.GetKeyDown(KeyCode.L); // L: Lướt
+            keyS1 = Input.GetKeyDown(KeyCode.U);   // U: Skill 1 (Đánh thường)
+            keyS2 = Input.GetKeyDown(KeyCode.I);   // I: Skill 2
+            keyS3 = Input.GetKeyDown(KeyCode.O);   // O: Skill 3
+            keyS4 = Input.GetKeyDown(KeyCode.P);   // P: Skill 4 (Ulti)
+        }
+        else if (playerIndex == 2)
+        {
+            // --- PLAYER 2 ---
+            keyLeft = Input.GetKey(KeyCode.LeftArrow);
+            keyRight = Input.GetKey(KeyCode.RightArrow);
+            keyJump = Input.GetKeyDown(KeyCode.UpArrow);
+
+            // Hỗ trợ cả phím số bên phải (Keypad) và số ở trên chữ (Alpha)
+            keyDash = Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3); // 3: Lướt
+            keyS1 = Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1);   // 1: Skill 1 (Đánh thường)
+            keyS2 = Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);   // 4: Skill 2
+            keyS3 = Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5);   // 5: Skill 3
+            keyS4 = Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6);   // 6: Skill 4 (Ulti)
+        }
+
+        // --- XỬ LÝ DI CHUYỂN ---
+        if (keyLeft) horizontalInput = -1f;
+        else if (keyRight) horizontalInput = 1f;
+        else horizontalInput = 0f;
+
         rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
-        
+
         if (anim != null) anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
-        if (horizontalInput > 0) 
+        if (horizontalInput > 0)
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
-        else if (horizontalInput < 0) 
+        else if (horizontalInput < 0)
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
 
-        if (Input.GetButtonDown("Jump"))
+        // --- XỬ LÝ NHẢY, LƯỚT VÀ TUNG CHIÊU ---
+        if (keyJump)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             if (anim != null) anim.SetTrigger("Jump");
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (keyDash)
         {
             float dashDirection = transform.localScale.x > 0 ? 1 : -1;
             StartCoroutine(DashRoutine(dashDirection));
         }
 
-        if (Input.GetKeyDown(KeyCode.U)) TryUseSkill("Skill1", skill1Cost);
-        if (Input.GetKeyDown(KeyCode.I)) TryUseSkill("Skill2", skill2Cost);
-        if (Input.GetKeyDown(KeyCode.O)) TryUseSkill("Skill3", skill3Cost);
-        if (Input.GetKeyDown(KeyCode.P)) TryUseSkill("Skill4", skill4Cost);
+        if (keyS1) TryUseSkill("Skill1", skill1Cost);
+        if (keyS2) TryUseSkill("Skill2", skill2Cost);
+        if (keyS3) TryUseSkill("Skill3", skill3Cost);
+        if (keyS4) TryUseSkill("Skill4", skill4Cost);
     }
 
     void HandleAILogic()
     {
-        // 🔒 KHÓA ĐIỀU KHIỂN AI: AI cũng bất động khi bị hất tung
         if (isDashing || isStunned) return;
 
         if (enemyTarget == null)
@@ -131,10 +169,13 @@ public class CharacterController2D : MonoBehaviour
         {
             if (Random.Range(0, 1000) < 3 && Mathf.Abs(rb.linearVelocity.y) < 0.1f && distanceToEnemy > attackRange)
             {
-                if (Random.value > 0.5f) {
-                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); 
+                if (Random.value > 0.5f)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                     if (anim != null) anim.SetTrigger("Jump");
-                } else {
+                }
+                else
+                {
                     StartCoroutine(DashRoutine(moveDirection));
                 }
             }
@@ -143,11 +184,11 @@ public class CharacterController2D : MonoBehaviour
 
         if (aiCurrentStrategy == 0)
         {
-            aiCurrentStrategy = Random.Range(1, 5); 
+            aiCurrentStrategy = Random.Range(1, 5);
             aiIsRepositioning = false;
         }
 
-        if (aiCurrentStrategy == 1) 
+        if (aiCurrentStrategy == 1)
         {
             if (distanceToEnemy > meleeHitRange)
             {
@@ -159,11 +200,11 @@ public class CharacterController2D : MonoBehaviour
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 if (anim != null) anim.SetFloat("Speed", 0f);
                 TryUseSkill("Skill1", skill1Cost);
-                aiCurrentStrategy = 0; 
+                aiCurrentStrategy = 0;
                 actionTimer = 0f;
             }
         }
-        else 
+        else
         {
             if (distanceToEnemy > attackRange)
             {
@@ -179,11 +220,11 @@ public class CharacterController2D : MonoBehaviour
                 {
                     aiIsRepositioning = true;
                     StartCoroutine(DashRoutine(-moveDirection));
-                    return; 
+                    return;
                 }
 
                 int cost = 0;
-                switch(aiCurrentStrategy)
+                switch (aiCurrentStrategy)
                 {
                     case 2: cost = skill2Cost; break;
                     case 3: cost = skill3Cost; break;
@@ -191,16 +232,13 @@ public class CharacterController2D : MonoBehaviour
                 }
 
                 bool castSuccess = TryUseSkill("Skill" + aiCurrentStrategy, cost);
-                if (!castSuccess) aiCurrentStrategy = 1; 
+                if (!castSuccess) aiCurrentStrategy = 1;
                 else { aiCurrentStrategy = 0; actionTimer = 0f; }
                 aiIsRepositioning = false;
             }
         }
     }
 
-    // =================================================================
-    // 💥 CƠ CHẾ NHẬN LỰC HẤT TUNG & BỊ CHOÁNG
-    // =================================================================
     public void TakeKnockback(Vector2 force, float stunTime)
     {
         StartCoroutine(KnockbackRoutine(force, stunTime));
@@ -208,30 +246,21 @@ public class CharacterController2D : MonoBehaviour
 
     private IEnumerator KnockbackRoutine(Vector2 force, float stunTime)
     {
-        isStunned = true; // Bật cờ choáng, vô hiệu hóa nút bấm và AI
-
-        // Hủy vận tốc rơi hiện tại để đảm bảo lực hất lên luôn chính xác
-        rb.linearVelocity = Vector2.zero; 
-        
-        // Truyền lực hất văng đi
+        isStunned = true;
+        rb.linearVelocity = Vector2.zero;
         rb.linearVelocity = force;
-
-        // [ĐÃ SỬA TẠI ĐÂY] Kích hoạt Trigger "Hit" có sẵn trong Animator của bạn
         if (anim != null) anim.SetTrigger("Hit");
-
-        // Chờ hết thời gian bị khóa
         yield return new WaitForSeconds(stunTime);
-
-        isStunned = false; // Phục hồi trạng thái bình thường
+        isStunned = false;
     }
 
     private IEnumerator DashRoutine(float direction)
     {
-        isDashing = true; 
+        isDashing = true;
         if (anim != null) anim.SetTrigger("Dash");
         rb.linearVelocity = new Vector2(direction * dashForce, 0f);
         yield return new WaitForSeconds(dashDuration);
-        isDashing = false; 
+        isDashing = false;
     }
 
     void FindEnemyTarget()
@@ -246,7 +275,7 @@ public class CharacterController2D : MonoBehaviour
         if (energySys != null)
         {
             if (energySys.UseEnergy(cost)) { anim.SetTrigger(skillParameterName); return true; }
-            return false; 
+            return false;
         }
         else { anim.SetTrigger(skillParameterName); return true; }
     }
@@ -257,14 +286,14 @@ public class CharacterController2D : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, meleeHitRange, enemyLayers);
         bool hitSomeone = false;
 
-        foreach(Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemy in hitEnemies)
         {
             CharacterController2D targetObj = enemy.GetComponent<CharacterController2D>();
-            if (targetObj != null && targetObj.isDashing) continue; 
+            if (targetObj != null && targetObj.isDashing) continue;
 
             EnemyHealth aiHealth = enemy.GetComponent<EnemyHealth>();
             if (aiHealth != null) { aiHealth.TakeDamage(meleeDamage); hitSomeone = true; }
-            
+
             PlayerHealth playerHealth = enemy.GetComponent<PlayerHealth>();
             if (playerHealth != null) { playerHealth.TakeDamage(meleeDamage); hitSomeone = true; }
         }
@@ -289,8 +318,7 @@ public class CharacterController2D : MonoBehaviour
         if (bulletPrefab == null || finalSpawnPoint == null) return;
 
         GameObject bullet = Instantiate(bulletPrefab, finalSpawnPoint.position, Quaternion.identity);
-        
-        // Cập nhật để hỗ trợ Đạn Hất Tung Mới (UltimatePushSkill)
+
         UltimatePushSkill projUlt = bullet.GetComponent<UltimatePushSkill>();
         if (projUlt != null)
         {
