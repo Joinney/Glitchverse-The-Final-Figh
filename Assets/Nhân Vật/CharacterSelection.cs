@@ -7,114 +7,91 @@ public class CharacterSelection : MonoBehaviour
     [System.Serializable]
     public class CharacterData
     {
-        public string characterName;  
-        public Sprite portraitSprite; // Ảnh chân dung tĩnh nửa thân
-        public Sprite[] fightIdleSprites; // DANH SÁCH KHUNG HÌNH TOÀN THÂN CHIẾN ĐẤU (Kéo thả cụm ảnh động vào đây)
+        public string characterName;
+        public Sprite portraitSprite;
+        public Sprite[] fightIdleSprites;
     }
 
     [Header("UI Previews (Portraits)")]
-    public Image p1PreviewImage; 
-    public Image p2PreviewImage; 
+    public Image p1PreviewImage;
+    public Image p2PreviewImage; // Giữ biến này lại để Unity không báo lỗi (nếu bạn lỡ kéo thả)
     public GameObject startBattleButton;
 
     [Header("UI Models (Animations)")]
-    public Image p1ModelAnimImage; // Kéo Object Luffy_ModelAnim vào đây
-    public Image p2ModelAnimImage; // Kéo Object Zenitsu_ModelAnim vào đây
+    public Image p1ModelAnimImage;
+    public Image p2ModelAnimImage;
 
     [Header("Characters List")]
-    public CharacterData[] characters; 
+    public CharacterData[] characters;
 
     private int p1SelectedIndex = -1;
-    private int p2SelectedIndex = -1;
-    private bool isP1Locked = false;
-    private bool isP2Locked = false;
-
-    // Quản lý Coroutine chạy animation tự chế bằng code để đổi hình liên tục
     private Coroutine p1AnimCoroutine;
-    private Coroutine p2AnimCoroutine;
 
     void Start()
     {
-        // Ẩn toàn bộ ảnh chân dung và ảnh động lúc chưa chọn
+        // Ẩn tất cả khi vừa mở bảng chọn tướng
         SetImageAlpha(p1PreviewImage, 0f);
         SetImageAlpha(p2PreviewImage, 0f);
         SetImageAlpha(p1ModelAnimImage, 0f);
         SetImageAlpha(p2ModelAnimImage, 0f);
+
+        // Giấu nút Start đi
+        if (startBattleButton != null) startBattleButton.SetActive(false);
+        Debug.Log("CODE MOI DA CHAY 100%!");
     }
 
     // ==========================================
-    // LOGIC 1: RÊ CHUỘT QUA Ô (HOVER) ĐỂ XEM TRƯỚC
-    // ==========================================
-    public void HoverCharacter(int characterIndex)
-    {
-        if (characterIndex < 0 || characterIndex >= characters.Length) return;
-
-        if (!isP1Locked)
-        {
-            // Đổi ảnh chân dung mờ 60%
-            p1PreviewImage.sprite = characters[characterIndex].portraitSprite;
-            SetImageAlpha(p1PreviewImage, 0.6f); 
-
-            // Chạy animation toàn thân tương ứng cho P1 (mờ 60%)
-            if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
-            p1AnimCoroutine = StartCoroutine(PlayModelAnimation(p1ModelAnimImage, characters[characterIndex].fightIdleSprites, 0.6f));
-        }
-        else if (!isP2Locked) 
-        {
-            // Đổi ảnh chân dung mờ 60%
-            p2PreviewImage.sprite = characters[characterIndex].portraitSprite;
-            SetImageAlpha(p2PreviewImage, 0.6f); 
-
-            // Chạy animation toàn thân tương ứng cho P2 (mờ 60%)
-            if (p2AnimCoroutine != null) StopCoroutine(p2AnimCoroutine);
-            p2AnimCoroutine = StartCoroutine(PlayModelAnimation(p2ModelAnimImage, characters[characterIndex].fightIdleSprites, 0.6f));
-        }
-    }
-
-    // ==========================================
-    // LOGIC 2: CLICK CHUỘT ĐỂ CHỐT CHỌN (LOCK IN)
+    // LOGIC CLICK CHUỘT: CHỈ ĐỊNH VÀ VÀO GAME
     // ==========================================
     public void SelectCharacter(int characterIndex)
     {
         if (characterIndex < 0 || characterIndex >= characters.Length) return;
 
-        if (!isP1Locked)
+        // 1. Chỉ định nhân vật (Không cần khóa)
+        p1SelectedIndex = characterIndex;
+
+        // 2. Hiển thị ảnh chân dung rõ 100%
+        p1PreviewImage.sprite = characters[characterIndex].portraitSprite;
+        SetImageAlpha(p1PreviewImage, 1f);
+
+        // 3. Chạy animation toàn thân
+        if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
+        p1AnimCoroutine = StartCoroutine(PlayModelAnimation(p1ModelAnimImage, characters[characterIndex].fightIdleSprites, 1f));
+
+        // 4. Lưu tên nhân vật vào hệ thống để mang vào màn Fight
+        PlayerPrefs.SetString("P1_Selection", characters[characterIndex].characterName);
+        Debug.Log("Đang chọn: " + characters[characterIndex].characterName);
+
+        // 5. Bật nút Start Game lên
+        if (startBattleButton != null) startBattleButton.SetActive(true);
+    }
+
+    // ==========================================
+    // LOGIC RÊ CHUỘT (Chỉ áp dụng khi chưa chọn ai)
+    // ==========================================
+    public void HoverCharacter(int characterIndex)
+    {
+        // Nếu ĐÃ CLICK chọn 1 nhân vật rồi -> KHÔNG cho hover làm phiền màn hình nữa
+        if (p1SelectedIndex != -1) return;
+
+        // Nếu CHƯA CHỌN ai -> Hiển thị bóng mờ mờ 60% cho người chơi xem trước
+        if (characterIndex >= 0 && characterIndex < characters.Length)
         {
-            p1SelectedIndex = characterIndex;
             p1PreviewImage.sprite = characters[characterIndex].portraitSprite;
-            SetImageAlpha(p1PreviewImage, 1f); // Sáng rõ 100%
-            isP1Locked = true;
-            
-            // Ép animation của P1 sáng rõ 100%
+            SetImageAlpha(p1PreviewImage, 0.6f);
+
             if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
-            p1AnimCoroutine = StartCoroutine(PlayModelAnimation(p1ModelAnimImage, characters[characterIndex].fightIdleSprites, 1f));
-
-            PlayerPrefs.SetString("P1_Selection", characters[characterIndex].characterName);
-            return; 
-        }
-        
-        if (!isP2Locked)
-        {
-            p2SelectedIndex = characterIndex;
-            p2PreviewImage.sprite = characters[characterIndex].portraitSprite;
-            SetImageAlpha(p2PreviewImage, 1f); // Sáng rõ 100%
-            isP2Locked = true;
-
-            // Ép animation của P2 sáng rõ 100%
-            if (p2AnimCoroutine != null) StopCoroutine(p2AnimCoroutine);
-            p2AnimCoroutine = StartCoroutine(PlayModelAnimation(p2ModelAnimImage, characters[characterIndex].fightIdleSprites, 1f));
-
-            PlayerPrefs.SetString("P2_Selection", characters[characterIndex].characterName);
-
-            if (startBattleButton != null) startBattleButton.SetActive(true);
+            p1AnimCoroutine = StartCoroutine(PlayModelAnimation(p1ModelAnimImage, characters[characterIndex].fightIdleSprites, 0.6f));
         }
     }
 
-    // Coroutine tự động lặp các khung hình để tạo chuyển động mượt mà
+    // ==========================================
+    // HÀM HỖ TRỢ
+    // ==========================================
     private IEnumerator PlayModelAnimation(Image targetImage, Sprite[] sprites, float alpha)
     {
         if (targetImage == null || sprites == null || sprites.Length == 0) yield break;
-        
+
         SetImageAlpha(targetImage, alpha);
         int frameIndex = 0;
 
@@ -122,29 +99,19 @@ public class CharacterSelection : MonoBehaviour
         {
             targetImage.sprite = sprites[frameIndex];
             frameIndex = (frameIndex + 1) % sprites.Length;
-            yield return new WaitForSeconds(0.1f); // Tốc độ đổi khung hình (0.1 giây = 10fps)
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
     public void CancelSelection()
     {
-        if (isP2Locked)
-        {
-            isP2Locked = false;
-            p2SelectedIndex = -1;
-            SetImageAlpha(p2PreviewImage, 0f);
-            SetImageAlpha(p2ModelAnimImage, 0f);
-            if (p2AnimCoroutine != null) StopCoroutine(p2AnimCoroutine);
-            if (startBattleButton != null) startBattleButton.SetActive(false);
-        }
-        else if (isP1Locked)
-        {
-            isP1Locked = false;
-            p1SelectedIndex = -1;
-            SetImageAlpha(p1PreviewImage, 0f);
-            SetImageAlpha(p1ModelAnimImage, 0f);
-            if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
-        }
+        // Hàm này gọi khi bấm nút "BACK"
+        p1SelectedIndex = -1;
+        SetImageAlpha(p1PreviewImage, 0f);
+        SetImageAlpha(p1ModelAnimImage, 0f);
+        if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
+
+        if (startBattleButton != null) startBattleButton.SetActive(false);
     }
 
     private void SetImageAlpha(Image img, float alpha)

@@ -32,6 +32,9 @@ public class MatchTimer : MonoBehaviour
 
     void Update()
     {
+        // --- CHẶN Ở ĐÂY: Nếu bảng 3-2-1 chưa chạy xong thì ĐÓNG BĂNG ĐỒNG HỒ ---
+        if (CountdownManager.isCountdownFinished == false) return;
+
         // Nếu là Vô cực hoặc Trận đấu đã kết thúc thì không đếm ngược nữa
         if (isInfinity || matchEnded) return;
 

@@ -6,7 +6,7 @@ public class ZenitsuAI : MonoBehaviour
     private Rigidbody2D rb;
 
     [Header("Cấu Hình AI Tạm Thời")]
-    public GameObject hitboxSword; 
+    public GameObject hitboxSword;
     private float actionTimer = 0f;
     public float timeBetweenActions = 2.5f; // Cứ 2.5 giây AI tự tung 1 chiêu ngẫu nhiên
 
@@ -14,14 +14,22 @@ public class ZenitsuAI : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        
+
         // Đảm bảo AI đứng im lúc vào trận
-        if(anim != null) anim.SetFloat("Speed", 0f);
+        if (anim != null) anim.SetFloat("Speed", 0f);
     }
 
     void Update()
     {
-        // AI TỰ ĐỘNG ĐÁNH THEO THỜI GIAN (Không mượn phím bàn phím nữa)
+        // --- CHẶN HOÀN TOÀN: Nếu đếm ngược 3-2-1 chưa xong thì AI đứng im tuyệt đối ---
+        if (!CountdownManager.isCountdownFinished)
+        {
+            if (rb != null) rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Khóa dịch chuyển ngang
+            if (anim != null) anim.SetFloat("Speed", 0f); // Giữ animation đứng thở
+            return;
+        }
+
+        // AI TỰ ĐỘNG ĐÁNH THEO THỜI GIAN
         actionTimer += Time.deltaTime;
         if (actionTimer >= timeBetweenActions)
         {
@@ -37,23 +45,26 @@ public class ZenitsuAI : MonoBehaviour
 
         int randomChoice = Random.Range(1, 5); // Ra số ngẫu nhiên từ 1 đến 4
         string skillName = "Skill" + randomChoice;
-        
+
         anim.SetTrigger(skillName);
         rb.linearVelocity = Vector2.zero; // Khựng người lại gồng chiêu
-        
+
         Debug.Log("🤖 AI Zenitsu tự động tung chiêu: " + skillName);
     }
 
-    // Xử lý khi Kiếm của AI chém trúng Luffy
+    // Xử lý khi Kiếm của AI chém trúng Player
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Contains("Luffy") || collision.CompareTag("Player"))
+        // Nếu đếm ngược chưa xong thì kiếm cũng không được phép gây sát thương
+        if (!CountdownManager.isCountdownFinished) return;
+
+        if (collision.gameObject.name.Contains("Tatsumaki") || collision.CompareTag("Player"))
         {
-            Animator luffyAnim = collision.GetComponent<Animator>();
-            if (luffyAnim != null)
+            Animator playerAnim = collision.GetComponent<Animator>();
+            if (playerAnim != null)
             {
-                luffyAnim.SetTrigger("Hit"); // Đấm Luffy giật người!
-                Debug.Log("⚡ Kiếm của AI Zenitsu đã chém trúng Luffy!");
+                playerAnim.SetTrigger("Hit");
+                Debug.Log("⚡ Kiếm của AI Zenitsu đã chém trúng Player!");
             }
         }
     }

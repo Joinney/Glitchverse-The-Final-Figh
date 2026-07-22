@@ -19,8 +19,8 @@ public class AuraSkill : MonoBehaviour
         // Tìm nhân vật ở gần nhất
         foreach (GameObject obj in potentialMasters)
         {
-            // [ĐÃ SỬA LỖI TẠI ĐÂY] - Bắt buộc bỏ qua chính bản thân quả cầu!
-            if (obj == gameObject) continue; 
+            // Bắt buộc bỏ qua chính bản thân quả cầu!
+            if (obj == gameObject) continue;
 
             float dist = Vector2.Distance(transform.position, obj.transform.position);
             if (dist < minDistance)
@@ -46,17 +46,29 @@ public class AuraSkill : MonoBehaviour
         if (other.CompareTag(gameObject.tag)) return;
 
         timer += Time.deltaTime;
-        
+
         // Giật máu liên tục theo nhịp
         if (timer >= tickRate)
         {
+            // Đặt lại đồng hồ đếm ngược ngay lập tức để chuẩn bị cho nhịp giật tiếp theo
+            timer = 0f;
+
+            // --- KIỂM TRA MỤC TIÊU CÓ ĐANG ĐỠ ĐÒN KHÔNG ---
+            CharacterController2D targetController = other.GetComponent<CharacterController2D>();
+
+            if (targetController != null && targetController.isBlocking)
+            {
+                // Vì đây là SKILL 2 -> Đỡ đòn sẽ kháng 100% sát thương.
+                // Bỏ qua và không gọi lệnh trừ máu ở dưới nữa.
+                return;
+            }
+
+            // --- GÂY SÁT THƯƠNG (Nếu không đỡ) ---
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             if (enemy != null) enemy.TakeDamage(damagePerTick);
 
             PlayerHealth player = other.GetComponent<PlayerHealth>();
             if (player != null) player.TakeDamage(damagePerTick);
-
-            timer = 0f; 
         }
     }
 }

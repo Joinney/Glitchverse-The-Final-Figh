@@ -135,6 +135,7 @@ Transform:
   - {fileID: 4561003327493755681}
   - {fileID: 8879679632482423889}
   - {fileID: 3932299592307961931}
+  - {fileID: 3130570674167797000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5873208529008949682
@@ -342,11 +343,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 0
+  playerIndex: 1
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 8
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  maxJumps: 2
+  groundCheck: {fileID: 3130570674167797000}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   dashDuration: 0.25
   isDashing: 0
   skill1Cost: 0
@@ -367,6 +375,7 @@ MonoBehaviour:
   skill2ProjectilePrefab: {fileID: 6463726145178906186, guid: bd66e1cedb3616b4890c08335d5548e6, type: 3}
   skill3ProjectilePrefab: {fileID: 2122267035422742896, guid: 7ea61689c8831ea4d829f9d2c04703ec, type: 3}
   skill4ProjectilePrefab: {fileID: 850628983955983704, guid: f5745b1bae2acb44c8eea204971db033, type: 3}
+  isBlocking: 0
   isStunned: 0
 --- !u!114 &3226569249232862520
 MonoBehaviour:
@@ -382,7 +391,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   characterFace: {fileID: 8202346698720115375, guid: 37f2a2a541896e743be2acba7d5a61bd, type: 3}
   characterName: Tatsumaki
-  maxHealth: 3800
+  baseHealth: 1000
+  maxHealth: 1000
   healthBar: {fileID: 0}
   hitSounds:
   - {fileID: 8300000, guid: d44c3c461f7306f41a913c20645099e5, type: 3}
@@ -525,6 +535,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.196, y: 0.049498003, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7776487688283565177}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8926411434622327775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3130570674167797000}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3130570674167797000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926411434622327775}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.073, y: -0.257, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []

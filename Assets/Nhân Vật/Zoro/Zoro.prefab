@@ -35,7 +35,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7569107995936505348}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5044382433924591567
@@ -243,11 +244,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 0
+  playerIndex: 1
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 8
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  maxJumps: 2
+  groundCheck: {fileID: 7569107995936505348}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  dashDuration: 0.25
+  isDashing: 0
+  skill1Cost: 0
+  skill2Cost: 25
+  skill3Cost: 50
+  skill4Cost: 100
+  energyGainOnHit: 15
   attackPoint: {fileID: 0}
   meleeHitRange: 0.8
   enemyLayers:
@@ -255,9 +270,14 @@ MonoBehaviour:
     m_Bits: 0
   meleeDamage: 35
   castPoint: {fileID: 0}
+  castPointSkill2: {fileID: 0}
+  castPointSkill3: {fileID: 0}
+  castPointSkill4: {fileID: 0}
   skill2ProjectilePrefab: {fileID: 0}
   skill3ProjectilePrefab: {fileID: 0}
   skill4ProjectilePrefab: {fileID: 0}
+  isBlocking: 0
+  isStunned: 0
 --- !u!114 &8227367587030349323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,7 +292,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   characterFace: {fileID: 3797060297842685893, guid: cd27f57e5a72791488fcf2fdb366a1cc, type: 3}
   characterName: Roronoa Zoro
+  baseHealth: 3800
   maxHealth: 3800
   healthBar: {fileID: 0}
   hitSounds: []
   stunDuration: 0.5
+--- !u!1 &8611812724070034909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7569107995936505348}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7569107995936505348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611812724070034909}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.113, y: -0.335, z: 0}
+  m_LocalScale: {x: 0.22222224, y: 0.22222224, z: 0.22222224}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8211055898835232440}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

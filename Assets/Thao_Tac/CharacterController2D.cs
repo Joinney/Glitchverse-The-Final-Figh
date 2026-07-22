@@ -18,6 +18,14 @@ public class CharacterController2D : MonoBehaviour
     public float attackRange = 2f;
     public float timeBetweenActions = 2f;
 
+    [Header("Cấu Hình Nhảy (Double Jump)")] // --- PHẦN MỚI THÊM VÀO ---
+    public int maxJumps = 2; // Số lần nhảy tối đa (2 = double jump)
+    private int jumpsRemaining;
+    public Transform groundCheck; // Vị trí kiểm tra chạm đất (Kéo thả object ở dưới chân nhân vật vào đây)
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer; // Layer của mặt đất
+    private bool isGrounded;
+
     [Header("Cấu Hình Lướt (Né Đòn)")]
     public float dashDuration = 0.25f;
     public bool isDashing = false;
@@ -47,11 +55,13 @@ public class CharacterController2D : MonoBehaviour
     public GameObject skill4ProjectilePrefab;
 
     [Header("Trạng Thái Chiến Đấu")]
+    public bool isBlocking = false;
+    public bool isStunned = false;
+
+    public bool canMoveAndFight = false;
     private float actionTimer = 0f;
     private float horizontalInput;
     private Vector3 originalScale;
-
-    public bool isStunned = false;
 
     private int aiCurrentStrategy = 0;
     private bool aiIsRepositioning = false;
@@ -63,55 +73,79 @@ public class CharacterController2D : MonoBehaviour
         energySys = GetComponent<EnergySystem>();
         originalScale = transform.localScale;
 
+        jumpsRemaining = maxJumps; // Cấp số lần nhảy ban đầu
+
         if (isAI) FindEnemyTarget();
     }
 
     void Update()
     {
+        // --- KIỂM TRA CHẠM ĐẤT ---
+        if (groundCheck != null)
+        {
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+            // Nếu chạm đất và đang rơi xuống (velocity.y <= 0) thì reset số lần nhảy
+            if (isGrounded && rb.linearVelocity.y <= 0.1f)
+            {
+                jumpsRemaining = maxJumps;
+            }
+        }
+
         if (!isAI) HandlePlayerInput();
         else HandleAILogic();
     }
 
     void HandlePlayerInput()
     {
-        // 🔒 KHÓA ĐIỀU KHIỂN
+        if (!canMoveAndFight)
+        {
+            if (rb != null) rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            if (anim != null) anim.SetFloat("Speed", 0f);
+            return;
+        }
+
         if (isDashing || isStunned) return;
 
         bool keyLeft = false, keyRight = false, keyJump = false, keyDash = false;
         bool keyS1 = false, keyS2 = false, keyS3 = false, keyS4 = false;
+        bool keyBlock = false;
 
-        // ===============================================
-        // CÀI ĐẶT NÚT BẤM (ĐÃ CHỈNH LẠI THEO Ý BẠN)
-        // ===============================================
         if (playerIndex == 1)
         {
-            // --- PLAYER 1 ---
             keyLeft = Input.GetKey(KeyCode.A);
             keyRight = Input.GetKey(KeyCode.D);
             keyJump = Input.GetKeyDown(KeyCode.W);
-
-            keyDash = Input.GetKeyDown(KeyCode.L); // L: Lướt
-            keyS1 = Input.GetKeyDown(KeyCode.U);   // U: Skill 1 (Đánh thường)
-            keyS2 = Input.GetKeyDown(KeyCode.I);   // I: Skill 2
-            keyS3 = Input.GetKeyDown(KeyCode.O);   // O: Skill 3
-            keyS4 = Input.GetKeyDown(KeyCode.P);   // P: Skill 4 (Ulti)
+            keyBlock = Input.GetKey(KeyCode.K);
+            keyDash = Input.GetKeyDown(KeyCode.L);
+            keyS1 = Input.GetKeyDown(KeyCode.U);
+            keyS2 = Input.GetKeyDown(KeyCode.I);
+            keyS3 = Input.GetKeyDown(KeyCode.O);
+            keyS4 = Input.GetKeyDown(KeyCode.P);
         }
         else if (playerIndex == 2)
         {
-            // --- PLAYER 2 ---
             keyLeft = Input.GetKey(KeyCode.LeftArrow);
             keyRight = Input.GetKey(KeyCode.RightArrow);
             keyJump = Input.GetKeyDown(KeyCode.UpArrow);
-
-            // Hỗ trợ cả phím số bên phải (Keypad) và số ở trên chữ (Alpha)
-            keyDash = Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3); // 3: Lướt
-            keyS1 = Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1);   // 1: Skill 1 (Đánh thường)
-            keyS2 = Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);   // 4: Skill 2
-            keyS3 = Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5);   // 5: Skill 3
-            keyS4 = Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6);   // 6: Skill 4 (Ulti)
+            keyBlock = Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Alpha2);
+            keyDash = Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3);
+            keyS1 = Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1);
+            keyS2 = Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);
+            keyS3 = Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5);
+            keyS4 = Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6);
         }
 
-        // --- XỬ LÝ DI CHUYỂN ---
+        isBlocking = keyBlock;
+        if (anim != null) anim.SetBool("IsBlocking", isBlocking);
+
+        if (isBlocking)
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            if (anim != null) anim.SetFloat("Speed", 0f);
+            return;
+        }
+
         if (keyLeft) horizontalInput = -1f;
         else if (keyRight) horizontalInput = 1f;
         else horizontalInput = 0f;
@@ -125,11 +159,15 @@ public class CharacterController2D : MonoBehaviour
         else if (horizontalInput < 0)
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
 
-        // --- XỬ LÝ NHẢY, LƯỚT VÀ TUNG CHIÊU ---
-        if (keyJump)
+        // --- XỬ LÝ NHẢY CÓ GIỚI HẠN (DOUBLE JUMP) ---
+        if (keyJump && jumpsRemaining > 0)
         {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
             if (anim != null) anim.SetTrigger("Jump");
+
+            jumpsRemaining--;
         }
 
         if (keyDash)
@@ -148,6 +186,12 @@ public class CharacterController2D : MonoBehaviour
     {
         if (isDashing || isStunned) return;
 
+        if (isBlocking)
+        {
+            isBlocking = false;
+            if (anim != null) anim.SetBool("IsBlocking", false);
+        }
+
         if (enemyTarget == null)
         {
             FindEnemyTarget();
@@ -165,9 +209,16 @@ public class CharacterController2D : MonoBehaviour
 
         actionTimer += Time.deltaTime;
 
+        if (distanceToEnemy < attackRange && Random.Range(0, 1000) < 5)
+        {
+            StartCoroutine(AIBlockRoutine());
+            return;
+        }
+
         if (actionTimer < timeBetweenActions)
         {
-            if (Random.Range(0, 1000) < 3 && Mathf.Abs(rb.linearVelocity.y) < 0.1f && distanceToEnemy > attackRange)
+            // Sửa lại cách AI nhảy để nó cũng xài GroundCheck cho chuẩn
+            if (Random.Range(0, 1000) < 3 && isGrounded && distanceToEnemy > attackRange)
             {
                 if (Random.value > 0.5f)
                 {
@@ -182,6 +233,7 @@ public class CharacterController2D : MonoBehaviour
             return;
         }
 
+        // ... Phần logic AI còn lại giữ nguyên ...
         if (aiCurrentStrategy == 0)
         {
             aiCurrentStrategy = Random.Range(1, 5);
@@ -239,8 +291,28 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    private IEnumerator AIBlockRoutine()
+    {
+        isBlocking = true;
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", 0f);
+            anim.SetBool("IsBlocking", true);
+        }
+        yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+        isBlocking = false;
+        if (anim != null) anim.SetBool("IsBlocking", false);
+    }
+
     public void TakeKnockback(Vector2 force, float stunTime)
     {
+        if (isBlocking)
+        {
+            rb.linearVelocity = new Vector2(force.x * 0.2f, rb.linearVelocity.y);
+            return;
+        }
+
         StartCoroutine(KnockbackRoutine(force, stunTime));
     }
 
@@ -289,7 +361,10 @@ public class CharacterController2D : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             CharacterController2D targetObj = enemy.GetComponent<CharacterController2D>();
+
             if (targetObj != null && targetObj.isDashing) continue;
+
+            if (targetObj != null && targetObj.isBlocking) continue;
 
             EnemyHealth aiHealth = enemy.GetComponent<EnemyHealth>();
             if (aiHealth != null) { aiHealth.TakeDamage(meleeDamage); hitSomeone = true; }
@@ -306,6 +381,13 @@ public class CharacterController2D : MonoBehaviour
         if (attackPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, meleeHitRange);
+
+        // Vẽ thêm vòng tròn để dễ hình dung Ground Check dưới chân
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
     }
 
     public void SpawnSkill2Projectile() { SpawnBullet(skill2ProjectilePrefab, castPointSkill2); }

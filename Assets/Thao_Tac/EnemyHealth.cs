@@ -6,7 +6,13 @@ public class EnemyHealth : MonoBehaviour
     [Header("Thông tin UI")]
     public Sprite characterFace;
     public string characterName = "Name NV";
-    public int maxHealth = 1000;
+
+    // TÁCH BIẾN GIỐNG PLAYER: Đổi maxHealth thành baseHealth
+    public int baseHealth = 1000;
+
+    // Khai báo ẩn maxHealth để code tự tính
+    [HideInInspector] public int maxHealth;
+
     public HealthBarUI healthBar;
     private int currentHealth;
 
@@ -27,7 +33,9 @@ public class EnemyHealth : MonoBehaviour
     {
         // CẬP NHẬT TỈ LỆ MÁU TỪ SETTINGS
         float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
-        maxHealth = Mathf.RoundToInt(maxHealth * tyLeMau);
+
+        // Dùng máu gốc nhân tỉ lệ
+        maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
 
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
@@ -35,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
         aiScript = GetComponent<CharacterController2D>();
 
         audioSource = GetComponent<AudioSource>();
+        // (Khuyến nghị: Tương tự Player, nếu tối ưu được thì kéo thả thẳng vào Inspector thay vì dùng GameObject.Find)
         healthBar = GameObject.Find("HealthBar_P2").GetComponent<HealthBarUI>();
 
         if (healthBar != null && characterFace != null)

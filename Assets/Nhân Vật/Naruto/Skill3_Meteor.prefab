@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 12
   lifeTime: 3
-  damage: 250
+  damage: 350
   hitAnimationDuration: 0.5
   castSound: {fileID: 8300000, guid: 138201b7789ccf443bbd5a45d3aa3866, type: 3}
   hitSound: {fileID: 8300000, guid: 5c57436058f6b024e8661612c89d0e7a, type: 3}

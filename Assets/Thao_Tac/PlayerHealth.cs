@@ -6,7 +6,13 @@ public class PlayerHealth : MonoBehaviour
     [Header("Thông tin UI")]
     public Sprite characterFace;
     public string characterName = "Name NV";
-    public int maxHealth = 3800;
+
+    // THAY ĐỔI NHẸ Ở ĐÂY: Đổi maxHealth thành baseHealth (Máu gốc)
+    public int baseHealth = 3800;
+
+    // Khai báo maxHealth ẩn đi để script tự tính toán, không cần nhập tay
+    [HideInInspector] public int maxHealth;
+
     public HealthBarUI healthBar;
     private int currentHealth;
 
@@ -26,13 +32,17 @@ public class PlayerHealth : MonoBehaviour
     {
         // CẬP NHẬT TỈ LỆ MÁU TỪ SETTINGS
         float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
-        maxHealth = Mathf.RoundToInt(maxHealth * tyLeMau);
+
+        // Dùng MÁU GỐC (baseHealth) nhân với tỷ lệ để ra maxHealth
+        maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
 
         currentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerScript = GetComponent<CharacterController2D>();
+
+        // (Lưu ý: GameObject.Find khá nặng, nếu được bạn nên kéo thả healthBar trực tiếp trên Inspector)
         healthBar = GameObject.Find("HealthBar_P1").GetComponent<HealthBarUI>();
 
         if (healthBar != null && characterFace != null)
@@ -92,7 +102,6 @@ public class PlayerHealth : MonoBehaviour
         if (playerScript != null) playerScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;

@@ -185,10 +185,12 @@ MonoBehaviour:
   speed: 15
   lifeTime: 3
   damage: 250
+  skillType: 3
   hitAnimationDuration: 2
   impactEffect: {fileID: 0}
   castSound: {fileID: 8300000, guid: 249265df8948e1443bb3d2c4c1c86106, type: 3}
   hitSound: {fileID: 8300000, guid: 19e554fcee82ca64b8017b49ca696a3a, type: 3}
+  blockSound: {fileID: 0}
 --- !u!95 &915222329557041058
 Animator:
   serializedVersion: 7

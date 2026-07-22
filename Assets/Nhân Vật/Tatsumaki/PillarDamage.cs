@@ -16,20 +16,34 @@ public class PillarDamage : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Tránh tự đâm trúng phe mình (người triệu hồi)
-        if (other.CompareTag(gameObject.tag)) return; 
+        if (other.CompareTag(gameObject.tag)) return;
+
+        // --- BƯỚC 1: KIỂM TRA TRẠNG THÁI ĐỠ ĐÒN ---
+        CharacterController2D targetController = other.GetComponent<CharacterController2D>();
+
+        int finalDamage = damage; // Gán sát thương mặc định ban đầu bằng sát thương gốc
+
+        // Nếu mục tiêu có tồn tại và đang giữ nút đỡ đòn
+        if (targetController != null && targetController.isBlocking)
+        {
+            // SKILL 3: Giảm 50% sát thương
+            finalDamage = finalDamage / 2;
+        }
+
+        // --- BƯỚC 2: TRỪ MÁU (Sử dụng finalDamage thay vì damage gốc) ---
 
         // Nếu đâm trúng AI kẻ địch
         EnemyHealth enemy = other.GetComponent<EnemyHealth>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(finalDamage);
         }
 
         // Nếu đâm trúng Player đối thủ
         PlayerHealth player = other.GetComponent<PlayerHealth>();
         if (player != null)
         {
-            player.TakeDamage(damage);
+            player.TakeDamage(finalDamage);
         }
     }
 }

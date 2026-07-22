@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2542182054202948049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 573425826177120387}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &573425826177120387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2542182054202948049}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.33333334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5318612806675429576}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2725208896150500582
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,6 +102,7 @@ Transform:
   m_Children:
   - {fileID: 4406259519048721423}
   - {fileID: 8235668041043997238}
+  - {fileID: 573425826177120387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1145804364783200946
@@ -278,11 +310,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 0
+  playerIndex: 1
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 8
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  maxJumps: 2
+  groundCheck: {fileID: 573425826177120387}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  dashDuration: 0.25
+  isDashing: 0
   skill1Cost: 0
   skill2Cost: 25
   skill3Cost: 50
@@ -301,6 +342,8 @@ MonoBehaviour:
   skill2ProjectilePrefab: {fileID: 300300766827724240, guid: f825dff72a711684fa92812d43d6dc0e, type: 3}
   skill3ProjectilePrefab: {fileID: 300300766827724240, guid: 971fa8c4a2933b546bad84f858b1c22e, type: 3}
   skill4ProjectilePrefab: {fileID: 300300766827724240, guid: d2b4c0d362c284241b4ae9d762777944, type: 3}
+  isBlocking: 0
+  isStunned: 0
 --- !u!114 &3268877413582775157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   characterFace: {fileID: -3769433412233039927, guid: 21744cbca20fd874d9b712e395472e59, type: 3}
   characterName: Gojo Satoru
+  baseHealth: 3800
   maxHealth: 3800
   healthBar: {fileID: 0}
   hitSounds:

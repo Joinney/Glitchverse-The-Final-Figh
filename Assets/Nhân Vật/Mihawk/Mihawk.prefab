@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6737779366642518145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1225227006466516252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3897728365551120809}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3897728365551120809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225227006466516252}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.271, y: -0.363, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6737779366642518145}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1991479821396350565
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +180,7 @@ Transform:
   m_Children:
   - {fileID: 4764825188974931483}
   - {fileID: 6855238296413704592}
+  - {fileID: 3897728365551120809}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6395875353580377400
@@ -357,6 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   characterFace: {fileID: 5683044911111423371, guid: 8c141785dc6e54b418cdcf937f67b89f, type: 3}
   characterName: Mihawk
+  baseHealth: 3800
   maxHealth: 3800
   healthBar: {fileID: 0}
   hitSounds:
@@ -375,11 +408,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 0
+  playerIndex: 1
   moveSpeed: 5
   jumpForce: 8
   dashForce: 15
   attackRange: 2
   timeBetweenActions: 2.5
+  maxJumps: 2
+  groundCheck: {fileID: 3897728365551120809}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  dashDuration: 0.25
+  isDashing: 0
   skill1Cost: 0
   skill2Cost: 25
   skill3Cost: 50
@@ -392,9 +434,14 @@ MonoBehaviour:
     m_Bits: 128
   meleeDamage: 50
   castPoint: {fileID: 6855238296413704592}
+  castPointSkill2: {fileID: 0}
+  castPointSkill3: {fileID: 0}
+  castPointSkill4: {fileID: 0}
   skill2ProjectilePrefab: {fileID: 2306775677551397954, guid: 42b9c64504bd3ba438bcc5aad6335952, type: 3}
   skill3ProjectilePrefab: {fileID: 2306775677551397954, guid: 05537a2d2f925be4186f8dabdbf9c588, type: 3}
   skill4ProjectilePrefab: {fileID: 2306775677551397954, guid: b8fbc83db5e5a234a965e251b2913fb6, type: 3}
+  isBlocking: 0
+  isStunned: 0
 --- !u!82 &8111471954656581898
 AudioSource:
   m_ObjectHideFlags: 0
