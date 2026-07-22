@@ -18,7 +18,6 @@ public class CountdownManager : MonoBehaviour
     public AudioClip tickSound;
     public AudioClip fightSound;
 
-    // CÔNG TẮC TOÀN CẦU: Dùng để báo cho các hệ thống khác biết đã đếm ngược xong chưa
     public static bool isCountdownFinished = false;
 
     private void Start()
@@ -29,27 +28,25 @@ public class CountdownManager : MonoBehaviour
 
     private IEnumerator StartCountdownRoutine()
     {
-        countdownImage.gameObject.SetActive(true);
+        if (countdownImage != null) countdownImage.gameObject.SetActive(true);
 
-        // --- 1. TÌM TẤT CẢ NHÂN VẬT (CẢ PLAYER VÀ AI) ---
+        // 1. Chỉ tìm CharacterController2D (Vì cả Player và AI đều đang dùng chung script này!)
         CharacterController2D[] allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
 
+        // Chờ đến khi đủ 2 nhân vật (Player và AI) xuất hiện trên sân
         while (allCharacters.Length < 2)
         {
             yield return null;
             allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
         }
 
-        // --- 2. KHÓA CỨNG TOÀN BỘ (PLAYER & AI ĐỨNG IM TUYỆT ĐỐI) ---
+        // 2. KHÓA CỨNG TOÀN BỘ CẢ 2 BÊN
         foreach (var chara in allCharacters)
         {
-            if (chara != null)
-            {
-                chara.canMoveAndFight = false; // Tắt khả năng di chuyển và đánh của tất cả
-            }
+            if (chara != null) chara.canMoveAndFight = false;
         }
 
-        // --- 3. CHIẾU ANIMATION 3 - 2 - 1 - FIGHT ---
+        // 3. CHIẾU ANIMATION
         if (tickSound != null && audioSource != null) audioSource.PlayOneShot(tickSound);
         yield return StartCoroutine(PlayFrames(frames3, 1f));
 
@@ -62,31 +59,25 @@ public class CountdownManager : MonoBehaviour
         if (fightSound != null && audioSource != null) audioSource.PlayOneShot(fightSound);
         yield return StartCoroutine(PlayFrames(framesFight, 0.8f));
 
-        // --- 4. KẾT THÚC ĐẾM NGƯỢC ---
-        countdownImage.gameObject.SetActive(false);
+        if (countdownImage != null) countdownImage.gameObject.SetActive(false);
 
-        // --- 5. MỞ KHÓA CHO TẤT CẢ CÙNG XÔNG VÀO ĐÁNH ---
+        // 4. MỞ KHÓA CHO CẢ 2 BÊN CÙNG ĐÁNH
         foreach (var chara in allCharacters)
         {
-            if (chara != null)
-            {
-                chara.canMoveAndFight = true;
-            }
+            if (chara != null) chara.canMoveAndFight = true;
         }
 
-        // Bật đồng hồ đếm giờ 60s
         isCountdownFinished = true;
     }
 
     private IEnumerator PlayFrames(Sprite[] frames, float duration)
     {
         if (frames == null || frames.Length == 0) yield break;
-
         float timePerFrame = duration / frames.Length;
 
         for (int i = 0; i < frames.Length; i++)
         {
-            countdownImage.sprite = frames[i];
+            if (countdownImage != null) countdownImage.sprite = frames[i];
             yield return new WaitForSeconds(timePerFrame);
         }
     }

@@ -344,6 +344,7 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 300300766827724240, guid: d2b4c0d362c284241b4ae9d762777944, type: 3}
   isBlocking: 0
   isStunned: 0
+  canMoveAndFight: 0
 --- !u!114 &3268877413582775157
 MonoBehaviour:
   m_ObjectHideFlags: 0

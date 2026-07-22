@@ -4967,58 +4967,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155645583}
   m_CullTransparentMesh: 1
---- !u!1 &1157431735
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1157431736}
-  - component: {fileID: 1157431737}
-  m_Layer: 0
-  m_Name: CountdownManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1157431736
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157431735}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -249.06912, y: -160.54955, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2055820752}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1157431737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157431735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf75a819fc8b9f4fbb79dc6832590ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CountdownManager
-  countdownImage: {fileID: 0}
-  frames3: []
-  frames2: []
-  frames1: []
-  framesFight: []
-  audioSource: {fileID: 0}
-  tickSound: {fileID: 0}
-  fightSound: {fileID: 0}
 --- !u!1 &1178639377
 GameObject:
   m_ObjectHideFlags: 0
@@ -5063,10 +5011,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86c770f657c1a04fa36c38da7ffc05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
-  pausePanel: {fileID: 0}
-  settingsPanel: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  volumeText: {fileID: 0}
+  pausePanel: {fileID: 82722890}
+  settingsPanel: {fileID: 453629132}
+  volumeSlider: {fileID: 877811528}
+  volumeText: {fileID: 56748042}
 --- !u!1 &1211480816
 GameObject:
   m_ObjectHideFlags: 0
@@ -7279,7 +7227,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1178639378}
-  - {fileID: 1157431736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2063731858

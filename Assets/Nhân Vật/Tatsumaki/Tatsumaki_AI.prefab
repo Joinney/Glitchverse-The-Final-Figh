@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7407520232941119315}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 710347816706540293}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.254704, y: 0.126082, z: 0}
+  m_LocalPosition: {x: -0.078, y: -0.266, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -381,11 +381,11 @@ MonoBehaviour:
   attackRange: 2
   timeBetweenActions: 2.5
   maxJumps: 2
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 7407520232941119315}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   dashDuration: 0.25
   isDashing: 0
   skill1Cost: 0
@@ -408,6 +408,7 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 850628983955983704, guid: f5745b1bae2acb44c8eea204971db033, type: 3}
   isBlocking: 0
   isStunned: 0
+  canMoveAndFight: 0
 --- !u!114 &7265582207138030308
 MonoBehaviour:
   m_ObjectHideFlags: 0

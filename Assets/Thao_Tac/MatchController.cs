@@ -18,7 +18,7 @@ public class MatchController : MonoBehaviour
     [Header("Tên Ải Tiếp Theo")]
     public string nextStageName = "Fight_Stage2";
 
-    [Header("Số thứ tự của Ải này (1 đến 5)")] // <--- MỚI THÊM 
+    [Header("Số thứ tự của Ải này (1 đến 5)")]
     public int currentStageIndex = 1;
 
     private bool matchEnded = false;
@@ -32,37 +32,57 @@ public class MatchController : MonoBehaviour
         // 1. Hiện bảng kết quả lên
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
 
-        // 2. Tráo ảnh và Quản lý nút bấm
+        // 2. Tráo ảnh, Quản lý nút bấm và LƯU TIẾN TRÌNH SAVE GAME
         if (isPlayerWin)
         {
             if (resultImage != null) resultImage.sprite = victorySprite;
-            if (nextStageButton != null) nextStageButton.SetActive(true); // Thắng -> Hiện nút Play
+            if (nextStageButton != null) nextStageButton.SetActive(true);
 
-            // --- ĐOẠN CODE MỚI THÊM: LƯU TIẾN TRÌNH ---
-            // Đọc xem hiện tại người chơi đang mở tới ải mấy (mặc định là 1)
+            // --- 1. LƯU CHO NÚT CONTINUE ---
+            PlayerPrefs.SetInt("Current_Stage_Index", currentStageIndex + 1);
+            PlayerPrefs.SetInt("Has_Saved_Game", 1);
+
+            // --- 2. LƯU ĐỂ MỞ Ổ KHÓA BẢN ĐỒ (MAP) ---
             int currentUnlocked = PlayerPrefs.GetInt("UnlockedStage", 1);
-
-            // Nếu ải vừa thắng là ải cao nhất người chơi từng tới -> Mở khóa ải tiếp theo!
             if (currentStageIndex >= currentUnlocked)
             {
                 PlayerPrefs.SetInt("UnlockedStage", currentStageIndex + 1);
-                Debug.Log("Đã mở khóa ải số: " + (currentStageIndex + 1));
+                Debug.Log("Đã phá ổ khóa ải số: " + (currentStageIndex + 1));
             }
-            // ------------------------------------------
+
+            PlayerPrefs.Save();
+            Debug.Log("Thắng! Đã lưu tiến trình. Lần tới Continue sẽ vào Ải: " + (currentStageIndex + 1));
         }
         else
         {
             if (resultImage != null) resultImage.sprite = gameoverSprite;
-            if (nextStageButton != null) nextStageButton.SetActive(false); // Thua -> Giấu nút Play đi
+            if (nextStageButton != null) nextStageButton.SetActive(false);
+
+            // --- LƯU TIẾN TRÌNH KHI THUA ---
+            PlayerPrefs.SetInt("Current_Stage_Index", currentStageIndex);
+            PlayerPrefs.SetInt("Has_Saved_Game", 1);
+            PlayerPrefs.Save();
         }
 
-        // 3. Đóng băng mọi nhân vật trên sân
+        // 3. Đóng băng hoàn toàn mọi nhân vật trên sân khi chiến thắng
         CharacterController2D[] allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
         foreach (CharacterController2D character in allCharacters)
         {
-            character.enabled = false; // Tắt di chuyển
+            Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
+
+            character.StopAllCoroutines();
+            character.enabled = false;
+
             Animator anim = character.GetComponent<Animator>();
-            if (anim != null) anim.SetFloat("Speed", 0); // Ép về dáng đứng im
+            if (anim != null)
+            {
+                anim.SetFloat("Speed", 0); // Ép về dáng đứng im
+                anim.SetBool("IsBlocking", false);
+            }
         }
     }
 
@@ -76,13 +96,13 @@ public class MatchController : MonoBehaviour
 
     public void OnBackClick()
     {
-        // Về màn hình Bản đồ
-        SceneManager.LoadScene("SampleScene");
+        // Về màn hình Menu chính (Chỗ có nút Continue)
+        SceneManager.LoadScene("SampleScene"); // Đảm bảo tên "SampleScene" đúng với Scene Menu của bạn
     }
 
     public void OnNextStageClick()
     {
-        // Nhảy sang map tiếp theo
+        // Nhảy sang map tiếp theo trực tiếp từ bảng Victory
         if (!string.IsNullOrEmpty(nextStageName))
         {
             SceneManager.LoadScene(nextStageName);

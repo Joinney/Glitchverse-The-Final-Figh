@@ -18,7 +18,7 @@ public class CharacterController2D : MonoBehaviour
     public float attackRange = 2f;
     public float timeBetweenActions = 2f;
 
-    [Header("Cấu Hình Nhảy (Double Jump)")] // --- PHẦN MỚI THÊM VÀO ---
+    [Header("Cấu Hình Nhảy (Double Jump)")]
     public int maxJumps = 2; // Số lần nhảy tối đa (2 = double jump)
     private int jumpsRemaining;
     public Transform groundCheck; // Vị trí kiểm tra chạm đất (Kéo thả object ở dưới chân nhân vật vào đây)
@@ -58,7 +58,9 @@ public class CharacterController2D : MonoBehaviour
     public bool isBlocking = false;
     public bool isStunned = false;
 
+    // Vẫn giữ biến này để CountdownManager không bị lỗi báo đỏ khi gọi đến
     public bool canMoveAndFight = false;
+
     private float actionTimer = 0f;
     private float horizontalInput;
     private Vector3 originalScale;
@@ -75,7 +77,26 @@ public class CharacterController2D : MonoBehaviour
 
         jumpsRemaining = maxJumps; // Cấp số lần nhảy ban đầu
 
-        if (isAI) FindEnemyTarget();
+        if (isAI)
+        {
+            FindEnemyTarget();
+
+            // ==================================================
+            // THIẾT LẬP ĐỘ KHÓ: ĐỘT BIẾN THỂ CHẤT CHO AI
+            // ==================================================
+            string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
+            if (difficulty == "Hard")
+            {
+                timeBetweenActions = 0.3f; // Hard: Ra chiêu liên tục (nghỉ 0.3s)
+                moveSpeed = moveSpeed * 1.5f; // Hard: Chạy nhanh gấp rưỡi Player
+                Debug.Log($"🔥 [HỆ THỐNG] Kích hoạt AI chế độ HARD cho {gameObject.name}");
+            }
+            else
+            {
+                timeBetweenActions = 1.8f; // Normal: Đứng nhìn 1.8s rồi mới đánh
+                Debug.Log($"🛡️ [HỆ THỐNG] Kích hoạt AI chế độ NORMAL cho {gameObject.name}");
+            }
+        }
     }
 
     void Update()
@@ -92,19 +113,24 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
+        // =========================================================
+        // CHẶN TUYỆT ĐỐI BẰNG CÔNG TẮC TOÀN CẦU
+        // Bất chấp nhân vật sinh ra sớm hay muộn, nếu hệ thống chưa 
+        // đếm ngược xong thì ép đứng im!
+        // =========================================================
+        if (!CountdownManager.isCountdownFinished)
+        {
+            if (rb != null) rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            if (anim != null) anim.SetFloat("Speed", 0f);
+            return; // Thoát ngay, không chạy Input của Player lẫn não của AI
+        }
+
         if (!isAI) HandlePlayerInput();
         else HandleAILogic();
     }
 
     void HandlePlayerInput()
     {
-        if (!canMoveAndFight)
-        {
-            if (rb != null) rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-            if (anim != null) anim.SetFloat("Speed", 0f);
-            return;
-        }
-
         if (isDashing || isStunned) return;
 
         bool keyLeft = false, keyRight = false, keyJump = false, keyDash = false;
@@ -209,16 +235,23 @@ public class CharacterController2D : MonoBehaviour
 
         actionTimer += Time.deltaTime;
 
-        if (distanceToEnemy < attackRange && Random.Range(0, 1000) < 5)
+        // ==================================================
+        // TƯ DUY PHẢN XẠ: ĐỠ ĐÒN THEO ĐỘ KHÓ
+        // ==================================================
+        string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
+        int blockChance = (difficulty == "Hard") ? 150 : 10;
+
+        if (distanceToEnemy < attackRange && Random.Range(0, 1000) < blockChance)
         {
             StartCoroutine(AIBlockRoutine());
             return;
         }
+        // ==================================================
 
         if (actionTimer < timeBetweenActions)
         {
-            // Sửa lại cách AI nhảy để nó cũng xài GroundCheck cho chuẩn
-            if (Random.Range(0, 1000) < 3 && isGrounded && distanceToEnemy > attackRange)
+            // AI Hard có thêm phản xạ nhảy né hoặc lướt khi thấy bất lợi
+            if (Random.Range(0, 1000) < (difficulty == "Hard" ? 8 : 3) && isGrounded && distanceToEnemy > attackRange)
             {
                 if (Random.value > 0.5f)
                 {
@@ -233,12 +266,45 @@ public class CharacterController2D : MonoBehaviour
             return;
         }
 
-        // ... Phần logic AI còn lại giữ nguyên ...
+        // ==================================================
+        // GIAI ĐOẠN 3: TƯ DUY CHIẾN THUẬT (KHOẢNG CÁCH)
+        // ==================================================
         if (aiCurrentStrategy == 0)
         {
-            aiCurrentStrategy = Random.Range(1, 5);
+            if (difficulty == "Hard")
+            {
+                // TƯ DUY AI CỰC KỲ KHÔN NGOAN (HARD MODE)
+                if (distanceToEnemy <= meleeHitRange)
+                {
+                    // 1. Quá sát -> 70% đấm cận chiến (Skill 1), 30% lướt lùi thủ thân
+                    if (Random.value < 0.7f) aiCurrentStrategy = 1;
+                    else
+                    {
+                        StartCoroutine(DashRoutine(-moveDirection)); // Lướt né ra xa
+                        actionTimer = 0f;
+                        return;
+                    }
+                }
+                else if (distanceToEnemy > attackRange)
+                {
+                    // 2. Ở xa -> Ưu tiên dùng chiêu tầm xa (Skill 2 hoặc Skill 3)
+                    aiCurrentStrategy = Random.value > 0.5f ? 2 : 3;
+                }
+                else
+                {
+                    // 3. Khoảng cách vừa -> Random ngẫu nhiên các skill linh hoạt
+                    aiCurrentStrategy = Random.Range(1, 5);
+                }
+            }
+            else
+            {
+                // AI NORMAL: Vẫn giữ nguyên kiểu ngẫu nhiên đơn giản
+                aiCurrentStrategy = Random.Range(1, 5);
+            }
+
             aiIsRepositioning = false;
         }
+        // ==================================================
 
         if (aiCurrentStrategy == 1)
         {
@@ -300,7 +366,13 @@ public class CharacterController2D : MonoBehaviour
             anim.SetFloat("Speed", 0f);
             anim.SetBool("IsBlocking", true);
         }
-        yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+
+        // Hard mode thì nó block lâu hơn một chút để câu giờ, Normal thì thả tay nhanh
+        string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
+        float blockDuration = (difficulty == "Hard") ? Random.Range(0.8f, 2.0f) : Random.Range(0.3f, 1.0f);
+
+        yield return new WaitForSeconds(blockDuration);
+
         isBlocking = false;
         if (anim != null) anim.SetBool("IsBlocking", false);
     }
@@ -363,7 +435,6 @@ public class CharacterController2D : MonoBehaviour
             CharacterController2D targetObj = enemy.GetComponent<CharacterController2D>();
 
             if (targetObj != null && targetObj.isDashing) continue;
-
             if (targetObj != null && targetObj.isBlocking) continue;
 
             EnemyHealth aiHealth = enemy.GetComponent<EnemyHealth>();
@@ -382,7 +453,6 @@ public class CharacterController2D : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, meleeHitRange);
 
-        // Vẽ thêm vòng tròn để dễ hình dung Ground Check dưới chân
         if (groundCheck != null)
         {
             Gizmos.color = Color.green;
