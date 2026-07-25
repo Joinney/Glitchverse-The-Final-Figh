@@ -14,7 +14,8 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector] public int maxHealth;
 
     public HealthBarUI healthBar;
-    private int currentHealth;
+
+    public int currentHealth;
 
     [Header("Âm Thanh Đau Đớn")]
     private AudioSource audioSource;
@@ -83,13 +84,9 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        // --- GỌI TRỌNG TÀI BÁO THUA ---
-        MatchController match = FindAnyObjectByType<MatchController>();
-        if (match != null) match.EndMatch(false);
-        // ------------------------------
-
         Debug.Log(gameObject.name + " đã tử trận!");
 
+        // 1. CHẠY HOẠT ẢNH GỤC NGÃ
         if (anim != null)
         {
             foreach (AnimatorControllerParameter param in anim.parameters)
@@ -99,15 +96,44 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
+        // 2. KHÓA DI CHUYỂN
         if (playerScript != null) playerScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
 
+        // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG (KNOCK-UP) ---
+        if (rb != null)
+        {
+            float vangX = transform.localScale.x > 0 ? -1.5f : 1.5f;
+            float vangY = 6f;
+
+            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = new Vector2(vangX, vangY);
+
+            StartCoroutine(FreezeBodyAfterDelay(2f));
+        }
+
+        // 4. GỌI GÓC QUAY CINEMATIC
+        GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (enemy != null && GameFeelManager.instance != null)
+        {
+            GameFeelManager.instance.TriggerCinematicFinish(this.transform, enemy.transform, false);
+        }
+        else
+        {
+            MatchController match = FindAnyObjectByType<MatchController>();
+            if (match != null) match.EndMatch(false);
+        }
+
+        this.enabled = false;
+    }
+
+    private IEnumerator FreezeBodyAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
             rb.simulated = false;
         }
-
-        this.enabled = false;
     }
 }

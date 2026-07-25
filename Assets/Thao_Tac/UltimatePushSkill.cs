@@ -4,27 +4,30 @@ public class UltimatePushSkill : MonoBehaviour
 {
     [Header("Thông số Chiêu Cuối")]
     public int damage = 80;
-    public float speed = 15f; 
+    public float speed = 15f;
     public float lifeTime = 3f;
 
     [Header("Hiệu ứng Hất Tung & Choáng")]
-    public Vector2 knockbackForce = new Vector2(0f, 15f); 
-    public float stunDuration = 1.2f; 
+    public Vector2 knockbackForce = new Vector2(0f, 15f);
+    public float stunDuration = 1.2f;
 
     [Header("Cài đặt Tường chặn")]
     public string wallTag = "Wall"; // Tên Tag của bức tường hoặc mặt đất
 
     [Header("Cài đặt Âm Thanh")]
-    public AudioClip castSound; 
-    public AudioClip hitSound;  
+    public AudioClip castSound;
+    public AudioClip hitSound;
 
     private Rigidbody2D rb;
-    private bool hasPlayedHitSound = false; 
+    private bool hasPlayedHitSound = false;
+
+    // Biến mới: Đảm bảo chỉ rung màn hình 1 lần khi đạn vừa chạm đích
+    private bool hasTriggeredGameFeel = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+
         if (castSound != null)
         {
             AudioSource.PlayClipAtPoint(castSound, transform.position);
@@ -67,10 +70,27 @@ public class UltimatePushSkill : MonoBehaviour
         PlayerHealth player = other.GetComponent<PlayerHealth>();
         if (player != null) { player.TakeDamage(damage); hitSomeone = true; }
 
-        if (hitSomeone && hitSound != null && !hasPlayedHitSound)
+        // NẾU ĐỤNG TRÚNG ĐỊCH
+        if (hitSomeone)
         {
-            AudioSource.PlayClipAtPoint(hitSound, transform.position);
-            hasPlayedHitSound = true; 
+            // 1. Phát âm thanh trúng đòn
+            if (hitSound != null && !hasPlayedHitSound)
+            {
+                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+                hasPlayedHitSound = true;
+            }
+
+            // 2. --- KÍCH HOẠT HIỆU ỨNG GAME FEEL CỰC MẠNH ---
+            if (!hasTriggeredGameFeel && GameFeelManager.instance != null)
+            {
+                // Khựng hình 0.1 giây (đòn thường chỉ 0.05)
+                GameFeelManager.instance.TriggerHitStop(0.1f);
+
+                // Rung màn hình bạo lực: Kéo dài 0.3 giây với biên độ siêu mạnh 0.4
+                GameFeelManager.instance.TriggerCameraShake(0.3f, 0.4f);
+
+                hasTriggeredGameFeel = true; // Khóa công tắc lại
+            }
         }
     }
 
@@ -78,7 +98,7 @@ public class UltimatePushSkill : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
         // Nếu đụng tường thì bỏ qua, không kéo tường đi
-        if (other.CompareTag(wallTag)) return; 
+        if (other.CompareTag(wallTag)) return;
 
         if (other.CompareTag(gameObject.tag)) return;
 

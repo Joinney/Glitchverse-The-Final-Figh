@@ -1,35 +1,45 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // BẮT BUỘC phải có dòng này để dùng Button
+using UnityEngine.UI;
+using TMPro; // BẮT BUỘC để dùng Text hiển thị điểm
 
 public class MainMenu : MonoBehaviour
 {
     [Header("Menu Panels")]
-    public GameObject startMenuPanel;     // Màn hình Start ban đầu (ảnh nền chung + nút START)
-    public GameObject modeMenuPanel;      // Màn hình Goku (chứa ảnh nền Goku)
-    public GameObject difficultyPanel;    // Màn hình chọn độ khó (chữ SELECT + các nút độ khó)
+    public GameObject startMenuPanel;     // Màn hình Start ban đầu
+    public GameObject modeMenuPanel;      // Màn hình Goku
+    public GameObject difficultyPanel;    // Màn hình chọn độ khó
     public GameObject characterSelectPanel;
-    public GameObject singlePlayerPanel;  // Ô CHỨA MÀN HÌNH CHƠI ĐƠN MỚI TÍNH
+    public GameObject singlePlayerPanel;  // Ô CHỨA MÀN HÌNH CHƠI ĐƠN 
 
     [Header("Sub Containers")]
-    public GameObject gokuButtonsContainer; // Nhóm chứa các nút cũ (New Game, Continue, Play More, BACK)
+    public GameObject gokuButtonsContainer; // Nhóm chứa các nút (New Game, Continue...)
 
     [Header("Save System UI")]
-    public Button continueButton; // Kéo nút Continue trên Canvas vào đây
+    public Button continueButton; // Nút Continue
 
     // ==========================================
-    // HÀM CHẠY NGAY KHI VỪA MỞ MÀN HÌNH MENU LÊN
+    // PHẦN MỚI: BẢNG KỶ LỤC CÚP VÀNG
+    // ==========================================
+    [Header("Scoreboard (Bảng Thành Tích)")]
+    public GameObject scoreboardPanel;
+    public TextMeshProUGUI totalScoreText;
+    public TextMeshProUGUI totalTimeText;
+
+    public GameObject scoreCupObject;
+    // ==========================================
+    // HÀM CHẠY NGAY KHI VỪA MỞ MÀN HÌNH MENU
     // ==========================================
     void Start()
     {
-        // --- LOGIC MỚI: KIỂM TRA FILE SAVE ĐỂ BẬT/TẮT NÚT CONTINUE ---
+        // Kiểm tra file save để bật/tắt nút Continue
         bool hasSavedGame = PlayerPrefs.GetInt("Has_Saved_Game", 0) == 1;
         if (continueButton != null)
         {
-            continueButton.interactable = hasSavedGame; // Có file save thì nút sáng lên, không thì mờ đi không bấm được
+            continueButton.interactable = hasSavedGame;
         }
 
-        // --- LOGIC CŨ: XỬ LÝ LỜI NHẮN BACK TỪ TRONG BẢN ĐỒ ---
+        // Xử lý lời nhắn quay lại từ trong game
         if (PlayerPrefs.GetInt("BackToCharSelect", 0) == 1)
         {
             PlayerPrefs.SetInt("BackToCharSelect", 0);
@@ -67,48 +77,121 @@ public class MainMenu : MonoBehaviour
     }
 
     // ==========================================
-    // 3. NÚT "NEW GAME" (Chơi 1 mình vs AI)
+    // NÚT "NEW GAME" (Chơi 1 mình vs AI)
     // ==========================================
     public void OpenDifficultyMenu()
     {
         PlayerPrefs.SetInt("GameMode", 1);
 
-        PlayerPrefs.SetInt("Current_Stage_Index", 1); // Reset ải cho nút Continue
-        PlayerPrefs.SetInt("UnlockedStage", 1);       // Khóa lại toàn bộ Bản Đồ, chỉ mở Ải 1
-        PlayerPrefs.SetInt("Has_Saved_Game", 0);      // Tắt nút Continue cho đến khi thắng ải 1
-        PlayerPrefs.Save();
-        // ---------------------------------------------------
+        // --- RESET TIẾN TRÌNH CHƠI ---
+        PlayerPrefs.SetInt("Current_Stage_Index", 1);
+        PlayerPrefs.SetInt("UnlockedStage", 1);
+        PlayerPrefs.SetInt("Has_Saved_Game", 0);
 
-        Debug.Log("Chế độ: NEW GAME -> Đã reset toàn bộ bản đồ và mở chọn độ khó.");
+        // --- MỚI THÊM: XÓA SẠCH ĐIỂM SỐ KỶ LỤC CŨ ---
+        for (int i = 1; i <= 5; i++)
+        {
+            PlayerPrefs.DeleteKey("BestScore_Stage_" + i);
+            PlayerPrefs.DeleteKey("BestTime_Stage_" + i);
+        }
+
+        PlayerPrefs.Save();
+        Debug.Log("Chế độ: NEW GAME -> Đã reset toàn bộ bản đồ, kỷ lục và mở chọn độ khó.");
 
         gokuButtonsContainer.SetActive(false);
         difficultyPanel.SetActive(true);
     }
 
     // ==========================================
-    // 3.1 NÚT "CONTINUE" (Chơi tiếp màn dở dang)
+    // NÚT "CONTINUE" (Chơi tiếp màn dở dang)
     // ==========================================
     public void OnClickContinue()
     {
-        // Kiểm tra chắc chắn là có file Save mới cho chạy
         if (PlayerPrefs.GetInt("Has_Saved_Game", 0) == 1)
         {
             int currentStage = PlayerPrefs.GetInt("Current_Stage_Index", 1);
-
-            // Format tên Scene (Ví dụ: Fight_Stage1, Fight_Stage2...)
             string savedSceneName = "Fight_Stage" + currentStage;
-
             string p1Name = PlayerPrefs.GetString("P1_Selection", "Gojo");
             string diff = PlayerPrefs.GetString("GameDifficulty", "Normal");
 
             Debug.Log($"[CONTINUE] Đang tải trận: P1 {p1Name} | Độ khó: {diff} | Ải: {savedSceneName}");
-
-            // LOAD THẲNG VÀO TRẬN, BỎ QUA MỌI THỨ!
             SceneManager.LoadScene(savedSceneName);
         }
     }
 
-    // 3.5 Gắn vào nút CHƠI 2 NGƯỜI trên màn hình Goku
+    // ==========================================
+    // HỆ THỐNG GIAO DIỆN KỶ LỤC (CÚP VÀNG)
+    // ==========================================
+    public void OpenScoreboard()
+    {
+        int totalScore = 0;
+        float totalTime = 0f;
+
+        for (int i = 1; i <= 5; i++)
+        {
+            totalScore += PlayerPrefs.GetInt("BestScore_Stage_" + i, 0);
+
+            float stageTime = PlayerPrefs.GetFloat("BestTime_Stage_" + i, 9999f);
+            if (stageTime < 9999f)
+            {
+                totalTime += stageTime;
+            }
+        }
+
+        if (totalScoreText != null)
+        {
+            totalScoreText.text = "TỔNG ĐIỂM: " + totalScore.ToString("N0");
+        }
+
+        if (totalTimeText != null)
+        {
+            if (totalTime == 0f)
+            {
+                totalTimeText.text = "THỜI GIAN: Chưa có";
+            }
+            else
+            {
+                int minutes = Mathf.FloorToInt(totalTime / 60F);
+                int seconds = Mathf.FloorToInt(totalTime - minutes * 60);
+                totalTimeText.text = string.Format("TỔNG THỜI GIAN: {0:00}:{1:00}", minutes, seconds);
+            }
+        }
+
+        // 1. Hiển thị bảng thành tích
+        if (scoreboardPanel != null) scoreboardPanel.SetActive(true);
+
+        // 2. Ẩn nhóm nút bấm menu
+        if (gokuButtonsContainer != null) gokuButtonsContainer.SetActive(false);
+
+        // 3. AN TOÀN: Chỉ tắt hình ảnh và nút bấm của cái cúp (Không tắt GameObject nên không sợ mất tích)
+        GameObject cup = GameObject.Find("Score");
+        if (cup != null)
+        {
+            cup.GetComponent<Image>().enabled = false;
+            cup.GetComponent<Button>().enabled = false;
+        }
+    }
+
+    public void CloseScoreboard()
+    {
+        // 1. Tắt bảng thành tích
+        if (scoreboardPanel != null) scoreboardPanel.SetActive(false);
+
+        // 2. Hiện lại nhóm nút bấm menu
+        if (gokuButtonsContainer != null) gokuButtonsContainer.SetActive(true);
+
+        // 3. Bật lại hình ảnh và nút bấm cho cái cúp
+        GameObject cup = GameObject.Find("Score");
+        if (cup != null)
+        {
+            cup.GetComponent<Image>().enabled = true;
+            cup.GetComponent<Button>().enabled = true;
+        }
+    }
+
+    // ==========================================
+    // CÁC NÚT ĐIỀU HƯỚNG KHÁC
+    // ==========================================
     public void OpenCharacterSelectDirectly()
     {
         PlayerPrefs.SetInt("GameMode", 2);
@@ -144,7 +227,7 @@ public class MainMenu : MonoBehaviour
     public void ResetSaveData()
     {
         PlayerPrefs.SetInt("Current_Stage_Index", 1);
-        PlayerPrefs.SetInt("Has_Saved_Game", 0); // Hủy file Save
+        PlayerPrefs.SetInt("Has_Saved_Game", 0);
         PlayerPrefs.Save();
         Debug.Log("ĐÃ RESET GAME: Mất file Continue, quay về Ải 1");
     }

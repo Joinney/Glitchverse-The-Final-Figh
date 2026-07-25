@@ -92,6 +92,31 @@ public class ProjectileMihawk : MonoBehaviour
                 Instantiate(impactEffect, transform.position, transform.rotation);
             }
 
+            // =========================================================
+            // KÍCH HOẠT HIỆU ỨNG GAME FEEL (RUNG & KHỰNG) THEO SKILL
+            // =========================================================
+            if (GameFeelManager.instance != null)
+            {
+                if (skillType == 4)
+                {
+                    // Đòn Ulti (Skill 4): Khựng 0.1s, Rung bạo lực 0.3s (biên độ 0.4)
+                    GameFeelManager.instance.TriggerHitStop(0.1f);
+                    GameFeelManager.instance.TriggerCameraShake(0.3f, 0.4f);
+                }
+                else if (skillType == 3)
+                {
+                    // Chiêu 3: Khựng 0.05s, Rung khá mạnh 0.2s (biên độ 0.25)
+                    GameFeelManager.instance.TriggerHitStop(0.05f);
+                    GameFeelManager.instance.TriggerCameraShake(0.2f, 0.25f);
+                }
+                else
+                {
+                    // Chiêu 2 (Hoặc mặc định): Khựng nhẹ 0.05s, Rung nhẹ 0.1s (biên độ 0.15)
+                    GameFeelManager.instance.TriggerHitStop(0.05f);
+                    GameFeelManager.instance.TriggerCameraShake(0.1f, 0.15f);
+                }
+            }
+
             // --- CHỐNG BUG DOUBLE-HIT ---
             // Bước 1: Phanh gấp, không cho kiếm khí bay xuyên qua người địch
             Rigidbody2D realRb = GetComponent<Rigidbody2D>();

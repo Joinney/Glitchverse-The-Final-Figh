@@ -445,6 +445,14 @@ public class CharacterController2D : MonoBehaviour
         }
 
         if (hitSomeone && energySys != null) energySys.AddEnergy(energyGainOnHit);
+
+        // --- CODE MỚI THÊM: KÍCH HOẠT HIỆU ỨNG GAME FEEL KHI ĐÁNH TRÚNG ---
+        if (hitSomeone && GameFeelManager.instance != null)
+        {
+            // 0.05s khựng hình và 0.1s rung màn hình với cường độ 0.15
+            GameFeelManager.instance.TriggerHitStop(0.05f);
+            GameFeelManager.instance.TriggerCameraShake(0.1f, 0.15f);
+        }
     }
 
     void OnDrawGizmosSelected()

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro; // Bắt buộc phải có để dùng TextMeshPro hiển thị điểm
 
 public class MatchController : MonoBehaviour
 {
@@ -21,7 +22,23 @@ public class MatchController : MonoBehaviour
     [Header("Số thứ tự của Ải này (1 đến 5)")]
     public int currentStageIndex = 1;
 
+    // --- PHẦN MỚI THÊM: GIAO DIỆN KỶ LỤC VÀ ĐIỂM SỐ ---
+    [Header("UI Kỷ Lục & Điểm Số")]
+    public TextMeshProUGUI timeText;       // Kéo Text hiển thị thời gian vào đây
+    public TextMeshProUGUI scoreText;      // Kéo Text hiển thị điểm số vào đây
+    public GameObject newRecordAlert;      // Kéo Chữ "NEW RECORD!" vào đây
+
+    private float matchTime = 0f;
     private bool matchEnded = false;
+
+    void Update()
+    {
+        // Bấm giờ: Trận đấu đang diễn ra và đếm ngược đã xong
+        if (CountdownManager.isCountdownFinished && !matchEnded)
+        {
+            matchTime += Time.deltaTime;
+        }
+    }
 
     // HÀM XỬ LÝ KẾT THÚC TRẬN ĐẤU
     public void EndMatch(bool isPlayerWin)
@@ -38,6 +55,59 @@ public class MatchController : MonoBehaviour
             if (resultImage != null) resultImage.sprite = victorySprite;
             if (nextStageButton != null) nextStageButton.SetActive(true);
 
+            // ==========================================
+            // TÍNH TOÁN ĐIỂM SỐ VÀ THỜI GIAN
+            // ==========================================
+            int minutes = Mathf.FloorToInt(matchTime / 60F);
+            int seconds = Mathf.FloorToInt(matchTime - minutes * 60);
+            string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            int baseScore = 1000;
+            // Thưởng thời gian (Đánh càng nhanh điểm càng cao, tối đa 5000 điểm)
+            int timeBonus = Mathf.Max(0, 5000 - Mathf.RoundToInt(matchTime * 50));
+            int healthBonus = 0;
+
+            // Thưởng sinh tồn (Máu còn càng nhiều điểm càng cao, tối đa 5000 điểm)
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                PlayerHealth pHealth = player.GetComponent<PlayerHealth>();
+                if (pHealth != null && pHealth.maxHealth > 0)
+                {
+                    float healthPct = (float)pHealth.currentHealth / pHealth.maxHealth;
+                    healthBonus = Mathf.RoundToInt(healthPct * 5000);
+                }
+            }
+
+            int totalScore = baseScore + timeBonus + healthBonus;
+
+            // Cập nhật lên UI
+            if (timeText != null) timeText.text = "THỜI GIAN: " + timeString;
+            if (scoreText != null) scoreText.text = "ĐIỂM TỔNG: " + totalScore.ToString();
+
+            // Kiểm tra và lưu kỷ lục mới vào máy
+            string stageScoreKey = "BestScore_Stage_" + currentStageIndex;
+            string stageTimeKey = "BestTime_Stage_" + currentStageIndex;
+
+            int bestScore = PlayerPrefs.GetInt(stageScoreKey, 0);
+            float bestTime = PlayerPrefs.GetFloat(stageTimeKey, 9999f);
+
+            bool isNewRecord = false;
+            if (totalScore > bestScore)
+            {
+                PlayerPrefs.SetInt(stageScoreKey, totalScore);
+                isNewRecord = true;
+            }
+            if (matchTime < bestTime)
+            {
+                PlayerPrefs.SetFloat(stageTimeKey, matchTime);
+                isNewRecord = true;
+            }
+
+            // Hiển thị chữ chúc mừng Kỷ lục mới nếu có
+            if (newRecordAlert != null) newRecordAlert.SetActive(isNewRecord);
+            // ==========================================
+
             // --- 1. LƯU CHO NÚT CONTINUE ---
             PlayerPrefs.SetInt("Current_Stage_Index", currentStageIndex + 1);
             PlayerPrefs.SetInt("Has_Saved_Game", 1);
@@ -51,12 +121,17 @@ public class MatchController : MonoBehaviour
             }
 
             PlayerPrefs.Save();
-            Debug.Log("Thắng! Đã lưu tiến trình. Lần tới Continue sẽ vào Ải: " + (currentStageIndex + 1));
+            Debug.Log($"Thắng! Thời gian: {timeString} | Điểm: {totalScore} | Kỷ lục mới: {isNewRecord}");
         }
         else
         {
             if (resultImage != null) resultImage.sprite = gameoverSprite;
             if (nextStageButton != null) nextStageButton.SetActive(false);
+
+            // Nếu thua thì hiển thị trắng số liệu trên UI
+            if (timeText != null) timeText.text = "--:--";
+            if (scoreText != null) scoreText.text = "THẤT BẠI";
+            if (newRecordAlert != null) newRecordAlert.SetActive(false);
 
             // --- LƯU TIẾN TRÌNH KHI THUA ---
             PlayerPrefs.SetInt("Current_Stage_Index", currentStageIndex);
@@ -64,7 +139,7 @@ public class MatchController : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        // 3. Đóng băng hoàn toàn mọi nhân vật trên sân khi chiến thắng
+        // 3. Đóng băng hoàn toàn mọi nhân vật trên sân khi kết thúc
         CharacterController2D[] allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
         foreach (CharacterController2D character in allCharacters)
         {

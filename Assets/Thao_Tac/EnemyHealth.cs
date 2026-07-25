@@ -84,13 +84,9 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        // --- GỌI TRỌNG TÀI BÁO THẮNG ---
-        MatchController match = FindAnyObjectByType<MatchController>();
-        if (match != null) match.EndMatch(true);
-        // -------------------------------
-
         Debug.Log(gameObject.name + " đã bị hạ gục!");
 
+        // 1. CHẠY HOẠT ẢNH GỤC NGÃ
         if (anim != null)
         {
             foreach (AnimatorControllerParameter param in anim.parameters)
@@ -100,16 +96,49 @@ public class EnemyHealth : MonoBehaviour
             }
         }
 
+        // 2. KHÓA AI DI CHUYỂN
         if (aiScript != null) aiScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
 
-        Rigidbody2D targetRb = GetComponent<Rigidbody2D>();
-        if (targetRb != null)
+        // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG (KNOCK-UP) ---
+        if (rb != null)
         {
-            targetRb.linearVelocity = Vector2.zero;
-            targetRb.simulated = false;
+            // Xác định hướng văng (văng ngược lại với hướng đang nhìn)
+            float vangX = transform.localScale.x > 0 ? -1.5f : 1.5f;
+            float vangY = 6f;
+
+            // Xóa hết quán tính cũ và bơm lực hất tung
+            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = new Vector2(vangX, vangY);
+
+            // Gọi bộ đếm giờ để khóa cái xác lại sau khi nó rơi chạm đất
+            StartCoroutine(FreezeBodyAfterDelay(2f));
+        }
+
+        // 4. GỌI GÓC QUAY CINEMATIC
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null && GameFeelManager.instance != null)
+        {
+            GameFeelManager.instance.TriggerCinematicFinish(this.transform, player.transform, true);
+        }
+        else
+        {
+            MatchController match = FindAnyObjectByType<MatchController>();
+            if (match != null) match.EndMatch(true);
         }
 
         this.enabled = false;
+    }
+
+    // Đợi xác rơi xuống đất rồi khóa cứng lại (không cho trượt trên sàn)
+    private IEnumerator FreezeBodyAfterDelay(float delay)
+    {
+        // Dùng Realtime vì lúc này game đang bị Slow-mo 
+        yield return new WaitForSecondsRealtime(delay);
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
+        }
     }
 }
