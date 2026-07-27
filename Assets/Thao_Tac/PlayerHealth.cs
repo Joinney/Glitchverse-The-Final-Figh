@@ -109,7 +109,7 @@ public class PlayerHealth : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.linearVelocity = new Vector2(vangX, vangY);
 
-            StartCoroutine(FreezeBodyAfterDelay(2f));
+            // ĐÃ XÓA FreezeBodyAfterDelay ở đây để nhường quyền cho GameFeelManager kiểm soát thời điểm rơi chạm đất!
         }
 
         // 4. GỌI GÓC QUAY CINEMATIC
@@ -125,15 +125,5 @@ public class PlayerHealth : MonoBehaviour
         }
 
         this.enabled = false;
-    }
-
-    private IEnumerator FreezeBodyAfterDelay(float delay)
-    {
-        yield return new WaitForSecondsRealtime(delay);
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.simulated = false;
-        }
     }
 }
