@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tat_skill1
+  m_Name: Mihawk_Attack2
   serializedVersion: 8
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,19 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -6986862385349952067, guid: 5051c2f322e2e67428261a67f795a052, type: 3}
+      value: {fileID: 1452035167417571433, guid: e7210189130436b419dc7ec0d3b1fa90, type: 3}
     - time: 0.16666667
-      value: {fileID: 7669704195127576953, guid: 054d912e1c811614484917b56ca232e8, type: 3}
+      value: {fileID: 7894128967692550678, guid: 274b64a8bcee8084c91be98030da332c, type: 3}
     - time: 0.33333334
-      value: {fileID: 4206938851230834228, guid: c930079408d018f44a1da7918ecfcca3, type: 3}
+      value: {fileID: -945785087746756497, guid: 6749b8a6cec55fd4390d618abf655b4b, type: 3}
     - time: 0.5
-      value: {fileID: 2264049117447930178, guid: 59ce0c84dcc063c48848172fbc3bc4bf, type: 3}
+      value: {fileID: 428124825733210171, guid: 74ad6698fa7d7874a8ee1c5320a54bf8, type: 3}
+    - time: 0.6666667
+      value: {fileID: 5071477614299199237, guid: 2e0f649ab073a424792b86269d080618, type: 3}
+    - time: 0.8333333
+      value: {fileID: 1009425677123780820, guid: dc9e6bd9585558040b913d1ba484fe06, type: 3}
+    - time: 1
+      value: {fileID: -7036338794392371194, guid: 3e56f848279b4f4418c5ccdc62e77894, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -51,16 +57,19 @@ AnimationClip:
       isSerializeReferenceCurve: 0
       metaData: 0
     pptrCurveMapping:
-    - {fileID: -6986862385349952067, guid: 5051c2f322e2e67428261a67f795a052, type: 3}
-    - {fileID: 7669704195127576953, guid: 054d912e1c811614484917b56ca232e8, type: 3}
-    - {fileID: 4206938851230834228, guid: c930079408d018f44a1da7918ecfcca3, type: 3}
-    - {fileID: 2264049117447930178, guid: 59ce0c84dcc063c48848172fbc3bc4bf, type: 3}
+    - {fileID: 1452035167417571433, guid: e7210189130436b419dc7ec0d3b1fa90, type: 3}
+    - {fileID: 7894128967692550678, guid: 274b64a8bcee8084c91be98030da332c, type: 3}
+    - {fileID: -945785087746756497, guid: 6749b8a6cec55fd4390d618abf655b4b, type: 3}
+    - {fileID: 428124825733210171, guid: 74ad6698fa7d7874a8ee1c5320a54bf8, type: 3}
+    - {fileID: 5071477614299199237, guid: 2e0f649ab073a424792b86269d080618, type: 3}
+    - {fileID: 1009425677123780820, guid: dc9e6bd9585558040b913d1ba484fe06, type: 3}
+    - {fileID: -7036338794392371194, guid: 3e56f848279b4f4418c5ccdc62e77894, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666667
+    m_StopTime: 1.1666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -80,7 +89,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.16666667
+  - time: 0.6666667
     functionName: TriggerMeleeHitbox
     data: 
     objectReferenceParameter: {fileID: 0}

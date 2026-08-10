@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tom_skill1
+  m_Name: Tat_Attack3
   serializedVersion: 8
   m_Legacy: 0
   m_Compressed: 0
@@ -21,19 +21,25 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -5386695632643209503, guid: 0a613d557e4f8204fa192f9b5e662f03, type: 3}
-    - time: 0.2
-      value: {fileID: 8404234449178682382, guid: 2ae2f02682aa8284b98bc20dc21c83db, type: 3}
-    - time: 0.4
-      value: {fileID: 2965844433203281379, guid: 561ed6a5253bc344cad2e1920c79d6dc, type: 3}
-    - time: 0.6
-      value: {fileID: -2102003501231014829, guid: 407a1210e1b8ab548974e2491535c40d, type: 3}
+      value: {fileID: 2960724735697646131, guid: 1a2c1122d1d44f94580c21763e6e2128, type: 3}
+    - time: 0.16666667
+      value: {fileID: -7975384025775442617, guid: 802afa612e7c2b14fbecb700fe044b7a, type: 3}
+    - time: 0.33333334
+      value: {fileID: -3870769916360766109, guid: 4c85f780141e2e3418242b6a3e1749d4, type: 3}
+    - time: 0.5
+      value: {fileID: 1539021308270978057, guid: 0ffd2c3f12fbd824fabbca633aea48c2, type: 3}
+    - time: 0.6666667
+      value: {fileID: -8432328455683342933, guid: e53efd66f6b8cd04bb8fc11a605873b6, type: 3}
+    - time: 0.8333333
+      value: {fileID: 8287060546656042078, guid: 8c9a1f77511fb5d4da6ef6a4b8d2a411, type: 3}
+    - time: 1
+      value: {fileID: 4632931651352532221, guid: 2e514229bda187d458c01f1c6ac47d60, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 5
+  m_SampleRate: 6
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -51,16 +57,19 @@ AnimationClip:
       isSerializeReferenceCurve: 0
       metaData: 0
     pptrCurveMapping:
-    - {fileID: -5386695632643209503, guid: 0a613d557e4f8204fa192f9b5e662f03, type: 3}
-    - {fileID: 8404234449178682382, guid: 2ae2f02682aa8284b98bc20dc21c83db, type: 3}
-    - {fileID: 2965844433203281379, guid: 561ed6a5253bc344cad2e1920c79d6dc, type: 3}
-    - {fileID: -2102003501231014829, guid: 407a1210e1b8ab548974e2491535c40d, type: 3}
+    - {fileID: 2960724735697646131, guid: 1a2c1122d1d44f94580c21763e6e2128, type: 3}
+    - {fileID: -7975384025775442617, guid: 802afa612e7c2b14fbecb700fe044b7a, type: 3}
+    - {fileID: -3870769916360766109, guid: 4c85f780141e2e3418242b6a3e1749d4, type: 3}
+    - {fileID: 1539021308270978057, guid: 0ffd2c3f12fbd824fabbca633aea48c2, type: 3}
+    - {fileID: -8432328455683342933, guid: e53efd66f6b8cd04bb8fc11a605873b6, type: 3}
+    - {fileID: 8287060546656042078, guid: 8c9a1f77511fb5d4da6ef6a4b8d2a411, type: 3}
+    - {fileID: 4632931651352532221, guid: 2e514229bda187d458c01f1c6ac47d60, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.8
+    m_StopTime: 1.1666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -80,7 +89,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.6
+  - time: 0.5
     functionName: TriggerMeleeHitbox
     data: 
     objectReferenceParameter: {fileID: 0}

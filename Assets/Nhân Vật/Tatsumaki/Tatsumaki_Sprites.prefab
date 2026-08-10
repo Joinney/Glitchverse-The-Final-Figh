@@ -395,6 +395,7 @@ MonoBehaviour:
   baseHealth: 1000
   maxHealth: 1000
   healthBar: {fileID: 0}
+  currentHealth: 0
   hitSounds:
   - {fileID: 8300000, guid: d44c3c461f7306f41a913c20645099e5, type: 3}
   stunDuration: 1

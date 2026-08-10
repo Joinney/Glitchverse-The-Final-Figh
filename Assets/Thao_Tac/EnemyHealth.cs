@@ -53,6 +53,11 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth);
 
+        if (ComboManager.instance != null)
+        {
+            ComboManager.instance.AddCombo();
+        }
+
         if (audioSource != null && hitSounds.Length > 0)
         {
             AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
