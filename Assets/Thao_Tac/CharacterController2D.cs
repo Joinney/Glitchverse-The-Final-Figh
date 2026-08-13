@@ -442,26 +442,39 @@ public class CharacterController2D : MonoBehaviour
     }
 
     // Nơi đây sẽ gọi sát thương, được kích hoạt bằng Animation Event
+    // ==========================================
+    // HỆ THỐNG SÁT THƯƠNG ĐÃ NÂNG CẤP CHO ĐỐI KHÁNG
+    // ==========================================
     public void TriggerMeleeHitbox()
     {
         if (attackPoint == null) return;
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, meleeHitRange, enemyLayers);
+
+        // BỎ QUA enemyLayers! Quét toàn bộ mọi thứ xung quanh (All Layers)
+        // Điều này đảm bảo P1 và P2 luôn chém trúng nhau dù ở bất kỳ Layer nào
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(attackPoint.position, meleeHitRange);
         bool hitSomeone = false;
 
-        foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D obj in hitObjects)
         {
-            CharacterController2D targetObj = enemy.GetComponent<CharacterController2D>();
+            // 1. Không được tự đánh trúng chính bản thân mình
+            if (obj.gameObject == this.gameObject) continue;
 
-            if (targetObj != null && targetObj.isDashing) continue;
-            if (targetObj != null && targetObj.isBlocking) continue;
+            // 2. Kiểm tra xem thứ vừa đụng phải có phải là Nhân vật không (bỏ qua nền đất, tường...)
+            CharacterController2D targetObj = obj.GetComponent<CharacterController2D>();
+            if (targetObj == null) continue;
 
-            EnemyHealth aiHealth = enemy.GetComponent<EnemyHealth>();
+            // 3. Nếu đối phương đang Lướt hoặc Đỡ Đòn thì không trừ máu
+            if (targetObj.isDashing || targetObj.isBlocking) continue;
+
+            // 4. Trừ máu (Hệ thống tự nhận diện nếu đó là Player hay Enemy)
+            EnemyHealth aiHealth = obj.GetComponent<EnemyHealth>();
             if (aiHealth != null) { aiHealth.TakeDamage(meleeDamage); hitSomeone = true; }
 
-            PlayerHealth playerHealth = enemy.GetComponent<PlayerHealth>();
+            PlayerHealth playerHealth = obj.GetComponent<PlayerHealth>();
             if (playerHealth != null) { playerHealth.TakeDamage(meleeDamage); hitSomeone = true; }
         }
 
+        // Hồi năng lượng và Hiệu ứng rung màn hình
         if (hitSomeone && energySys != null) energySys.AddEnergy(energyGainOnHit);
 
         if (hitSomeone && GameFeelManager.instance != null)

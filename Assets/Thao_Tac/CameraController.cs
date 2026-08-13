@@ -10,11 +10,11 @@ public class CameraController : MonoBehaviour
     public float smoothSpeed = 5f; 
     public Vector3 offset = new Vector3(0f, 2f, -10f); 
 
-    [Header("Cấu hình Tự Động Zoom (NEW)")]
-    public float minZoom = 5f;          // Kích thước camera tối thiểu khi 2 đứa đứng sát nhau (mặc định gốc của bạn là 5)
-    public float maxZoom = 7.5f;        // Kích thước camera tối đa khi ra xa nhau (tránh lùi quá rộng lòi viền)
-    public float zoomFactor = 0.25f;    // Độ nhạy của zoom (số càng lớn camera zoom ra càng nhanh khi nhân vật lùi lại)
-    private Camera cam;                 // Biến nội bộ để điều khiển component Camera
+    [Header("Cấu hình Tự Động Zoom")]
+    public float minZoom = 5f;            // Kích thước camera tối thiểu khi 2 đứa đứng sát nhau
+    public float maxZoom = 7.5f;          // Kích thước camera tối đa khi ra xa nhau
+    public float zoomFactor = 0.25f;      // Độ nhạy của zoom
+    private Camera cam;                   // Biến nội bộ để điều khiển component Camera
 
     [Header("Khóa Tầm Nhìn (Tránh lòi viền đen)")]
     public float minX = -20f; 
@@ -24,7 +24,6 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        // Tự động lấy linh hồn Camera 2D gắn trên chính Object này
         cam = GetComponent<Camera>();
 
         if (player1 == null)
@@ -55,28 +54,32 @@ public class CameraController : MonoBehaviour
 
         if (player1 == null || player2 == null) return;
 
-        // 1. Logic di chuyển camera theo điểm chính giữa (Giữ nguyên)
+        // 1. Tính toán khoảng cách ngang giữa 2 nhân vật
+        float distance = Mathf.Abs(player1.position.x - player2.position.x);
+
+        // =========================================================================
+        // 💡 XỬ LÝ THÔNG MINH CHO LỖI MẤT CHÂN KHI LẠI GẦN:
+        // Khi 2 nhân vật lại gần nhau (distance nhỏ), ta tự động cộng thêm chiều cao 
+        // vào offset.y để camera ngước lên trên, giữ trọn chân nhân vật trong khung hình.
+        // =========================================================================
+        float dynamicYOffset = offset.y + Mathf.Lerp(1.5f, 0f, distance / 5f); 
+        Vector3 dynamicOffset = new Vector3(offset.x, dynamicYOffset, offset.z);
+
+        // 2. Logic di chuyển camera theo điểm chính giữa kết hợp offset động
         Vector3 middlePoint = (player1.position + player2.position) / 2f;
-        Vector3 targetPosition = middlePoint + offset;
+        Vector3 targetPosition = middlePoint + dynamicOffset;
 
         targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY + 1.5f); // Cho phép nhỉnh lên một chút khi cận chiến
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
 
-        // 2. LOGIC TỰ ĐỘNG ZOOM THEO KHOẢNG CÁCH (XỬ LÝ MỚI)
+        // 3. LOGIC TỰ ĐỘNG ZOOM THEO KHOẢNG CÁCH
         if (cam != null)
         {
-            // Tính toán khoảng cách thực tế giữa Player và Enemy theo trục X (chiều ngang)
-            float distance = Mathf.Abs(player1.position.x - player2.position.x);
-
-            // Tính toán size camera cần đạt tới: Khoảng cách càng xa, size camera càng to lên
             float targetZoom = minZoom + (distance * zoomFactor);
-
-            // Chốt chặn ép không cho phép kích thước camera vượt quá ngưỡng min và max định sẵn
             targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
 
-            // Nội suy Lerp giúp camera thay đổi kích thước mượt mà, không bị khựng giật khi nhân vật dash nhanh
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, smoothSpeed * Time.deltaTime);
         }
     }

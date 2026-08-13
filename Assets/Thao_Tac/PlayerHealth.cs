@@ -7,14 +7,8 @@ public class PlayerHealth : MonoBehaviour
     public Sprite characterFace;
     public string characterName = "Name NV";
 
-    // THAY ĐỔI NHẸ Ở ĐÂY: Đổi maxHealth thành baseHealth (Máu gốc)
     public int baseHealth = 3800;
-
-    // Khai báo maxHealth ẩn đi để script tự tính toán, không cần nhập tay
     [HideInInspector] public int maxHealth;
-
-    public HealthBarUI healthBar;
-
     public int currentHealth;
 
     [Header("Âm Thanh Đau Đớn")]
@@ -28,28 +22,61 @@ public class PlayerHealth : MonoBehaviour
     public float stunDuration = 0.5f;
 
     private Coroutine stunCoroutine;
+    private HealthBarUI healthBar;
 
     void Start()
     {
         // CẬP NHẬT TỈ LỆ MÁU TỪ SETTINGS
         float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
-
-        // Dùng MÁU GỐC (baseHealth) nhân với tỷ lệ để ra maxHealth
         maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
-
         currentHealth = maxHealth;
+
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerScript = GetComponent<CharacterController2D>();
 
-        // (Lưu ý: GameObject.Find khá nặng, nếu được bạn nên kéo thả healthBar trực tiếp trên Inspector)
-        healthBar = GameObject.Find("HealthBar_P1").GetComponent<HealthBarUI>();
+        // ==========================================
+        // TỰ ĐỘNG PHÂN BIỆT THANH MÁU P1 HAY P2 / ENEMY
+        // ==========================================
+        string gameMode = PlayerPrefs.GetString("GameMode", "Single");
 
-        if (healthBar != null && characterFace != null)
+        if (gameMode == "PvP")
         {
-            healthBar.SetAvatar(characterFace);
+            // Nếu là chế độ 2 người: Dựa vào playerIndex để gán thanh máu
+            if (playerScript != null && playerScript.playerIndex == 2)
+            {
+                GameObject barP2 = GameObject.Find("HealthBar_P2");
+                if (barP2 != null) healthBar = barP2.GetComponent<HealthBarUI>();
+            }
+            else
+            {
+                // Mặc định cho Player 1
+                GameObject barP1 = GameObject.Find("HealthBar_P1");
+                if (barP1 != null) healthBar = barP1.GetComponent<HealthBarUI>();
+            }
+        }
+        else
+        {
+            // Nếu là chế độ Chơi đơn (Singleplayer): Player dùng P1, AI dùng P2
+            if (gameObject.CompareTag("Enemy"))
+            {
+                GameObject barP2 = GameObject.Find("HealthBar_P2");
+                if (barP2 != null) healthBar = barP2.GetComponent<HealthBarUI>();
+            }
+            else
+            {
+                GameObject barP1 = GameObject.Find("HealthBar_P1");
+                if (barP1 != null) healthBar = barP1.GetComponent<HealthBarUI>();
+            }
+        }
+
+        // KÍCH HOẠT HIỂN THỊ LÊN THANH MÁU TƯƠNG TỨC
+        if (healthBar != null)
+        {
+            if (characterFace != null) healthBar.SetAvatar(characterFace);
             healthBar.SetCharacterName(characterName);
+            healthBar.SetHealth(currentHealth, maxHealth);
         }
     }
 
@@ -86,7 +113,6 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log(gameObject.name + " đã tử trận!");
 
-        // 1. CHẠY HOẠT ẢNH GỤC NGÃ
         if (anim != null)
         {
             foreach (AnimatorControllerParameter param in anim.parameters)
@@ -96,11 +122,9 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // 2. KHÓA DI CHUYỂN
         if (playerScript != null) playerScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
 
-        // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG (KNOCK-UP) ---
         if (rb != null)
         {
             float vangX = transform.localScale.x > 0 ? -1.5f : 1.5f;
@@ -108,11 +132,8 @@ public class PlayerHealth : MonoBehaviour
 
             rb.linearVelocity = Vector2.zero;
             rb.linearVelocity = new Vector2(vangX, vangY);
-
-            // ĐÃ XÓA FreezeBodyAfterDelay ở đây để nhường quyền cho GameFeelManager kiểm soát thời điểm rơi chạm đất!
         }
 
-        // 4. GỌI GÓC QUAY CINEMATIC
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
         if (enemy != null && GameFeelManager.instance != null)
         {

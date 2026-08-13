@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7641225619622006256
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -245,6 +245,8 @@ MonoBehaviour:
     m_Bits: 8
   dashDuration: 0.25
   isDashing: 0
+  comboStep: 0
+  comboWindow: 0.8
   skill1Cost: 0
   skill2Cost: 25
   skill3Cost: 50
@@ -265,6 +267,8 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 4298145840603222059, guid: 76a2ff1195ba0d14c89cdff0cbf66c06, type: 3}
   isBlocking: 0
   isStunned: 0
+  canMoveAndFight: 0
+  attackCooldown: 0.35
 --- !u!82 &1639237251072188429
 AudioSource:
   m_ObjectHideFlags: 0

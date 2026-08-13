@@ -277,7 +277,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5851465457807570211
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -388,6 +388,8 @@ MonoBehaviour:
     m_Bits: 0
   dashDuration: 0.25
   isDashing: 0
+  comboStep: 0
+  comboWindow: 0.8
   skill1Cost: 0
   skill2Cost: 1000
   skill3Cost: 1000
@@ -409,6 +411,7 @@ MonoBehaviour:
   isBlocking: 0
   isStunned: 0
   canMoveAndFight: 0
+  attackCooldown: 0.35
 --- !u!114 &7265582207138030308
 MonoBehaviour:
   m_ObjectHideFlags: 0

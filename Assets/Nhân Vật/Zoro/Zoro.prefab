@@ -147,7 +147,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &9016129930361654572
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -258,6 +258,8 @@ MonoBehaviour:
     m_Bits: 8
   dashDuration: 0.25
   isDashing: 0
+  comboStep: 0
+  comboWindow: 0.8
   skill1Cost: 0
   skill2Cost: 25
   skill3Cost: 50
@@ -278,6 +280,8 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 0}
   isBlocking: 0
   isStunned: 0
+  canMoveAndFight: 0
+  attackCooldown: 0.35
 --- !u!114 &8227367587030349323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +299,7 @@ MonoBehaviour:
   baseHealth: 3800
   maxHealth: 3800
   healthBar: {fileID: 0}
+  currentHealth: 0
   hitSounds: []
   stunDuration: 0.5
 --- !u!1 &8611812724070034909
