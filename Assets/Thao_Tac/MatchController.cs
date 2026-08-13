@@ -1,15 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro; // Bắt buộc phải có để dùng TextMeshPro hiển thị điểm
+using TMPro;
+using System.Collections; // 💡 BẮT BUỘC PHẢI THÊM DÒNG NÀY ĐỂ DÙNG TÍNH NĂNG TỰ ĐỘNG ĐẾM GIÂY
 
 public class MatchController : MonoBehaviour
 {
     [Header("Giao diện Kết quả")]
     public GameObject gameOverPanel;
     public Image resultImage;
-
-    [Header("Kho Ảnh Mẫu")]
     public Sprite victorySprite;
     public Sprite gameoverSprite;
 
@@ -22,52 +21,85 @@ public class MatchController : MonoBehaviour
     [Header("Số thứ tự của Ải này (1 đến 5)")]
     public int currentStageIndex = 1;
 
-    // --- PHẦN MỚI THÊM: GIAO DIỆN KỶ LỤC VÀ ĐIỂM SỐ ---
     [Header("UI Kỷ Lục & Điểm Số")]
-    public TextMeshProUGUI timeText;       // Kéo Text hiển thị thời gian vào đây
-    public TextMeshProUGUI scoreText;      // Kéo Text hiển thị điểm số vào đây
-    public GameObject newRecordAlert;      // Kéo Chữ "NEW RECORD!" vào đây
+    public TextMeshProUGUI timeText;       
+    public TextMeshProUGUI scoreText;      
+    public GameObject newRecordAlert;      
+
+    [Header("Cấu hình Đối Kháng (PvP BO3)")]
+    public string mainMenuSceneName = "MainMenu"; 
+    public TextMeshProUGUI pvpResultText;         
+    public TextMeshProUGUI pvpScoreText;          
+    public GameObject pvpNextRoundBtnObject;      
+    public GameObject pvpBackBtnObject;           
+    
+    // ==========================================
+    // 💡 TỐI ƯU TRẢI NGHIỆM: ĐỘ TRỄ TỰ ĐỘNG RESET TRẬN
+    // ==========================================
+    [Header("Chờ tự động sang Hiệp mới (Giây)")]
+    public float autoNextRoundDelay = 3f; // Để người chơi kịp ngắm tỉ số 3 giây rồi auto lướt qua ván mới
 
     private float matchTime = 0f;
     private bool matchEnded = false;
+    private string gameMode;
+
+    void Start()
+    {
+        gameMode = PlayerPrefs.GetString("GameMode", "Single");
+        
+        if (pvpResultText != null) pvpResultText.gameObject.SetActive(false);
+        if (pvpScoreText != null) pvpScoreText.gameObject.SetActive(false);
+    }
 
     void Update()
     {
-        // Bấm giờ: Trận đấu đang diễn ra và đếm ngược đã xong
         if (CountdownManager.isCountdownFinished && !matchEnded)
         {
             matchTime += Time.deltaTime;
         }
     }
 
-    // HÀM XỬ LÝ KẾT THÚC TRẬN ĐẤU
+    // ==========================================
+    // HÀM 1: BỘ ĐÁNH CHẶN VÀ XỬ LÝ CHƠI ĐƠN
+    // ==========================================
     public void EndMatch(bool isPlayerWin)
     {
         if (matchEnded) return;
-        matchEnded = true;
 
-        // 1. Hiện bảng kết quả lên
+        if (gameMode == "PvP")
+        {
+            int winnerIndex = 1;
+            PlayerHealth[] allPlayers = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+            foreach (PlayerHealth p in allPlayers)
+            {
+                if (p.currentHealth <= 0)
+                {
+                    CharacterController2D cc = p.GetComponent<CharacterController2D>();
+                    if (cc != null && cc.playerIndex == 1) winnerIndex = 2; 
+                    else winnerIndex = 1; 
+                }
+            }
+            EndPvPMatch(winnerIndex);
+            return; 
+        }
+
+        matchEnded = true;
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
 
-        // 2. Tráo ảnh, Quản lý nút bấm và LƯU TIẾN TRÌNH SAVE GAME
+        // ... [GIỮ NGUYÊN CODE TÍNH ĐIỂM CHƠI ĐƠN] ...
         if (isPlayerWin)
         {
             if (resultImage != null) resultImage.sprite = victorySprite;
             if (nextStageButton != null) nextStageButton.SetActive(true);
 
-            // ==========================================
-            // TÍNH TOÁN ĐIỂM SỐ VÀ THỜI GIAN
-            // ==========================================
             int minutes = Mathf.FloorToInt(matchTime / 60F);
             int seconds = Mathf.FloorToInt(matchTime - minutes * 60);
             string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
 
             int baseScore = 1000;
-            // Thưởng thời gian (Đánh càng nhanh điểm càng cao, tối đa 5000 điểm)
             int timeBonus = Mathf.Max(0, 5000 - Mathf.RoundToInt(matchTime * 50));
             int healthBonus = 0;
 
-            // Thưởng sinh tồn (Máu còn càng nhiều điểm càng cao, tối đa 5000 điểm)
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -81,11 +113,9 @@ public class MatchController : MonoBehaviour
 
             int totalScore = baseScore + timeBonus + healthBonus;
 
-            // Cập nhật lên UI
             if (timeText != null) timeText.text = "THỜI GIAN: " + timeString;
             if (scoreText != null) scoreText.text = "ĐIỂM TỔNG: " + totalScore.ToString();
 
-            // Kiểm tra và lưu kỷ lục mới vào máy
             string stageScoreKey = "BestScore_Stage_" + currentStageIndex;
             string stageTimeKey = "BestTime_Stage_" + currentStageIndex;
 
@@ -93,94 +123,139 @@ public class MatchController : MonoBehaviour
             float bestTime = PlayerPrefs.GetFloat(stageTimeKey, 9999f);
 
             bool isNewRecord = false;
-            if (totalScore > bestScore)
-            {
-                PlayerPrefs.SetInt(stageScoreKey, totalScore);
-                isNewRecord = true;
-            }
-            if (matchTime < bestTime)
-            {
-                PlayerPrefs.SetFloat(stageTimeKey, matchTime);
-                isNewRecord = true;
-            }
+            if (totalScore > bestScore) { PlayerPrefs.SetInt(stageScoreKey, totalScore); isNewRecord = true; }
+            if (matchTime < bestTime) { PlayerPrefs.SetFloat(stageTimeKey, matchTime); isNewRecord = true; }
 
-            // Hiển thị chữ chúc mừng Kỷ lục mới nếu có
             if (newRecordAlert != null) newRecordAlert.SetActive(isNewRecord);
-            // ==========================================
 
-            // --- 1. LƯU CHO NÚT CONTINUE ---
             PlayerPrefs.SetInt("Current_Stage_Index", currentStageIndex + 1);
             PlayerPrefs.SetInt("Has_Saved_Game", 1);
-
-            // --- 2. LƯU ĐỂ MỞ Ổ KHÓA BẢN ĐỒ (MAP) ---
             int currentUnlocked = PlayerPrefs.GetInt("UnlockedStage", 1);
-            if (currentStageIndex >= currentUnlocked)
-            {
-                PlayerPrefs.SetInt("UnlockedStage", currentStageIndex + 1);
-                Debug.Log("Đã phá ổ khóa ải số: " + (currentStageIndex + 1));
-            }
-
+            if (currentStageIndex >= currentUnlocked) PlayerPrefs.SetInt("UnlockedStage", currentStageIndex + 1);
             PlayerPrefs.Save();
-            Debug.Log($"Thắng! Thời gian: {timeString} | Điểm: {totalScore} | Kỷ lục mới: {isNewRecord}");
         }
         else
         {
             if (resultImage != null) resultImage.sprite = gameoverSprite;
             if (nextStageButton != null) nextStageButton.SetActive(false);
-
-            // Nếu thua thì hiển thị trắng số liệu trên UI
             if (timeText != null) timeText.text = "--:--";
             if (scoreText != null) scoreText.text = "THẤT BẠI";
             if (newRecordAlert != null) newRecordAlert.SetActive(false);
 
-            // --- LƯU TIẾN TRÌNH KHI THUA ---
             PlayerPrefs.SetInt("Current_Stage_Index", currentStageIndex);
             PlayerPrefs.SetInt("Has_Saved_Game", 1);
             PlayerPrefs.Save();
         }
 
-        // 3. Đóng băng hoàn toàn mọi nhân vật trên sân khi kết thúc
+        FreezeAllCharacters();
+    }
+
+    // ==========================================
+    // HÀM 2: XỬ LÝ ĐỐI KHÁNG ĐẾM HIỆP CỰC MƯỢT
+    // ==========================================
+    public void EndPvPMatch(int winningPlayerIndex)
+    {
+        if (matchEnded) return;
+        matchEnded = true;
+
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+
+        if (timeText != null) timeText.gameObject.SetActive(false);
+        if (scoreText != null) scoreText.gameObject.SetActive(false);
+        if (newRecordAlert != null) newRecordAlert.SetActive(false);
+        if (nextStageButton != null) nextStageButton.SetActive(false);
+        if (resultImage != null) resultImage.gameObject.SetActive(false);
+        
+        string scoreKey = "PvP_P" + winningPlayerIndex + "_Score";
+        int currentScore = PlayerPrefs.GetInt(scoreKey, 0) + 1; 
+        PlayerPrefs.SetInt(scoreKey, currentScore);
+
+        int p1Score = PlayerPrefs.GetInt("PvP_P1_Score", 0);
+        int p2Score = PlayerPrefs.GetInt("PvP_P2_Score", 0);
+
+        if (pvpScoreText != null)
+        {
+            pvpScoreText.gameObject.SetActive(true);
+            pvpScoreText.text = $"TỈ SỐ\nP1 [{p1Score}] - [{p2Score}] P2";
+        }
+
+        if (pvpResultText != null) pvpResultText.gameObject.SetActive(true);
+
+        // ==========================================
+        // 💡 CẬP NHẬT: LUÔN HIỆN PLAY AGAIN KHI KẾT THÚC TRẬN
+        // ==========================================
+        if (currentScore >= 2)
+        {
+            // THẮNG CHUNG CUỘC: Hiện chữ to và HIỆN CẢ 2 NÚT BẤM
+            if (pvpResultText != null) pvpResultText.text = "PLAYER " + winningPlayerIndex + "\nWINS THE MATCH!";
+            
+            if (pvpNextRoundBtnObject != null) pvpNextRoundBtnObject.SetActive(true); // Bật nút PLAY AGAIN
+            if (pvpBackBtnObject != null) pvpBackBtnObject.SetActive(true);           // Bật nút BACK
+        }
+        else
+        {
+            // MỚI THẮNG 1 HIỆP: Ẩn nút đi, để 3 giây auto-reset chạy mượt
+            if (pvpResultText != null) pvpResultText.text = "PLAYER " + winningPlayerIndex + "\nWINS ROUND!";
+            
+            if (pvpNextRoundBtnObject != null) pvpNextRoundBtnObject.SetActive(false);
+            if (pvpBackBtnObject != null) pvpBackBtnObject.SetActive(false);
+
+            StartCoroutine(AutoNextRoundRoutine());
+        }
+
+        FreezeAllCharacters();
+    }
+
+    private IEnumerator AutoNextRoundRoutine()
+    {
+        yield return new WaitForSeconds(autoNextRoundDelay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void FreezeAllCharacters()
+    {
         CharacterController2D[] allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
         foreach (CharacterController2D character in allCharacters)
         {
             Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.linearVelocity = Vector2.zero;
-            }
-
+            if (rb != null) rb.linearVelocity = Vector2.zero;
             character.StopAllCoroutines();
             character.enabled = false;
-
             Animator anim = character.GetComponent<Animator>();
-            if (anim != null)
-            {
-                anim.SetFloat("Speed", 0); // Ép về dáng đứng im
-                anim.SetBool("IsBlocking", false);
-            }
+            if (anim != null) { anim.SetFloat("Speed", 0); anim.SetBool("IsBlocking", false); }
         }
     }
 
-    // --- CÁC HÀM GẮN CHO NÚT BẤM (ON CLICK) ---
-
-    public void OnReplayClick()
-    {
-        // Chơi lại map hiện tại
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void OnBackClick()
-    {
-        // Về màn hình Menu chính (Chỗ có nút Continue)
-        SceneManager.LoadScene("SampleScene"); // Đảm bảo tên "SampleScene" đúng với Scene Menu của bạn
-    }
-
-    public void OnNextStageClick()
-    {
-        // Nhảy sang map tiếp theo trực tiếp từ bảng Victory
-        if (!string.IsNullOrEmpty(nextStageName))
+    // ==========================================
+    // 💡 CẬP NHẬT: NÚT PLAY AGAIN SẼ RESET TỈ SỐ PVP
+    // ==========================================
+    public void OnReplayClick() 
+    { 
+        if (gameMode == "PvP")
         {
-            SceneManager.LoadScene(nextStageName);
+            // Nếu bấm chơi lại trận mới, phải trả tỉ số về 0-0!
+            PlayerPrefs.SetInt("PvP_P1_Score", 0);
+            PlayerPrefs.SetInt("PvP_P2_Score", 0);
+            PlayerPrefs.Save();
         }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+    }
+    
+    public void OnBackClick() 
+    { 
+        if (gameMode == "PvP")
+        {
+            PlayerPrefs.SetInt("BackToCharSelect", 1);
+            SceneManager.LoadScene(mainMenuSceneName); 
+        }
+        else
+        {
+            SceneManager.LoadScene("SampleScene"); 
+        }
+    }
+    
+    public void OnNextStageClick() 
+    { 
+        if (!string.IsNullOrEmpty(nextStageName)) SceneManager.LoadScene(nextStageName); 
     }
 }

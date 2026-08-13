@@ -23,14 +23,7 @@ public class GameFeelManager : MonoBehaviour
         }
     }
 
-    // ==========================================
-    // 1. HIỆU ỨNG HIT-STOP (KHỰNG HÌNH)
-    // ==========================================
-    public void TriggerHitStop(float duration = 0.05f)
-    {
-        StartCoroutine(HitStopRoutine(duration));
-    }
-
+    public void TriggerHitStop(float duration = 0.05f) { StartCoroutine(HitStopRoutine(duration)); }
     private IEnumerator HitStopRoutine(float duration)
     {
         Time.timeScale = 0f;
@@ -38,14 +31,7 @@ public class GameFeelManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    // ==========================================
-    // 2. HIỆU ỨNG RUNG MÀN HÌNH (CAMERA SHAKE)
-    // ==========================================
-    public void TriggerCameraShake(float duration = 0.1f, float magnitude = 0.2f)
-    {
-        StartCoroutine(CameraShakeRoutine(duration, magnitude));
-    }
-
+    public void TriggerCameraShake(float duration = 0.1f, float magnitude = 0.2f) { StartCoroutine(CameraShakeRoutine(duration, magnitude)); }
     private IEnumerator CameraShakeRoutine(float duration, float magnitude)
     {
         Transform camTransform = Camera.main.transform;
@@ -56,7 +42,6 @@ public class GameFeelManager : MonoBehaviour
         {
             float x = Random.Range(-1f, 1f) * magnitude;
             float y = Random.Range(-1f, 1f) * magnitude;
-
             camTransform.localPosition = new Vector3(origPos.x + x, origPos.y + y, origPos.z);
             elapsed += Time.unscaledDeltaTime;
             yield return null;
@@ -64,9 +49,6 @@ public class GameFeelManager : MonoBehaviour
         camTransform.localPosition = origPos;
     }
 
-    // ==========================================
-    // 3. GÓC MÁY KẾT LIỄU ĐỐI THỦ (CINEMATIC)
-    // ==========================================
     public void TriggerCinematicFinish(Transform loser, Transform winner, bool isPlayerWin)
     {
         StartCoroutine(CinematicFinishRoutine(loser, winner, isPlayerWin));
@@ -81,7 +63,37 @@ public class GameFeelManager : MonoBehaviour
             if (script != this) script.enabled = false;
         }
 
-        // KHÓA TAY CHÂN NGƯỜI CHIẾN THẮNG
+        // ==========================================
+        // 1. TỰ ĐỘNG TÌM ĐÚNG NGƯỜI CHIẾN THẮNG (Sửa lỗi Zoom nhầm người)
+        // ==========================================
+        if (winner == null)
+        {
+            PlayerHealth[] allPlayers = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+            foreach (PlayerHealth p in allPlayers)
+            {
+                if (p.transform != loser)
+                {
+                    winner = p.transform;
+                    break;
+                }
+            }
+        }
+
+        // ==========================================
+        // 2. ANTI-JUGGLING: CHỐNG GIẬT CAMERA KHI CHẾT TRÊN KHÔNG
+        // ==========================================
+        if (loser != null)
+        {
+            // Tắt mọi điểm neo sát thương (Triggers) để các skill đang bay tới sẽ xuyên qua luôn
+            // Giúp xác chết rơi xuống mượt mà theo trọng lực mà không bị xóc nảy!
+            Collider2D[] loserCols = loser.GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D col in loserCols)
+            {
+                if (col.isTrigger) col.enabled = false;
+            }
+        }
+
+        // Khóa người chiến thắng tạo dáng
         if (winner != null)
         {
             MonoBehaviour[] winnerScripts = winner.GetComponents<MonoBehaviour>();
@@ -89,99 +101,69 @@ public class GameFeelManager : MonoBehaviour
             {
                 string sName = script.GetType().Name;
                 if (sName.Contains("Movement") || sName.Contains("AI") || sName.Contains("Controller") || sName.Contains("Health"))
-                {
                     script.enabled = false;
-                }
             }
-
             Rigidbody2D winnerRb = winner.GetComponent<Rigidbody2D>();
             if (winnerRb != null) winnerRb.linearVelocity = Vector2.zero;
-
             Animator winnerAnim = winner.GetComponent<Animator>();
-            if (winnerAnim != null)
-            {
-                winnerAnim.SetFloat("Speed", 0);
-                winnerAnim.SetBool("IsBlocking", false);
-            }
+            if (winnerAnim != null) { winnerAnim.SetFloat("Speed", 0); winnerAnim.SetBool("IsBlocking", false); }
         }
 
-        // Slow-Motion siêu ngầu
         Time.timeScale = 0.2f;
-
         float transitionTime = 0.5f;
         float elapsed = 0f;
         Vector3 startCamPos = cam.transform.position;
         float targetZoomSize = originalOrthoSize * 0.5f;
 
-        // PHASE 1: ZOOM VÀO VÀ LIA MÁY BÁM THEO KẺ THUA
+        // ZOOM VÀO KẺ THUA NGÃ XUỐNG
         while (elapsed < transitionTime)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / transitionTime;
             t = t * t * (3f - 2f * t);
-
-            Vector3 loserFocusPos = new Vector3(loser.position.x, loser.position.y + 0.5f, startCamPos.z);
-            cam.transform.position = Vector3.Lerp(startCamPos, loserFocusPos, t);
+            if (loser != null)
+            {
+                Vector3 loserFocusPos = new Vector3(loser.position.x, loser.position.y + 0.5f, startCamPos.z);
+                cam.transform.position = Vector3.Lerp(startCamPos, loserFocusPos, t);
+            }
             cam.orthographicSize = Mathf.Lerp(originalOrthoSize, targetZoomSize, t);
             yield return null;
         }
 
-        // =======================================
-        // CAMERA THÔNG MINH KẾT HỢP XỬ LÝ VẬT LÝ KHI CHẠM ĐẤT
-        // =======================================
+        // CHỜ XÁC CHẠM ĐẤT TRONG SLOW MOTION
         float maxFallWatchTime = 6f;
         float fallElapsed = 0f;
-        Rigidbody2D loserRb = loser.GetComponent<Rigidbody2D>();
-
-        bool wasFalling = false; // Biến cờ theo dõi: Đã rơi chưa?
+        Rigidbody2D loserRb = loser != null ? loser.GetComponent<Rigidbody2D>() : null;
+        bool wasFalling = false; 
 
         while (fallElapsed < maxFallWatchTime)
         {
             fallElapsed += Time.unscaledDeltaTime;
-
-            if (loser != null)
-            {
-                cam.transform.position = new Vector3(loser.position.x, loser.position.y + 0.5f, startCamPos.z);
-            }
+            if (loser != null) cam.transform.position = new Vector3(loser.position.x, loser.position.y + 0.5f, startCamPos.z);
 
             if (loserRb != null)
             {
-                // Xác nhận xác đang trên đà rớt xuống (Vận tốc Y âm)
-                if (loserRb.linearVelocity.y < -0.1f)
-                {
-                    wasFalling = true;
-                }
-
-                // NẾU ĐÃ TỪNG RƠI XUỐNG, mà giờ vận tốc Y bằng 0 => Chính xác 100% là vừa chạm sàn
+                if (loserRb.linearVelocity.y < -0.1f) wasFalling = true;
                 if (wasFalling && Mathf.Abs(loserRb.linearVelocity.y) < 0.05f)
                 {
-
-                    // 1. TRIỆT TIÊU LỖI TRƯỢT: Đóng băng toàn bộ vật lý
                     loserRb.linearVelocity = Vector2.zero;
-                    loserRb.simulated = false; // Tắt luôn vật lý, xác nằm im như tượng
-
-                    // 2. TRIỆT TIÊU LỖI LƠ LỬNG: Dìm xác xuống mặt đất một chút
-                    // MẸO: Bạn có thể thay đổi số -0.4f thành -0.3f hoặc -0.5f nếu thấy nó chìm quá sâu hoặc chưa đủ sát sàn
+                    loserRb.simulated = false; // Tắt hẳn vật lý để xác nằm im
                     loser.position = new Vector3(loser.position.x, loser.position.y - 0.4f, loser.position.z);
-
-                    yield return new WaitForSecondsRealtime(0.5f); // Ngắm xác nằm im thêm 0.5s rồi mới lướt đi
+                    yield return new WaitForSecondsRealtime(0.5f);
                     break;
                 }
             }
             yield return null;
         }
-        // =======================================
 
-        // PHASE 3: LƯỚT CAMERA SANG KẺ CHIẾN THẮNG
+        // CHUYỂN CẢNH SANG NGƯỜI CHIẾN THẮNG
         elapsed = 0f;
         startCamPos = cam.transform.position;
-
         while (elapsed < transitionTime)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / transitionTime;
             t = t * t * (3f - 2f * t);
-
             if (winner != null)
             {
                 Vector3 winnerFocusPos = new Vector3(winner.position.x, winner.position.y + 0.5f, startCamPos.z);
@@ -192,20 +174,33 @@ public class GameFeelManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1.5f);
 
-        // PHASE 4: TRẢ LẠI BÌNH THƯỜNG VÀ GỌI BẢNG VICTORY
+        // TRẢ LẠI TRẠNG THÁI CAMERA
         Time.timeScale = 1f;
         cam.transform.position = originalCamPos;
         cam.orthographicSize = originalOrthoSize;
-
         foreach (MonoBehaviour script in camScripts)
         {
             if (script != this) script.enabled = true;
         }
 
+        // ==========================================
+        // 3. ĐIỀU HƯỚNG VỀ ĐÚNG CHẾ ĐỘ (SINGLE HAY PVP)
+        // ==========================================
         MatchController matchCtrl = Object.FindFirstObjectByType<MatchController>();
         if (matchCtrl != null)
         {
-            matchCtrl.EndMatch(isPlayerWin);
+            string mode = PlayerPrefs.GetString("GameMode", "Single");
+            if (mode == "PvP")
+            {
+                int winnerIdx = 1;
+                CharacterController2D cc = loser.GetComponent<CharacterController2D>();
+                if (cc != null && cc.playerIndex == 1) winnerIdx = 2; // P1 chết -> P2 thắng
+                matchCtrl.EndPvPMatch(winnerIdx);
+            }
+            else
+            {
+                matchCtrl.EndMatch(isPlayerWin);
+            }
         }
     }
 }

@@ -100,23 +100,21 @@ public class EnemyHealth : MonoBehaviour
         if (aiScript != null) aiScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
 
-        // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG (KNOCK-UP) ---
+        // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG ĐÃ ĐƯỢC GIẢM LỰC ---
         if (rb != null)
         {
-            float vangX = transform.localScale.x > 0 ? -1.5f : 1.5f;
-            float vangY = 6f;
+            float vangX = transform.localScale.x > 0 ? -1.0f : 1.0f; 
+            float vangY = 2.5f; // 💡 Đã hạ từ 6f xuống 2.5f
 
             rb.linearVelocity = Vector2.zero;
             rb.linearVelocity = new Vector2(vangX, vangY);
-
-            // ĐÃ XÓA FreezeBodyAfterDelay ở đây để nhường quyền cho GameFeelManager kiểm soát thời điểm rơi chạm đất!
         }
 
-        // 4. GỌI GÓC QUAY CINEMATIC
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null && GameFeelManager.instance != null)
+        // 4. GỌI GÓC QUAY CINEMATIC ĐÃ ĐƯỢC TỐI ƯU
+        if (GameFeelManager.instance != null)
         {
-            GameFeelManager.instance.TriggerCinematicFinish(this.transform, player.transform, true);
+            // Truyền null để GameFeelManager tự động quét tìm người chiến thắng
+            GameFeelManager.instance.TriggerCinematicFinish(this.transform, null, true);
         }
         else
         {

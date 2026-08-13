@@ -128,21 +128,39 @@ public class PlayerHealth : MonoBehaviour
         if (rb != null)
         {
             float vangX = transform.localScale.x > 0 ? -1.5f : 1.5f;
-            float vangY = 6f;
+            float vangY = 2.5f;
 
             rb.linearVelocity = Vector2.zero;
             rb.linearVelocity = new Vector2(vangX, vangY);
         }
 
-        GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
-        if (enemy != null && GameFeelManager.instance != null)
+        if (GameFeelManager.instance != null)
         {
-            GameFeelManager.instance.TriggerCinematicFinish(this.transform, enemy.transform, false);
+            GameFeelManager.instance.TriggerCinematicFinish(this.transform, null, false);
         }
         else
         {
+            // ==========================================
+            // NÂNG CẤP: GỌI MATCH CONTROLLER THEO ĐÚNG CHẾ ĐỘ
+            // ==========================================
             MatchController match = FindAnyObjectByType<MatchController>();
-            if (match != null) match.EndMatch(false);
+            if (match != null)
+            {
+                string mode = PlayerPrefs.GetString("GameMode", "Single");
+                
+                if (mode == "PvP")
+                {
+                    // Logic Đối Kháng: Ai chết thì người kia thắng!
+                    // Lấy playerIndex để biết nạn nhân là ai
+                    int winner = (playerScript != null && playerScript.playerIndex == 1) ? 2 : 1;
+                    match.EndPvPMatch(winner);
+                }
+                else
+                {
+                    // Logic Đi Ải (Giữ nguyên như cũ)
+                    match.EndMatch(false);
+                }
+            }
         }
 
         this.enabled = false;
