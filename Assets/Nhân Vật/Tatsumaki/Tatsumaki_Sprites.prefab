@@ -397,7 +397,6 @@ MonoBehaviour:
   characterName: Tatsumaki
   baseHealth: 1000
   maxHealth: 1000
-  healthBar: {fileID: 0}
   currentHealth: 0
   hitSounds:
   - {fileID: 8300000, guid: d44c3c461f7306f41a913c20645099e5, type: 3}
@@ -429,7 +428,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

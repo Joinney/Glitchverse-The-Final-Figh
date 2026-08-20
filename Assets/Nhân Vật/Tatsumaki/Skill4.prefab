@@ -301,10 +301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26be52331473c3943bf21606653e055c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UltimatePushSkill
-  damage: 1000
+  damage: 500
   speed: 15
-  lifeTime: 3
+  lifeTime: 4
   knockbackForce: {x: 25, y: 15}
   stunDuration: 3
+  wallTag: Wall
   castSound: {fileID: 8300000, guid: 707e1ced11dd86c44aab5970a6854004, type: 3}
   hitSound: {fileID: 8300000, guid: 5cf8e13e2aa17124389454582efd6dfa, type: 3}

@@ -13,11 +13,6 @@ public class CountdownManager : MonoBehaviour
     public Sprite[] frames1;
     public Sprite[] framesFight;
 
-    [Header("Âm Thanh")]
-    public AudioSource audioSource;
-    public AudioClip tickSound;
-    public AudioClip fightSound;
-
     public static bool isCountdownFinished = false;
 
     private void Start()
@@ -30,14 +25,14 @@ public class CountdownManager : MonoBehaviour
     {
         if (countdownImage != null) countdownImage.gameObject.SetActive(true);
 
-        // 1. Chỉ tìm CharacterController2D (Vì cả Player và AI đều đang dùng chung script này!)
-        CharacterController2D[] allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
+        // 1. Chỉ tìm CharacterController2D (Cập nhật cú pháp Unity 6 chống báo vàng)
+        CharacterController2D[] allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
         // Chờ đến khi đủ 2 nhân vật (Player và AI) xuất hiện trên sân
         while (allCharacters.Length < 2)
         {
             yield return null;
-            allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
+            allCharacters = FindObjectsByType<CharacterController2D>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         }
 
         // 2. KHÓA CỨNG TOÀN BỘ CẢ 2 BÊN
@@ -46,17 +41,10 @@ public class CountdownManager : MonoBehaviour
             if (chara != null) chara.canMoveAndFight = false;
         }
 
-        // 3. CHIẾU ANIMATION
-        if (tickSound != null && audioSource != null) audioSource.PlayOneShot(tickSound);
+        // 3. CHIẾU ANIMATION (Đã loại bỏ Âm thanh)
         yield return StartCoroutine(PlayFrames(frames3, 1f));
-
-        if (tickSound != null && audioSource != null) audioSource.PlayOneShot(tickSound);
         yield return StartCoroutine(PlayFrames(frames2, 1f));
-
-        if (tickSound != null && audioSource != null) audioSource.PlayOneShot(tickSound);
         yield return StartCoroutine(PlayFrames(frames1, 1f));
-
-        if (fightSound != null && audioSource != null) audioSource.PlayOneShot(fightSound);
         yield return StartCoroutine(PlayFrames(framesFight, 0.8f));
 
         if (countdownImage != null) countdownImage.gameObject.SetActive(false);

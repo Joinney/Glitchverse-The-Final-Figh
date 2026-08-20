@@ -375,7 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController2D
   isAI: 1
   playerIndex: 1
-  moveSpeed: 5
+  moveSpeed: 0
   jumpForce: 8
   dashForce: 15
   attackRange: 2
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnergySystem
   maxEnergy: 100
   currentEnergy: 50
-  energyUIName: Energy_Fill_P1
+  energyUIName: Energy_Fill_P2
 --- !u!82 &6281881097814015547
 AudioSource:
   m_ObjectHideFlags: 0
@@ -541,8 +541,10 @@ MonoBehaviour:
   baseHealth: 1000
   maxHealth: 10000
   healthBar: {fileID: 0}
+  currentHealth: 0
   stunDuration: 0.6
-  hitSounds: []
+  hitSounds:
+  - {fileID: 8300000, guid: d44c3c461f7306f41a913c20645099e5, type: 3}
 --- !u!1 &8802868315031271629
 GameObject:
   m_ObjectHideFlags: 0

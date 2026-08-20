@@ -12,7 +12,7 @@ public class EnemyHealth : MonoBehaviour
     [HideInInspector] public int maxHealth;
 
     public HealthBarUI healthBar;
-    private int currentHealth;
+    public int currentHealth;
 
     private Animator anim;
     private Rigidbody2D rb;
@@ -103,7 +103,7 @@ public class EnemyHealth : MonoBehaviour
         // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG ĐÃ ĐƯỢC GIẢM LỰC ---
         if (rb != null)
         {
-            float vangX = transform.localScale.x > 0 ? -1.0f : 1.0f; 
+            float vangX = transform.localScale.x > 0 ? -1.0f : 1.0f;
             float vangY = 2.5f; // 💡 Đã hạ từ 6f xuống 2.5f
 
             rb.linearVelocity = Vector2.zero;

@@ -380,7 +380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnergySystem
   maxEnergy: 100
   currentEnergy: 50
-  energyUIName: Energy_Fill_P1
+  energyUIName: Energy_Fill_P2
 --- !u!212 &6754354430736616238
 SpriteRenderer:
   serializedVersion: 3
@@ -480,6 +480,7 @@ MonoBehaviour:
   baseHealth: 1000
   maxHealth: 10000
   healthBar: {fileID: 0}
+  currentHealth: 0
   stunDuration: 1
   hitSounds:
   - {fileID: 8300000, guid: 9a850634c089ffc4c987f1846fcf43f9, type: 3}
