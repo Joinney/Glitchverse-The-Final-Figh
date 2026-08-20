@@ -9,44 +9,48 @@ public class ProjectileMihawk : MonoBehaviour
 
     [Header("Phân Loại Chiêu Thức")]
     [Tooltip("Gõ 2, 3 hoặc 4. 2: Bị đỡ 100% | 3: Bị đỡ 50% dame | 4: Không thể đỡ (Ulti)")]
-    public int skillType = 2; // Mặc định là Skill 2
+    public int skillType = 2;
 
-    [Header("Xử lý Hình Ảnh & Âm Thanh")]
-    public float hitAnimationDuration = 0.5f; // Đạn sẽ đứng im bao lâu để chờ diễn xong hoạt ảnh nổ?
-    public GameObject impactEffect; // Kéo prefab vụ nổ rời (nếu có) vào đây
+    [Header("Xử lý Hình Ảnh")]
+    public float hitAnimationDuration = 0.5f;
+    public GameObject impactEffect;
 
-    private AudioSource audioSource;
-    public AudioClip castSound; // Tiếng vung kiếm xé gió
-    public AudioClip hitSound;  // Tiếng kiếm chém trúng thịt
-    public AudioClip blockSound; // (Tùy chọn) Tiếng kim loại va chạm khi bị đỡ đòn
+    [Header("Xử lý Âm Thanh (Tự do chỉnh to nhỏ)")]
+    public AudioClip castSound;
+    [Range(0f, 1f)] public float castVolume = 1f; // Chỉnh âm lượng tiếng chém gió
+
+    public AudioClip hitSound;
+    [Range(0f, 1f)] public float hitVolume = 1f;  // Chỉnh âm lượng tiếng trúng thịt
+
+    public AudioClip blockSound;
+    [Range(0f, 1f)] public float blockVolume = 1f; // Chỉnh âm lượng tiếng đỡ đòn
 
     void Start()
     {
-        // 1. Dùng lực vật lý đẩy đạn đi thẳng
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = new Vector2(speed, 0f);
         }
 
-        // 2. Phát tiếng vung kiếm ngay khi đạn sinh ra
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource != null && castSound != null)
+        // ==========================================
+        // 💡 CẢI TIẾN: PHÁT ÂM THANH NGAY TẠI CAMERA ĐỂ NGHE TO RÕ NHẤT
+        // ==========================================
+        if (castSound != null)
         {
-            audioSource.PlayOneShot(castSound);
+            // Ép nó phát ngay sát lỗ tai người chơi (Camera) để tiếng Cast luôn to và uy lực
+            Vector3 camPos = Camera.main != null ? Camera.main.transform.position : transform.position;
+            AudioSource.PlayClipAtPoint(castSound, camPos, castVolume);
         }
 
-        // 3. Tự hủy nếu bay quá xa khỏi màn hình
         Destroy(gameObject, lifeTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Nhận diện thông minh: Player bắn trúng Enemy HOẶC Enemy bắn trúng Player
         if ((gameObject.CompareTag("Player") && other.CompareTag("Enemy")) ||
             (gameObject.CompareTag("Enemy") && other.CompareTag("Player")))
         {
-            // --- LOGIC KIỂM TRA ĐỠ ĐÒN (BLOCK) ---
             CharacterController2D targetController = other.GetComponent<CharacterController2D>();
             int finalDamage = damage;
             bool isBlocked = false;
@@ -55,83 +59,66 @@ public class ProjectileMihawk : MonoBehaviour
             {
                 isBlocked = true;
 
-                if (skillType == 2)
-                {
-                    finalDamage = 0; // Skill 2: Kháng 100% sát thương
-                }
-                else if (skillType == 3)
-                {
-                    finalDamage = damage / 2; // Skill 3: Kháng 50% sát thương
-                }
+                if (skillType == 2) finalDamage = 0;
+                else if (skillType == 3) finalDamage = damage / 2;
                 else if (skillType == 4)
                 {
-                    finalDamage = damage; // Skill 4 (Ulti): Ăn trọn sát thương
-                    isBlocked = false; // Xuyên thủng phòng ngự
+                    finalDamage = damage;
+                    isBlocked = false;
                 }
             }
 
-            // --- TRỪ MÁU MỤC TIÊU ---
             if (finalDamage > 0)
             {
                 other.GetComponent<EnemyHealth>()?.TakeDamage(finalDamage);
                 other.GetComponent<PlayerHealth>()?.TakeDamage(finalDamage);
             }
 
-            // --- XỬ LÝ ÂM THANH KHI TRÚNG/ĐỠ ---
-            if (audioSource != null)
+            // ==========================================
+            // 💡 CẢI TIẾN: DÙNG LOA TÀNG HÌNH ĐỂ ÂM THANH KHÔNG BỊ CẮT ĐỨT
+            // ==========================================
+            if (isBlocked && blockSound != null)
             {
-                if (isBlocked && blockSound != null)
-                    audioSource.PlayOneShot(blockSound); // Kêu tiếng "Keng" nếu bị đỡ
-                else if (hitSound != null)
-                    audioSource.PlayOneShot(hitSound); // Kêu tiếng xuyệt thịt nếu trúng
+                AudioSource.PlayClipAtPoint(blockSound, transform.position, blockVolume);
+            }
+            else if (!isBlocked && hitSound != null)
+            {
+                AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
             }
 
-            // Sinh ra hiệu ứng nổ văng tóe lửa
             if (impactEffect != null)
             {
                 Instantiate(impactEffect, transform.position, transform.rotation);
             }
 
-            // =========================================================
-            // KÍCH HOẠT HIỆU ỨNG GAME FEEL (RUNG & KHỰNG) THEO SKILL
-            // =========================================================
             if (GameFeelManager.instance != null)
             {
                 if (skillType == 4)
                 {
-                    // Đòn Ulti (Skill 4): Khựng 0.1s, Rung bạo lực 0.3s (biên độ 0.4)
                     GameFeelManager.instance.TriggerHitStop(0.1f);
                     GameFeelManager.instance.TriggerCameraShake(0.3f, 0.4f);
                 }
                 else if (skillType == 3)
                 {
-                    // Chiêu 3: Khựng 0.05s, Rung khá mạnh 0.2s (biên độ 0.25)
                     GameFeelManager.instance.TriggerHitStop(0.05f);
                     GameFeelManager.instance.TriggerCameraShake(0.2f, 0.25f);
                 }
                 else
                 {
-                    // Chiêu 2 (Hoặc mặc định): Khựng nhẹ 0.05s, Rung nhẹ 0.1s (biên độ 0.15)
                     GameFeelManager.instance.TriggerHitStop(0.05f);
                     GameFeelManager.instance.TriggerCameraShake(0.1f, 0.15f);
                 }
             }
 
-            // --- CHỐNG BUG DOUBLE-HIT ---
-            // Bước 1: Phanh gấp, không cho kiếm khí bay xuyên qua người địch
             Rigidbody2D realRb = GetComponent<Rigidbody2D>();
             if (realRb != null) realRb.linearVelocity = Vector2.zero;
 
-            // Bước 2: Tắt lưỡi dao (Collider) để không trừ máu đối thủ thêm lần 2
             Collider2D col = GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
 
-            // Bước 3: Ép kiếm khí chuyển sang frame vỡ vụn
             Animator anim = GetComponent<Animator>();
-            if (anim != null)
-                anim.SetTrigger("Hit"); // Nhớ bỏ comment dòng này nếu bạn đã cài Trigger "Hit" trong Animator đạn nhé!
+            if (anim != null) anim.SetTrigger("Hit");
 
-            // Xóa viên đạn sau khi diễn xong hiệu ứng
             Destroy(gameObject, hitAnimationDuration);
         }
     }

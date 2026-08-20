@@ -160,6 +160,14 @@ MonoBehaviour:
   damagePerTick: 50
   tickRate: 0.5
   lifeTime: 5
+  castSound: {fileID: 0}
+  castVolume: 1
+  hitSound: {fileID: 8300000, guid: 609ad1babe0649946bf5f7b901e5cc6b, type: 3}
+  hitVolume: 1
+  impactSound: {fileID: 0}
+  impactVolume: 0.8
+  blockSound: {fileID: 0}
+  blockVolume: 1
 --- !u!58 &-2847138827402891200
 CircleCollider2D:
   m_ObjectHideFlags: 0

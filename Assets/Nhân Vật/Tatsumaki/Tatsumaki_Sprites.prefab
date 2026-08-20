@@ -360,9 +360,9 @@ MonoBehaviour:
   comboStep: 0
   comboWindow: 0.8
   skill1Cost: 0
-  skill2Cost: 0
-  skill3Cost: 0
-  skill4Cost: 0
+  skill2Cost: 25
+  skill3Cost: 50
+  skill4Cost: 100
   energyGainOnHit: 25
   attackPoint: {fileID: 4561003327493755681}
   meleeHitRange: 0.8

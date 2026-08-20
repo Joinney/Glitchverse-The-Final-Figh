@@ -205,3 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PillarDamage
   damage: 300
   lifeTime: 2
+  castSound: {fileID: 0}
+  castVolume: 1
+  hitSound: {fileID: 8300000, guid: 808ed979df346ea48b412b6e46c8d609, type: 3}
+  hitVolume: 1
+  impactSound: {fileID: 0}
+  impactVolume: 1
+  blockSound: {fileID: 0}
+  blockVolume: 1

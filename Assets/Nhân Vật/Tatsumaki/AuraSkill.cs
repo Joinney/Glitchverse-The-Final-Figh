@@ -3,23 +3,41 @@ using UnityEngine;
 public class AuraSkill : MonoBehaviour
 {
     [Header("Thông số Vòng Cầu")]
-    public int damagePerTick = 100;      // Lượng máu trừ mỗi lần giật dame
-    public float tickRate = 0.5f;       // Tốc độ giật dame (Cứ 0.5 giây giật 1 lần)
-    public float lifeTime = 5f;         // Thời gian vòng cầu tồn tại
+    public int damagePerTick = 100;
+    public float tickRate = 0.5f;
+    public float lifeTime = 5f;
+
+    // ==========================================
+    // 💡 LOGIC ÂM THANH CHUẨN Ý BẠN
+    // ==========================================
+    [Header("1. Âm thanh Xuất Chiêu (Phát ngay lập tức)")]
+    [Tooltip("Giọng nói/Tiếng hô chiêu của nhân vật")]
+    public AudioClip castSound;
+    [Range(0f, 1f)] public float castVolume = 1f;
+
+    [Tooltip("Tiếng Vòng Cầu bùng nổ khi vừa bật lên")]
+    public AudioClip hitSound;
+    [Range(0f, 1f)] public float hitVolume = 1f;
+
+    [Header("2. Âm thanh Va Chạm (Chỉ phát khi địch dính vòng)")]
+    [Tooltip("Tiếng 'Xẹt xẹt' giật điện mỗi 0.5 giây khi chạm vào địch")]
+    public AudioClip impactSound;
+    [Range(0f, 1f)] public float impactVolume = 0.8f;
+
+    [Tooltip("Tiếng Keng khi bị đối thủ đỡ đòn")]
+    public AudioClip blockSound;
+    [Range(0f, 1f)] public float blockVolume = 0.8f;
 
     private float timer = 0f;
 
     void Start()
     {
-        // 1. Quét tìm chủ nhân (Những người cùng Tag)
         GameObject[] potentialMasters = GameObject.FindGameObjectsWithTag(gameObject.tag);
         Transform trueMaster = null;
         float minDistance = Mathf.Infinity;
 
-        // Tìm nhân vật ở gần nhất
         foreach (GameObject obj in potentialMasters)
         {
-            // Bắt buộc bỏ qua chính bản thân quả cầu!
             if (obj == gameObject) continue;
 
             float dist = Vector2.Distance(transform.position, obj.transform.position);
@@ -30,45 +48,70 @@ public class AuraSkill : MonoBehaviour
             }
         }
 
-        // 2. Ép quả cầu làm con của chủ nhân để nó tự động đi theo
-        if (trueMaster != null)
-        {
-            transform.SetParent(trueMaster);
-        }
+        if (trueMaster != null) transform.SetParent(trueMaster);
 
-        // 3. Hẹn giờ tự hủy
+        // ==========================================
+        // 💡 PHÁT CẢ GIỌNG NÓI LẪN TIẾNG CHIÊU THỨC NGAY KHI VỪA BẬT
+        // ==========================================
+        Vector3 camPos = Camera.main != null ? Camera.main.transform.position : transform.position;
+
+        if (castSound != null) AudioSource.PlayClipAtPoint(castSound, camPos, castVolume);
+        if (hitSound != null) AudioSource.PlayClipAtPoint(hitSound, camPos, hitVolume);
+
         Destroy(gameObject, lifeTime);
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        // Không tự đốt máu bản thân hoặc đồng đội
         if (other.CompareTag(gameObject.tag)) return;
 
-        timer += Time.deltaTime;
-
-        // Giật máu liên tục theo nhịp
         if (timer >= tickRate)
         {
-            // Đặt lại đồng hồ đếm ngược ngay lập tức để chuẩn bị cho nhịp giật tiếp theo
-            timer = 0f;
-
-            // --- KIỂM TRA MỤC TIÊU CÓ ĐANG ĐỠ ĐÒN KHÔNG ---
             CharacterController2D targetController = other.GetComponent<CharacterController2D>();
+            bool isBlocked = (targetController != null && targetController.isBlocking);
+            Vector3 camPos = Camera.main != null ? Camera.main.transform.position : transform.position;
 
-            if (targetController != null && targetController.isBlocking)
+            // NẾU KẺ ĐỊCH ĐANG ĐỠ ĐÒN -> KÊU TIẾNG KENG RỒI BỎ QUA SÁT THƯƠNG
+            if (isBlocked)
             {
-                // Vì đây là SKILL 2 -> Đỡ đòn sẽ kháng 100% sát thương.
-                // Bỏ qua và không gọi lệnh trừ máu ở dưới nữa.
+                if (blockSound != null) AudioSource.PlayClipAtPoint(blockSound, camPos, blockVolume);
                 return;
             }
 
-            // --- GÂY SÁT THƯƠNG (Nếu không đỡ) ---
+            bool hitSomeone = false;
+
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-            if (enemy != null) enemy.TakeDamage(damagePerTick);
+            if (enemy != null) { enemy.TakeDamage(damagePerTick); hitSomeone = true; }
 
             PlayerHealth player = other.GetComponent<PlayerHealth>();
-            if (player != null) player.TakeDamage(damagePerTick);
+            if (player != null) { player.TakeDamage(damagePerTick); hitSomeone = true; }
+
+            // ==========================================
+            // 💡 CHỈ PHÁT TIẾNG "XẸT ĐIỆN" VÀ RUNG MÀN HÌNH KHI ĐỊCH ĐANG TRONG VÒNG
+            // ==========================================
+            if (hitSomeone)
+            {
+                if (impactSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(impactSound, camPos, impactVolume);
+                }
+
+                if (GameFeelManager.instance != null)
+                {
+                    GameFeelManager.instance.TriggerHitStop(0.02f);
+                    GameFeelManager.instance.TriggerCameraShake(0.1f, 0.1f);
+                }
+            }
         }
+    }
+
+    void LateUpdate()
+    {
+        if (timer >= tickRate) timer = 0f;
     }
 }

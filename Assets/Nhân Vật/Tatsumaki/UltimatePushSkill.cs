@@ -14,23 +14,29 @@ public class UltimatePushSkill : MonoBehaviour
     [Header("Cài đặt Tường chặn")]
     public string wallTag = "Wall"; // Tên Tag của bức tường hoặc mặt đất
 
+    // ==========================================
+    // 💡 GIỮ LẠI CAST SOUND VÀ CHỈNH TO HẾT CỠ
+    // ==========================================
     [Header("Cài đặt Âm Thanh")]
     public AudioClip castSound;
+    [Range(0f, 1f)] public float castVolume = 1f; // Tiếng thét/gầm tung chiêu
+
     public AudioClip hitSound;
+    [Range(0f, 1f)] public float hitVolume = 1f;  // Tiếng nổ ầm ĩ khi chạm mục tiêu / chạm tường
 
     private Rigidbody2D rb;
     private bool hasPlayedHitSound = false;
-
-    // Biến mới: Đảm bảo chỉ rung màn hình 1 lần khi đạn vừa chạm đích
     private bool hasTriggeredGameFeel = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
+        // 1. NGAY KHI CHIÊU XUẤT HIỆN LÀ PHÁT TIẾNG CAST SOUND LẬP TỨC (Dù trúng hay trượt)
         if (castSound != null)
         {
-            AudioSource.PlayClipAtPoint(castSound, transform.position);
+            Vector3 camPos = Camera.main != null ? Camera.main.transform.position : transform.position;
+            AudioSource.PlayClipAtPoint(castSound, camPos, castVolume);
         }
 
         Destroy(gameObject, lifeTime);
@@ -38,22 +44,22 @@ public class UltimatePushSkill : MonoBehaviour
 
     void Update()
     {
-        // Liên tục cập nhật vận tốc. Khi đụng tường, speed = 0 thì đạn sẽ tự đứng im
+        // Liên tục ép vận tốc
         rb.linearVelocity = new Vector2(speed, rb.linearVelocity.y);
     }
 
     // 💥 BƯỚC 1: Xử lý va chạm
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 🛑 NẾU CHẠM VÀO TƯỜNG (Ranh giới map): Dừng lại ngay lập tức!
-        if (other.CompareTag(wallTag))
-        {
-            speed = 0f; // Triệt tiêu tốc độ bay của đạn
-            return;     // Dừng đọc code tại đây (Không trừ máu bức tường)
-        }
-
         // Bỏ qua phe mình
         if (other.CompareTag(gameObject.tag)) return;
+
+        // 🛑 KIỂM TRA XEM CÓ ĐỤNG TƯỜNG KHÔNG?
+        bool isWall = other.CompareTag(wallTag);
+        if (isWall)
+        {
+            speed = 0f; // Triệt tiêu tốc độ bay để đạn dừng lại cắm vào tường
+        }
 
         bool hitSomeone = false;
 
@@ -70,26 +76,25 @@ public class UltimatePushSkill : MonoBehaviour
         PlayerHealth player = other.GetComponent<PlayerHealth>();
         if (player != null) { player.TakeDamage(damage); hitSomeone = true; }
 
-        // NẾU ĐỤNG TRÚNG ĐỊCH
-        if (hitSomeone)
+        // ==========================================
+        // 💡 TRÚNG ĐỊCH HOẶC TRÚNG TƯỜNG ĐỀU SẼ KÍCH NỔ HIT SOUND
+        // ==========================================
+        if (hitSomeone || isWall)
         {
-            // 1. Phát âm thanh trúng đòn
+            // Phát âm thanh nổ ngay tại Camera
             if (hitSound != null && !hasPlayedHitSound)
             {
-                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+                Vector3 camPos = Camera.main != null ? Camera.main.transform.position : transform.position;
+                AudioSource.PlayClipAtPoint(hitSound, camPos, hitVolume);
                 hasPlayedHitSound = true;
             }
 
-            // 2. --- KÍCH HOẠT HIỆU ỨNG GAME FEEL CỰC MẠNH ---
+            // Kích hoạt hiệu ứng khựng và rung màn hình bạo lực
             if (!hasTriggeredGameFeel && GameFeelManager.instance != null)
             {
-                // Khựng hình 0.1 giây (đòn thường chỉ 0.05)
                 GameFeelManager.instance.TriggerHitStop(0.1f);
-
-                // Rung màn hình bạo lực: Kéo dài 0.3 giây với biên độ siêu mạnh 0.4
                 GameFeelManager.instance.TriggerCameraShake(0.3f, 0.4f);
-
-                hasTriggeredGameFeel = true; // Khóa công tắc lại
+                hasTriggeredGameFeel = true;
             }
         }
     }
@@ -105,7 +110,6 @@ public class UltimatePushSkill : MonoBehaviour
         Rigidbody2D enemyRb = other.GetComponent<Rigidbody2D>();
         if (enemyRb != null)
         {
-            // Ép vận tốc kẻ địch. Nếu đạn đã đụng tường (speed = 0), địch cũng sẽ bị ép vận tốc về 0 và dính chặt vào tường!
             enemyRb.linearVelocity = new Vector2(speed, enemyRb.linearVelocity.y);
         }
     }
