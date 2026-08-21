@@ -8,9 +8,7 @@ public class EnemyHealth : MonoBehaviour
     public string characterName = "Name NV";
 
     public int baseHealth = 1000;
-
     [HideInInspector] public int maxHealth;
-
     public HealthBarUI healthBar;
     public int currentHealth;
 
@@ -20,7 +18,6 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("Thời gian bị choáng (giây)")]
     public float stunDuration = 0.6f;
-
     private Coroutine stunCoroutine;
 
     [Header("Âm Thanh Đau Đớn Của AI")]
@@ -30,21 +27,24 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
-
         maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
-
         currentHealth = maxHealth;
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         aiScript = GetComponent<CharacterController2D>();
-
         audioSource = GetComponent<AudioSource>();
-        healthBar = GameObject.Find("HealthBar_P2").GetComponent<HealthBarUI>();
 
-        if (healthBar != null && characterFace != null)
+        // An toàn tìm kiếm UI (Bỏ qua nếu là map đi cảnh hoặc quái nhỏ không có HealthBar_P2)
+        GameObject p2BarObj = GameObject.Find("HealthBar_P2");
+        if (p2BarObj != null)
         {
-            healthBar.SetAvatar(characterFace);
-            healthBar.SetCharacterName(characterName);
+            healthBar = p2BarObj.GetComponent<HealthBarUI>();
+            if (healthBar != null && characterFace != null)
+            {
+                healthBar.SetAvatar(characterFace);
+                healthBar.SetCharacterName(characterName);
+            }
         }
     }
 
@@ -53,19 +53,41 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth);
 
-        if (ComboManager.instance != null)
-        {
-            ComboManager.instance.AddCombo();
-        }
+        if (ComboManager.instance != null) ComboManager.instance.AddCombo();
 
-        if (audioSource != null && hitSounds.Length > 0)
+        // 🔊 Phát âm thanh trúng đòn (Hoạt động tốt cả khi không có AudioSource trên Prefab)
+        if (hitSounds != null && hitSounds.Length > 0)
         {
             AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
-            audioSource.PlayOneShot(randomClip);
+            if (randomClip != null)
+            {
+                AudioSource.PlayClipAtPoint(randomClip, transform.position);
+            }
         }
 
         if (anim != null) anim.SetTrigger("Hit");
 
+        // 💥 Xử lý đẩy lùi & gọi chết cho quái nhỏ (Skeleton / Goblin)
+        MinionMonsterAI minionAI = GetComponent<MinionMonsterAI>();
+        if (minionAI != null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                // Hướng đẩy lùi ngược chiều với hướng Player đang đứng
+                float pushDir = transform.position.x > player.transform.position.x ? 1f : -1f;
+                Vector2 knockForce = new Vector2(pushDir * 4.5f, 1.5f);
+                minionAI.TakeKnockback(knockForce);
+            }
+
+            if (currentHealth <= 0)
+            {
+                minionAI.Die();
+                return;
+            }
+        }
+
+        // Xử lý choáng cho Boss / Nhân vật đối kháng
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
         stunCoroutine = StartCoroutine(StunRoutine());
 
@@ -86,7 +108,7 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log(gameObject.name + " đã bị hạ gục!");
 
-        // 1. CHẠY HOẠT ẢNH GỤC NGÃ
+        // 1. Chạy hoạt ảnh gục ngã
         if (anim != null)
         {
             foreach (AnimatorControllerParameter param in anim.parameters)
@@ -96,24 +118,21 @@ public class EnemyHealth : MonoBehaviour
             }
         }
 
-        // 2. KHÓA AI DI CHUYỂN
+        // 2. Khóa AI di chuyển
         if (aiScript != null) aiScript.enabled = false;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
 
-        // 3. --- HIỆU ỨNG HẤT VĂNG LÊN KHÔNG ĐÃ ĐƯỢC GIẢM LỰC ---
+        // 3. Hiệu ứng hất văng
         if (rb != null)
         {
             float vangX = transform.localScale.x > 0 ? -1.0f : 1.0f;
-            float vangY = 2.5f; // 💡 Đã hạ từ 6f xuống 2.5f
-
-            rb.linearVelocity = Vector2.zero;
+            float vangY = 2.5f;
             rb.linearVelocity = new Vector2(vangX, vangY);
         }
 
-        // 4. GỌI GÓC QUAY CINEMATIC ĐÃ ĐƯỢC TỐI ƯU
+        // 4. Kết thúc trận đấu hoặc kích hoạt Cinematic
         if (GameFeelManager.instance != null)
         {
-            // Truyền null để GameFeelManager tự động quét tìm người chiến thắng
             GameFeelManager.instance.TriggerCinematicFinish(this.transform, null, true);
         }
         else

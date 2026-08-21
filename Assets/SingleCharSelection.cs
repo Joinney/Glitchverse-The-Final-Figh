@@ -15,7 +15,6 @@ public class SingleCharSelection : MonoBehaviour
 
     [Header("UI Previews (Portraits)")]
     public Image p1PreviewImage;
-    // Vẫn giữ biến p2PreviewImage để Inspector của bạn không bị mất tham chiếu
     public Image p2PreviewImage;
     public GameObject startBattleButton;
 
@@ -27,66 +26,63 @@ public class SingleCharSelection : MonoBehaviour
     public CharacterData[] characters;
 
     [Header("Cấu hình Scene")]
-    public string nextSceneName = "Fight_Stage1";
+    // Đã đổi sang SampleScene (Màn hình chọn Map)
+    public string nextSceneName = "SampleScene";
 
     private int currentSelectedIndex = -1;
     private Coroutine p1AnimCoroutine;
 
     void Start()
     {
-        // Vừa vào màn hình là reset sạch sẽ mọi thứ (Giải quyết triệt để lỗi Back ra vô lại)
         currentSelectedIndex = -1;
         SetImageAlpha(p1PreviewImage, 0f);
         SetImageAlpha(p1ModelAnimImage, 0f);
-        SetImageAlpha(p2PreviewImage, 0f); // Tạm ẩn P2
+        SetImageAlpha(p2PreviewImage, 0f);
         SetImageAlpha(p2ModelAnimImage, 0f);
 
-        // Ẩn nút Start, chỉ hiện khi đã click chọn ít nhất 1 người
         if (startBattleButton != null) startBattleButton.SetActive(false);
     }
 
-    // Gắn hàm này vào sự kiện OnClick của các Nút Nhân Vật (Gojo, Naruto...)
     public void SelectCharacter(int characterIndex)
     {
         if (characterIndex < 0 || characterIndex >= characters.Length) return;
 
         currentSelectedIndex = characterIndex;
 
-        // 1. Cập nhật ảnh chân dung (Sáng rõ 100%)
+        // 1. Cập nhật ảnh đại diện
         p1PreviewImage.sprite = characters[characterIndex].portraitSprite;
         SetImageAlpha(p1PreviewImage, 1f);
 
-        // 2. Chạy Animation mượt mà
+        // 2. Chạy Animation
         if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
         p1AnimCoroutine = StartCoroutine(PlayModelAnimation(p1ModelAnimImage, characters[characterIndex].fightIdleSprites, 1f));
 
-        // 3. Đã có người được chọn -> Cho phép hiện nút START
+        // 3. Kích hoạt nút START
         if (startBattleButton != null) startBattleButton.SetActive(true);
 
         Debug.Log("Đang xem thử: " + characters[characterIndex].characterName);
     }
 
-    // ==========================================
-    // GẮN HÀM NÀY VÀO NÚT "START" TRÊN MÀN HÌNH
-    // ==========================================
     public void OnStartButtonClicked()
     {
-        if (currentSelectedIndex == -1) return; // Tránh lỗi bấm Start khi chưa chọn ai
+        if (currentSelectedIndex == -1) return;
 
         string chosenP1 = characters[currentSelectedIndex].characterName;
+        
+        // Lưu Tên và ID số thứ tự của nhân vật (để MapSinhTon1 load đúng tướng)
         PlayerPrefs.SetString("P1_Selection", chosenP1);
+        PlayerPrefs.SetInt("SelectedCharacter", currentSelectedIndex);
 
-        // --- CẤU HÌNH ĐỐI THỦ AI (P2) ---
-        // Tự động chọn ngẫu nhiên 1 nhân vật làm Đối thủ AI
+        // Chọn ngẫu nhiên đối thủ AI
         int randomAI = Random.Range(0, characters.Length);
         PlayerPrefs.SetString("P2_Selection", characters[randomAI].characterName);
+        PlayerPrefs.SetInt("SelectedAI", randomAI);
 
-        // Lưu dữ liệu vào bộ nhớ máy
         PlayerPrefs.Save();
 
-        Debug.Log($"Trận đấu bắt đầu! Player: {chosenP1} VS AI: {characters[randomAI].characterName}");
+        Debug.Log($"Đã chọn: {chosenP1} (ID: {currentSelectedIndex}) -> Chuyển sang: {nextSceneName}");
 
-        // Chuyển Scene
+        // Chuyển sang SampleScene
         SceneManager.LoadScene(nextSceneName);
     }
 

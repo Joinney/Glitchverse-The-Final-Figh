@@ -188,8 +188,11 @@ MonoBehaviour:
   hitAnimationDuration: 3
   impactEffect: {fileID: 0}
   castSound: {fileID: 8300000, guid: c95782376f58db8419859b7b907cb8e5, type: 3}
+  castVolume: 1
   hitSound: {fileID: 8300000, guid: f498ea174ad1ad84bbeb0fe906717c0d, type: 3}
+  hitVolume: 0.58
   blockSound: {fileID: 0}
+  blockVolume: 1
 --- !u!95 &8522431907747186843
 Animator:
   serializedVersion: 7

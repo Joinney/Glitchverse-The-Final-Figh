@@ -72,28 +72,31 @@ public class CharacterController2D : MonoBehaviour
     private bool aiIsRepositioning = false;
 
     void Start()
-    {
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        energySys = GetComponent<EnergySystem>();
-        originalScale = transform.localScale;
-        jumpsRemaining = maxJumps;
+{
+    // Luôn mở khóa di chuyển cho MapSinhTon
+    CountdownManager.isCountdownFinished = true;
 
-        if (isAI)
+    anim = GetComponent<Animator>();
+    rb = GetComponent<Rigidbody2D>();
+    energySys = GetComponent<EnergySystem>();
+    originalScale = transform.localScale;
+    jumpsRemaining = maxJumps;
+
+    if (isAI)
+    {
+        FindEnemyTarget();
+        string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
+        if (difficulty == "Hard")
         {
-            FindEnemyTarget();
-            string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
-            if (difficulty == "Hard")
-            {
-                timeBetweenActions = 0.3f;
-                moveSpeed = moveSpeed * 1.5f;
-            }
-            else
-            {
-                timeBetweenActions = 1.8f;
-            }
+            timeBetweenActions = 0.3f;
+            moveSpeed = moveSpeed * 1.5f;
+        }
+        else
+        {
+            timeBetweenActions = 1.8f;
         }
     }
+}
 
     void Update()
     {
@@ -106,7 +109,9 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
-        if (!CountdownManager.isCountdownFinished)
+        // Bỏ qua kiểm tra đếm ngược nếu ở MapSinhTon, các map đối kháng còn lại vẫn khóa khi chưa xong đếm ngược
+        bool isSurvivalMap = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("MapSinhTon");
+        if (!isSurvivalMap && !CountdownManager.isCountdownFinished)
         {
             if (rb != null) rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             if (anim != null) anim.SetFloat("Speed", 0f);
@@ -441,42 +446,46 @@ public class CharacterController2D : MonoBehaviour
         else { anim.SetTrigger(skillParameterName); return true; }
     }
 
-    // Nơi đây sẽ gọi sát thương, được kích hoạt bằng Animation Event
-    // ==========================================
-    // HỆ THỐNG SÁT THƯƠNG ĐÃ NÂNG CẤP CHO ĐỐI KHÁNG
-    // ==========================================
     public void TriggerMeleeHitbox()
     {
         if (attackPoint == null) return;
 
-        // BỎ QUA enemyLayers! Quét toàn bộ mọi thứ xung quanh (All Layers)
-        // Điều này đảm bảo P1 và P2 luôn chém trúng nhau dù ở bất kỳ Layer nào
         Collider2D[] hitObjects = Physics2D.OverlapCircleAll(attackPoint.position, meleeHitRange);
         bool hitSomeone = false;
 
         foreach (Collider2D obj in hitObjects)
         {
-            // 1. Không được tự đánh trúng chính bản thân mình
+            // 1. Không tự đánh chính mình
             if (obj.gameObject == this.gameObject) continue;
 
-            // 2. Kiểm tra xem thứ vừa đụng phải có phải là Nhân vật không (bỏ qua nền đất, tường...)
+            // 2. Nếu là nhân vật đối kháng (có CharacterController2D), kiểm tra né đòn/đỡ đòn
             CharacterController2D targetObj = obj.GetComponent<CharacterController2D>();
-            if (targetObj == null) continue;
+            if (targetObj != null && (targetObj.isDashing || targetObj.isBlocking)) continue;
 
-            // 3. Nếu đối phương đang Lướt hoặc Đỡ Đòn thì không trừ máu
-            if (targetObj.isDashing || targetObj.isBlocking) continue;
+            // 3. Xử lý sát thương quái / đối thủ
+            EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
+            if (enemyHealth != null && !obj.CompareTag(gameObject.tag))
+            {
+                enemyHealth.TakeDamage(meleeDamage);
+                hitSomeone = true;
+            }
 
-            // 4. Trừ máu (Hệ thống tự nhận diện nếu đó là Player hay Enemy)
-            EnemyHealth aiHealth = obj.GetComponent<EnemyHealth>();
-            if (aiHealth != null) { aiHealth.TakeDamage(meleeDamage); hitSomeone = true; }
-
+            // 4. Xử lý sát thương Player (khi ở chế độ 2 người chơi)
             PlayerHealth playerHealth = obj.GetComponent<PlayerHealth>();
-            if (playerHealth != null) { playerHealth.TakeDamage(meleeDamage); hitSomeone = true; }
+            if (playerHealth != null && !obj.CompareTag(gameObject.tag))
+            {
+                playerHealth.TakeDamage(meleeDamage);
+                hitSomeone = true;
+            }
         }
 
-        // Hồi năng lượng và Hiệu ứng rung màn hình
-        if (hitSomeone && energySys != null) energySys.AddEnergy(energyGainOnHit);
+        // Hồi năng lượng khi trúng bất kỳ mục tiêu nào
+        if (hitSomeone && energySys != null)
+        {
+            energySys.AddEnergy(energyGainOnHit);
+        }
 
+        // Hiệu ứng va chạm
         if (hitSomeone && GameFeelManager.instance != null)
         {
             GameFeelManager.instance.TriggerHitStop(0.05f);
