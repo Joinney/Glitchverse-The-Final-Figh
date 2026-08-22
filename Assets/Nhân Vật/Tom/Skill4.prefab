@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 8528582163779311859}
   - component: {fileID: 4874182766897761367}
   - component: {fileID: 630867184626010557}
-  - component: {fileID: 1965288773694596583}
   m_Layer: 0
   m_Name: Skill4
   m_TagString: Untagged
@@ -304,27 +303,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1965288773694596583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298145840603222059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e4a394212be93945834c5b21eb3ec9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMihawk
-  speed: 15
-  lifeTime: 3
-  damage: 100
-  skillType: 2
-  hitAnimationDuration: 0.5
-  impactEffect: {fileID: 0}
-  castSound: {fileID: 8300000, guid: d833c4a106dd5bb4ebe9c832f2f06052, type: 3}
-  castVolume: 1
-  hitSound: {fileID: 8300000, guid: 0b330100fa915a34893e6e14f7ab34bb, type: 3}
-  hitVolume: 1
-  blockSound: {fileID: 0}
-  blockVolume: 1

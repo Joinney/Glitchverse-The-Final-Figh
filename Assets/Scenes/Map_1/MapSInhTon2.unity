@@ -3844,7 +3844,7 @@ MonoBehaviour:
   - {fileID: 2701001394860751720, guid: a0ff347161e0a5846abb1ddb718a45f7, type: 3}
   - {fileID: 7952637622976372527, guid: c972f11119b2eb142ab6b1f277bb9a97, type: 3}
   spawnPoint: {fileID: 0}
-  groundPrefab: {fileID: 7352146340770647562, guid: dc892b4b6351cbc428f0439afbaa53d3, type: 3}
+  groundPrefab: {fileID: 7352146340770647562, guid: 8875f4d2884e03542a7e7a31af45a895, type: 3}
   pieceWidth: 0
   spawnDistance: 15
   totalRoadLength: 100
@@ -3853,7 +3853,7 @@ MonoBehaviour:
   - {fileID: 8213974656607846790, guid: ac4318888d7476843887c9546b0855be, type: 3}
   minionSpawnInterval: 10
   miniBossPrefab: {fileID: 1424383095653874445, guid: 2fad0ec419ab0b546a490f8d31499f05, type: 3}
-  mainBossPrefab: {fileID: 7952637622976372527, guid: 239b8c51ed2019e428bf6d14c32f840d, type: 3}
+  mainBossPrefab: {fileID: 5311229867572298421, guid: 1ff7624da865d7640acd2e438fa01a88, type: 3}
   mainBossSpawnDistanceTrigger: 12
 --- !u!4 &1192286794
 Transform:
@@ -3864,7 +3864,7 @@ Transform:
   m_GameObject: {fileID: 1192286792}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 120.14648, y: 74.69944, z: 0}
+  m_LocalPosition: {x: 120.14648, y: 72.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5670,7 +5670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow2D
   target: {fileID: 0}
   smoothSpeed: 0.125
-  offset: {x: 3, y: 3.3, z: -10}
+  offset: {x: 3, y: 4.3, z: -10}
   isLocked: 0
 --- !u!1 &1748809944
 GameObject:
@@ -6248,6 +6248,7 @@ GameObject:
   - component: {fileID: 1852710533}
   - component: {fileID: 1852710532}
   - component: {fileID: 1852710531}
+  - component: {fileID: 1852710534}
   m_Layer: 0
   m_Name: "B\xE3i_bi\u1EC3n_0"
   m_TagString: Untagged
@@ -6318,12 +6319,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -20
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3681406118555067395, guid: 78f566cb34952d5449b92725fd8e79fb, type: 3}
+  m_Sprite: {fileID: 1008864113489360758, guid: 6d9f0f8510d42ba49a9172a7a2baaac4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.2, y: 7.86}
+  m_Size: {x: 6.26, y: 3.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6344,6 +6345,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1852710534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852710530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acc7a5bd2d754e4f9ac1b48e3aee0c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundAutoFit
 --- !u!1 &1855670574
 GameObject:
   m_ObjectHideFlags: 0
@@ -7397,7 +7410,7 @@ MonoBehaviour:
   gameoverSprite: {fileID: 317010468468323505, guid: ab4847fbf760df046942ea4fc3cf2f00, type: 3}
   nextStageButton: {fileID: 1518823075}
   selectMapSceneName: SampleScene
-  currentStageIndex: 1
+  currentStageIndex: 2
   scoreText: {fileID: 1794309037}
   newRecordAlert: {fileID: 1150070085}
   mainMenuSceneName: MainMenu
