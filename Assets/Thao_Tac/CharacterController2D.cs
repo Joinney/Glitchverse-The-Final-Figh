@@ -150,6 +150,7 @@ public class CharacterController2D : MonoBehaviour
         bool keyS1 = false, keyS2 = false, keyS3 = false, keyS4 = false;
         bool keyBlock = false;
 
+        // 🎮 1. BỘ PHÍM CHO NGƯỜI CHƠI 1 (P1)
         if (playerIndex == 1)
         {
             keyLeft = Input.GetKey(KeyCode.A);
@@ -162,6 +163,21 @@ public class CharacterController2D : MonoBehaviour
             keyS2 = Input.GetKeyDown(KeyCode.I);
             keyS3 = Input.GetKeyDown(KeyCode.O);
             keyS4 = Input.GetKeyDown(KeyCode.P);
+        }
+        // 🎮 2. BỘ PHÍM CHO NGƯỜI CHƠI 2 (P2)
+        else if (playerIndex == 2)
+        {
+            keyLeft = Input.GetKey(KeyCode.LeftArrow);
+            keyRight = Input.GetKey(KeyCode.RightArrow);
+            keyJump = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Alpha0);
+            
+            keyBlock = Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Alpha2);
+            keyDash = Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3);
+            
+            keyS1 = Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1);
+            keyS2 = Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);
+            keyS3 = Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5);
+            keyS4 = Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6);
         }
 
         isBlocking = keyBlock;
