@@ -15,16 +15,16 @@ public class CharacterController2D : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 12f;
     public float dashForce = 25f;
-    public float attackRange = 2f;
-    public float timeBetweenActions = 2f;
+    public float attackRange = 2.5f;
+    public float timeBetweenActions = 1.2f;
 
     [Header("Cấu Hình Nhảy (Double Jump)")]
     public int maxJumps = 2;
     private int jumpsRemaining;
     public Transform groundCheck;
-    public float groundCheckRadius = 0.2f;
+    public float groundCheckRadius = 0.25f;
     public LayerMask groundLayer;
-    private bool isGrounded;
+    public bool isGrounded;
 
     [Header("Cấu Hình Lướt (Né Đòn)")]
     public float dashDuration = 0.25f;
@@ -45,7 +45,7 @@ public class CharacterController2D : MonoBehaviour
 
     [Header("Cấu Hình Cận Chiến (Skill 1/Combo)")]
     public Transform attackPoint;
-    public float meleeHitRange = 0.8f;
+    public float meleeHitRange = 1.2f;
     public LayerMask enemyLayers;
     public int meleeDamage = 35;
 
@@ -62,15 +62,13 @@ public class CharacterController2D : MonoBehaviour
     [Header("Trạng Thái Chiến Đấu")]
     public bool isBlocking = false;
     public bool isStunned = false;
-    public bool isCastingUltimate = false; // ✨ Cờ Siêu Giáp: Không thể bị ngắt chiêu cuối
-    public bool canMoveAndFight = false;
+    public bool isCastingUltimate = false;
+    public bool canMoveAndFight = true;
 
     private float actionTimer = 0f;
     private float horizontalInput;
     private Vector3 originalScale;
-
     private int aiCurrentStrategy = 0;
-    private bool aiIsRepositioning = false;
 
     void Start()
     {
@@ -85,37 +83,13 @@ public class CharacterController2D : MonoBehaviour
         if (isAI)
         {
             FindEnemyTarget();
-            string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
-            if (difficulty == "Hard")
-            {
-                timeBetweenActions = 0.3f;
-                moveSpeed = moveSpeed * 1.5f;
-            }
-            else
-            {
-                timeBetweenActions = 1.8f;
-            }
         }
     }
 
     void Update()
     {
-        if (groundCheck != null)
-        {
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-            if (isGrounded && rb.linearVelocity.y <= 0.1f)
-            {
-                jumpsRemaining = maxJumps;
-            }
-        }
-
-        bool isSurvivalMap = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("MapSinhTon");
-        if (!isSurvivalMap && !CountdownManager.isCountdownFinished)
-        {
-            if (rb != null) rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-            if (anim != null) anim.SetFloat("Speed", 0f);
-            return;
-        }
+        // 🦘 KIỂM TRA MẶT ĐẤT & HỒI LƯỢT NHẢY
+        CheckGroundStatus();
 
         if (comboStep > 0)
         {
@@ -130,6 +104,44 @@ public class CharacterController2D : MonoBehaviour
         else HandleAILogic();
     }
 
+    private void CheckGroundStatus()
+    {
+        bool groundDetected = false;
+
+        if (groundCheck != null)
+        {
+            groundDetected = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        }
+
+        // Tự động kiểm tra thêm qua tia Raycast phụ xuống chân nếu chưa gán GroundCheck
+        if (!groundDetected)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.2f, groundLayer);
+            if (hit.collider != null) groundDetected = true;
+        }
+
+        // Khi tiếp đất và không bay lên
+        if (groundDetected && Mathf.Abs(rb.linearVelocity.y) < 0.2f)
+        {
+            isGrounded = true;
+            jumpsRemaining = maxJumps; // ✨ Hồi phục đủ 2 lần nhảy
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Tiếp đất khi chạm bất kỳ sàn nào
+        if (collision.gameObject.name.Contains("Nền") || collision.gameObject.name.Contains("Ground") || collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            jumpsRemaining = maxJumps;
+        }
+    }
+
     void HandlePlayerInput()
     {
         if (isDashing || isStunned || isCastingUltimate) return;
@@ -142,32 +154,14 @@ public class CharacterController2D : MonoBehaviour
         {
             keyLeft = Input.GetKey(KeyCode.A);
             keyRight = Input.GetKey(KeyCode.D);
-            
-            // 🎮 NÚT NHẢY: Dùng Space (hỗ trợ cả W)
             keyJump = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-            
             keyBlock = Input.GetKey(KeyCode.K);
             keyDash = Input.GetKeyDown(KeyCode.L);
             
-            // ⚔️ NÚT TUNG CHIÊU: Giữ nguyên U - I - O - P
             keyS1 = Input.GetKeyDown(KeyCode.U);
             keyS2 = Input.GetKeyDown(KeyCode.I);
             keyS3 = Input.GetKeyDown(KeyCode.O);
             keyS4 = Input.GetKeyDown(KeyCode.P);
-        }
-        else if (playerIndex == 2)
-        {
-            keyLeft = Input.GetKey(KeyCode.LeftArrow);
-            keyRight = Input.GetKey(KeyCode.RightArrow);
-            keyJump = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Alpha0);
-            
-            keyBlock = Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Alpha2);
-            keyDash = Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3);
-            
-            keyS1 = Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1);
-            keyS2 = Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);
-            keyS3 = Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5);
-            keyS4 = Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6);
         }
 
         isBlocking = keyBlock;
@@ -192,6 +186,7 @@ public class CharacterController2D : MonoBehaviour
         else if (horizontalInput < 0)
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
 
+        // 🚀 NHẢY KHÔNG TỐN NĂNG LƯỢNG
         if (keyJump && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
@@ -212,85 +207,79 @@ public class CharacterController2D : MonoBehaviour
         if (keyS4) UseUltimateSkill();
     }
 
+    [Header("AI Chống Kẹt & Tầm Xa")]
+    private float aiStuckTimer = 0f;
+    private float aiLastPosX;
+    public float rangedSkillMaxDistance = 8.5f; // Tầm bắn tối đa của Skill 2, 3, 4
+
     void HandleAILogic()
     {
         if (isDashing || isStunned || isCastingUltimate) return;
 
-        if (isBlocking)
-        {
-            isBlocking = false;
-            if (anim != null) anim.SetBool("IsBlocking", false);
-        }
-
         if (enemyTarget == null)
         {
             FindEnemyTarget();
-            if (anim != null) anim.SetFloat("Speed", 0f);
-            return;
+            if (enemyTarget == null) return;
         }
 
         float distanceToEnemy = Vector2.Distance(transform.position, enemyTarget.position);
-        float moveDirection = enemyTarget.position.x > transform.position.x ? 1f : -1f;
+        float deltaX = enemyTarget.position.x - transform.position.x;
+        float moveDirection = deltaX > 0 ? 1f : -1f;
 
-        if (!aiIsRepositioning)
-        {
-            transform.localScale = new Vector3(moveDirection * Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
-        }
+        // Luôn xoay mặt nhìn về phía Player
+        transform.localScale = new Vector3(moveDirection * Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
 
         actionTimer += Time.deltaTime;
 
-        string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
-        int blockChance = (difficulty == "Hard") ? 150 : 10;
-
-        if (distanceToEnemy < attackRange && Random.Range(0, 1000) < blockChance)
+        // 🧠 1. HỆ THỐNG PHÁT HIỆN BỊ CẢN / KẸT ĐƯỜNG -> LƯỚT / NHẢY QUA NGAY
+        if (Mathf.Abs(rb.linearVelocity.x) > 0.1f)
         {
-            StartCoroutine(AIBlockRoutine());
-            return;
-        }
-
-        if (actionTimer < timeBetweenActions)
-        {
-            if (Random.Range(0, 1000) < (difficulty == "Hard" ? 8 : 3) && isGrounded && distanceToEnemy > attackRange)
+            // Nếu đang di chuyển mà tọa độ thực tế gần như không đổi
+            if (Mathf.Abs(transform.position.x - aiLastPosX) < 0.05f)
             {
-                if (Random.value > 0.5f)
+                aiStuckTimer += Time.deltaTime;
+                if (aiStuckTimer >= 0.45f) // Bị cản quá 0.45s
                 {
-                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-                    if (anim != null) anim.SetTrigger("Jump");
-                }
-                else
-                {
-                    StartCoroutine(DashRoutine(moveDirection));
-                }
-            }
-            return;
-        }
-
-        if (aiCurrentStrategy == 0)
-        {
-            if (difficulty == "Hard")
-            {
-                if (distanceToEnemy <= meleeHitRange)
-                {
-                    if (Random.value < 0.7f) aiCurrentStrategy = 1;
-                    else
+                    aiStuckTimer = 0f;
+                    // 50% cơ hội Lướt qua vật cản, 50% Nhảy vượt qua
+                    if (Random.value > 0.5f)
                     {
-                        StartCoroutine(DashRoutine(-moveDirection));
-                        actionTimer = 0f;
-                        return;
+                        StartCoroutine(DashRoutine(moveDirection));
                     }
+                    else if (isGrounded)
+                    {
+                        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                        if (anim != null) anim.SetTrigger("Jump");
+                    }
+                    return;
                 }
-                else if (distanceToEnemy > attackRange) aiCurrentStrategy = Random.value > 0.5f ? 2 : 3;
-                else aiCurrentStrategy = Random.Range(1, 5);
             }
             else
             {
-                aiCurrentStrategy = Random.Range(1, 5);
+                aiStuckTimer = 0f;
             }
-            aiIsRepositioning = false;
+        }
+        else
+        {
+            aiStuckTimer = 0f;
+        }
+        aiLastPosX = transform.position.x;
+
+        // 🧠 2. CHỌN CHIẾN THUẬT RA CHIÊU NẾU CHƯA CÓ
+        if (aiCurrentStrategy == 0)
+        {
+            // Tỉ lệ: 75% tung chiêu từ xa (Skill 2, 3, 4), 25% áp sát đấm thường (Skill 1)
+            float roll = Random.value;
+            if (roll < 0.25f) aiCurrentStrategy = 1;      // Đánh thường cận chiến
+            else if (roll < 0.55f) aiCurrentStrategy = 2; // Skill 2 tầm xa
+            else if (roll < 0.85f) aiCurrentStrategy = 3; // Skill 3 tầm xa
+            else aiCurrentStrategy = 4;                   // Chiêu cuối (Ulti)
         }
 
+        // 🧠 3. THỰC THI CHIẾN THUẬT
         if (aiCurrentStrategy == 1)
         {
+            // === CHIÊU CẬN CHIẾN (SKILL 1 COMBO) -> PHẢI ÁP SÁT ===
             if (distanceToEnemy > meleeHitRange)
             {
                 rb.linearVelocity = new Vector2(moveDirection * moveSpeed, rb.linearVelocity.y);
@@ -301,44 +290,51 @@ public class CharacterController2D : MonoBehaviour
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 if (anim != null) anim.SetFloat("Speed", 0f);
 
-                PerformComboAttack();
-                aiCurrentStrategy = 0;
-                actionTimer = 0f;
+                if (actionTimer >= timeBetweenActions)
+                {
+                    actionTimer = 0f;
+                    PerformComboAttack();
+                    aiCurrentStrategy = 0;
+                }
             }
         }
         else
         {
-            if (distanceToEnemy > attackRange)
+            // === CHIÊU TẦM XA (SKILL 2, 3, 4) -> KHÔNG CẦN ÁP SÁT, TẦM BẮN RỘNG ===
+            if (distanceToEnemy > rangedSkillMaxDistance)
             {
+                // Nếu quá xa ngoài tầm bắn (> 8.5m) thì mới chạy lại gần
                 rb.linearVelocity = new Vector2(moveDirection * moveSpeed, rb.linearVelocity.y);
                 if (anim != null) anim.SetFloat("Speed", 1f);
             }
             else
             {
+                // ĐÃ VÀO TẦM BẮN (2m - 8.5m) -> DỪNG LẠI XẢ CHIÊU NGAY
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 if (anim != null) anim.SetFloat("Speed", 0f);
 
-                if ((aiCurrentStrategy == 3 || aiCurrentStrategy == 4) && !aiIsRepositioning && distanceToEnemy < attackRange - 0.5f)
+                if (actionTimer >= timeBetweenActions)
                 {
-                    aiIsRepositioning = true;
-                    StartCoroutine(DashRoutine(-moveDirection));
-                    return;
-                }
-
-                if (aiCurrentStrategy == 4)
-                {
-                    UseUltimateSkill();
-                    aiCurrentStrategy = 0;
                     actionTimer = 0f;
-                    aiIsRepositioning = false;
-                    return;
-                }
 
-                int cost = (aiCurrentStrategy == 2) ? skill2Cost : skill3Cost;
-                bool castSuccess = TryUseSkill("Skill" + aiCurrentStrategy, cost);
-                if (!castSuccess) aiCurrentStrategy = 1;
-                else { aiCurrentStrategy = 0; actionTimer = 0f; }
-                aiIsRepositioning = false;
+                    if (aiCurrentStrategy == 4)
+                    {
+                        UseUltimateSkill();
+                    }
+                    else
+                    {
+                        int cost = (aiCurrentStrategy == 2) ? skill2Cost : skill3Cost;
+                        TryUseSkill("Skill" + aiCurrentStrategy, cost);
+                    }
+
+                    // Sau khi xả chiêu từ xa, 40% cơ hội lướt lùi lại tạo khoảng cách (thả diều)
+                    if (Random.value < 0.4f && distanceToEnemy < 4f)
+                    {
+                        StartCoroutine(DashRoutine(-moveDirection));
+                    }
+
+                    aiCurrentStrategy = 0;
+                }
             }
         }
     }
@@ -394,29 +390,9 @@ public class CharacterController2D : MonoBehaviour
         isCastingUltimate = false;
     }
 
-    private IEnumerator AIBlockRoutine()
-    {
-        isBlocking = true;
-        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        if (anim != null)
-        {
-            anim.SetFloat("Speed", 0f);
-            anim.SetBool("IsBlocking", true);
-        }
-
-        string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
-        float blockDuration = (difficulty == "Hard") ? Random.Range(0.8f, 2.0f) : Random.Range(0.3f, 1.0f);
-
-        yield return new WaitForSeconds(blockDuration);
-
-        isBlocking = false;
-        if (anim != null) anim.SetBool("IsBlocking", false);
-    }
-
     public void TakeKnockback(Vector2 force, float stunTime)
     {
         if (isBlocking || isCastingUltimate) return;
-
         StartCoroutine(KnockbackRoutine(force, stunTime));
     }
 
@@ -441,9 +417,8 @@ public class CharacterController2D : MonoBehaviour
 
     void FindEnemyTarget()
     {
-        string targetTag = gameObject.CompareTag("Enemy") ? "Player" : "Enemy";
-        GameObject targetObj = GameObject.FindWithTag(targetTag);
-        if (targetObj != null) enemyTarget = targetObj.transform;
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null) enemyTarget = p.transform;
     }
 
     bool TryUseSkill(string skillParameterName, int cost)
@@ -466,9 +441,6 @@ public class CharacterController2D : MonoBehaviour
         foreach (Collider2D obj in hitObjects)
         {
             if (obj.gameObject == this.gameObject) continue;
-
-            CharacterController2D targetObj = obj.GetComponent<CharacterController2D>();
-            if (targetObj != null && (targetObj.isDashing || targetObj.isBlocking)) continue;
 
             EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
             if (enemyHealth != null && !obj.CompareTag(gameObject.tag))
@@ -494,19 +466,6 @@ public class CharacterController2D : MonoBehaviour
         {
             GameFeelManager.instance.TriggerHitStop(0.05f);
             GameFeelManager.instance.TriggerCameraShake(0.1f, 0.15f);
-        }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, meleeHitRange);
-
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
 

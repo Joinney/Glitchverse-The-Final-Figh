@@ -25,9 +25,10 @@ public class InfiniteRoadGenerator : MonoBehaviour
     private bool miniBossSpawned = false;
     private bool miniBossDefeated = false;
 
-    [Header("5. Cài Đặt Boss Cuối Đường")]
+    [Header("5. Cài Đặt Boss Cuối Đường (Tatsumaki)")]
     public GameObject mainBossPrefab;
-    public float mainBossSpawnDistanceTrigger = 12f; // Khi người chơi còn cách Boss 12m thì Boss mới xuất hiện
+    public float mainBossSpawnDistanceTrigger = 10f;
+    private GameObject activeMainBoss; // ✨ Đã khai báo biến này
     private bool mainBossSpawned = false;
 
     private Transform activePlayer;
@@ -39,6 +40,13 @@ public class InfiniteRoadGenerator : MonoBehaviour
         CalculatePieceWidth();
         SpawnSelectedPlayer();
         CreateInvisibleWall("Wall_Start", -3f);
+
+        // 🙈 TỰ ĐỘNG ẨN THANH MÁU BOSS P2 TỪ ĐẦU GAME
+        GameObject barP2 = GameObject.Find("HealthBar_P2");
+        if (barP2 != null)
+        {
+            barP2.SetActive(false);
+        }
     }
 
     void Start()
@@ -53,7 +61,7 @@ public class InfiniteRoadGenerator : MonoBehaviour
     {
         if (activePlayer == null) return;
 
-        // 1. Sinh quái nhỏ dọc đường
+        // Sinh quái nhỏ dọc đường
         if (activePlayer.position.x > nextMinionX - 20f && nextMinionX < totalRoadLength - 30f)
         {
             SpawnMinion();
@@ -61,7 +69,7 @@ public class InfiniteRoadGenerator : MonoBehaviour
 
         spawnedMinions.RemoveAll(m => m == null);
 
-        // 2. ĐIỀU KIỆN SINH MINI BOSS: Đi gần tới mốc 75m VÀ dọn sạch quái thường
+        // 1. Sinh Mini Boss Sói khi dọn sạch quái thường
         if (!miniBossSpawned && activePlayer.position.x >= totalRoadLength - 28f)
         {
             if (spawnedMinions.Count == 0)
@@ -70,19 +78,17 @@ public class InfiniteRoadGenerator : MonoBehaviour
             }
         }
 
-        // 3. KIỂM TRA MINI BOSS ĐÃ CHẾT
+        // 2. Mini Boss bị hạ gục -> Mở khóa Camera
         if (miniBossSpawned && !miniBossDefeated)
         {
             if (activeMiniBoss == null)
             {
                 miniBossDefeated = true;
                 UnlockArena();
-                Debug.Log("🎯 Mini Boss đã bị tiêu diệt! Hãy tiến sâu vào cuối bản đồ để tìm Boss chính.");
             }
         }
 
-        // 4. ĐIỀU KIỆN SINH BOSS CHÍNH:
-        // Phải thỏa mãn CẢ 2: Đã diệt xong Mini Boss VÀ Player/Camera đã đi vào vùng cuối map
+        // 3. Tiến sâu vào cuối map -> Triệu hồi Boss Chính thực chiến
         if (miniBossDefeated && !mainBossSpawned)
         {
             float bossX = totalRoadLength - 4f;
@@ -159,6 +165,7 @@ public class InfiniteRoadGenerator : MonoBehaviour
     {
         miniBossSpawned = true;
 
+        // Khóa camera và dựng 2 mép biên tự động theo khung nhìn màn hình
         if (camFollow != null)
         {
             camFollow.LockCameraAtCurrentPosition();
@@ -170,14 +177,13 @@ public class InfiniteRoadGenerator : MonoBehaviour
             activeMiniBoss = Instantiate(miniBossPrefab, new Vector3(spawnX, 1.8f, 0), Quaternion.identity);
             activeMiniBoss.tag = "Enemy";
 
-            // Ép xoay mặt sang trái nhìn về phía Player
             Vector3 s = activeMiniBoss.transform.localScale;
             activeMiniBoss.transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
 
             SpriteRenderer sr = activeMiniBoss.GetComponentInChildren<SpriteRenderer>();
             if (sr != null) sr.flipX = true;
 
-            BossAnnouncementUI.ShowAnnouncement("⚠️ CẢNH BÁO: MINI BOSS DARK WOLF XUẤT HIỆN! ⚠️", new Color(1f, 0.45f, 0f));
+            BossAnnouncementUI.ShowAnnouncement("CẢNH BÁO: MINI BOSS DARK WOLF XUẤT HIỆN!", new Color(1f, 0.45f, 0f));
             Debug.Log("🐺 Mini Boss Dark Wolf xuất hiện!");
         }
         else
@@ -201,25 +207,44 @@ public class InfiniteRoadGenerator : MonoBehaviour
 
         if (mainBossPrefab != null)
         {
-            float bossX = totalRoadLength - 4f;
-            GameObject bossObj = Instantiate(mainBossPrefab, new Vector3(bossX, 2.2f, 0), Quaternion.identity);
-            bossObj.tag = "Enemy";
+            float bossX = activePlayer.position.x + 6.5f;
+            if (bossX > totalRoadLength - 2f) bossX = totalRoadLength - 2f;
 
-            // 🔄 Tắt FlipX và ép Scale X âm (-5) để quay mặt sang trái
-            SpriteRenderer[] allRenderers = bossObj.GetComponentsInChildren<SpriteRenderer>();
+            activeMainBoss = Instantiate(mainBossPrefab, new Vector3(bossX, 2.2f, 0), Quaternion.identity);
+            activeMainBoss.tag = "Enemy";
+
+            if (camFollow != null)
+            {
+                camFollow.LockCameraAtCurrentPosition();
+            }
+
+            Vector3 s = activeMainBoss.transform.localScale;
+            activeMainBoss.transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
+
+            SpriteRenderer[] allRenderers = activeMainBoss.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer r in allRenderers)
             {
                 r.flipX = false;
             }
 
-            Vector3 s = bossObj.transform.localScale;
-            bossObj.transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
+            CharacterController2D bossCtrl = activeMainBoss.GetComponent<CharacterController2D>();
+            if (bossCtrl != null)
+            {
+                bossCtrl.isAI = true;
+                bossCtrl.enabled = true;
+            }
 
-            BossStageTrigger trigger = bossObj.GetComponent<BossStageTrigger>();
-            if (trigger == null) trigger = bossObj.AddComponent<BossStageTrigger>();
-            trigger.fightStageSceneName = "Fight_Stage1";
+            // 🩸 KÍCH HOẠT VÀ LÀM ĐẦY CÂY MÁU BOSS NGAY LẬP TỨC
+            EnemyHealth bossHealth = activeMainBoss.GetComponent<EnemyHealth>();
+            if (bossHealth != null)
+            {
+                bossHealth.enabled = true;
+                bossHealth.showFloatingHealthBar = false;
+                bossHealth.InitBossUI(); // Gọi khởi tạo và nạp đầy 100% máu lên UI
+            }
 
-            CreateInvisibleWall("Wall_End", totalRoadLength + 3f);
+            BossStageTrigger trigger = activeMainBoss.GetComponent<BossStageTrigger>();
+            if (trigger != null) Destroy(trigger);
 
             BossAnnouncementUI.ShowAnnouncement("THỦ LĨNH CUỐI CÙNG ĐÃ XUẤT HIỆN!", Color.red, 3.0f);
             Debug.Log("👑 Boss chính đã xuất hiện!");
