@@ -9,7 +9,7 @@ public class CharacterController2D : MonoBehaviour
 
     [Header("Cấu Hình Phân Loại")]
     public bool isAI = false;
-    public int playerIndex = 1; // 1 = P1 (WASD), 2 = P2 (Mũi tên)
+    public int playerIndex = 1; // 1 = P1, 2 = P2
 
     [Header("Thông Số Thuộc Tính")]
     public float moveSpeed = 5f;
@@ -31,8 +31,8 @@ public class CharacterController2D : MonoBehaviour
     public bool isDashing = false;
 
     [Header("Hệ Thống Combo Đánh Thường")]
-    public int comboStep = 0;           // Đang ở đòn thứ mấy
-    public float comboWindow = 0.8f;    // Thời gian cho phép gõ phím tiếp theo
+    public int comboStep = 0;
+    public float comboWindow = 0.8f;
     private float timeSinceLastAttack = 0f;
 
     [Header("Năng Lượng Tiêu Hao & Hồi Phục")]
@@ -62,6 +62,7 @@ public class CharacterController2D : MonoBehaviour
     [Header("Trạng Thái Chiến Đấu")]
     public bool isBlocking = false;
     public bool isStunned = false;
+    public bool isCastingUltimate = false; // ✨ Cờ Siêu Giáp: Không thể bị ngắt chiêu cuối
     public bool canMoveAndFight = false;
 
     private float actionTimer = 0f;
@@ -72,31 +73,30 @@ public class CharacterController2D : MonoBehaviour
     private bool aiIsRepositioning = false;
 
     void Start()
-{
-    // Luôn mở khóa di chuyển cho MapSinhTon
-    CountdownManager.isCountdownFinished = true;
-
-    anim = GetComponent<Animator>();
-    rb = GetComponent<Rigidbody2D>();
-    energySys = GetComponent<EnergySystem>();
-    originalScale = transform.localScale;
-    jumpsRemaining = maxJumps;
-
-    if (isAI)
     {
-        FindEnemyTarget();
-        string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
-        if (difficulty == "Hard")
+        CountdownManager.isCountdownFinished = true;
+
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        energySys = GetComponent<EnergySystem>();
+        originalScale = transform.localScale;
+        jumpsRemaining = maxJumps;
+
+        if (isAI)
         {
-            timeBetweenActions = 0.3f;
-            moveSpeed = moveSpeed * 1.5f;
-        }
-        else
-        {
-            timeBetweenActions = 1.8f;
+            FindEnemyTarget();
+            string difficulty = PlayerPrefs.GetString("GameDifficulty", "Normal");
+            if (difficulty == "Hard")
+            {
+                timeBetweenActions = 0.3f;
+                moveSpeed = moveSpeed * 1.5f;
+            }
+            else
+            {
+                timeBetweenActions = 1.8f;
+            }
         }
     }
-}
 
     void Update()
     {
@@ -109,7 +109,6 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
-        // Bỏ qua kiểm tra đếm ngược nếu ở MapSinhTon, các map đối kháng còn lại vẫn khóa khi chưa xong đếm ngược
         bool isSurvivalMap = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("MapSinhTon");
         if (!isSurvivalMap && !CountdownManager.isCountdownFinished)
         {
@@ -118,9 +117,6 @@ public class CharacterController2D : MonoBehaviour
             return;
         }
 
-        // ==================================================
-        // ĐẾM THỜI GIAN RỚT COMBO (Dành cho cả Player và AI)
-        // ==================================================
         if (comboStep > 0)
         {
             timeSinceLastAttack += Time.deltaTime;
@@ -136,7 +132,7 @@ public class CharacterController2D : MonoBehaviour
 
     void HandlePlayerInput()
     {
-        if (isDashing || isStunned) return;
+        if (isDashing || isStunned || isCastingUltimate) return;
 
         bool keyLeft = false, keyRight = false, keyJump = false, keyDash = false;
         bool keyS1 = false, keyS2 = false, keyS3 = false, keyS4 = false;
@@ -146,9 +142,14 @@ public class CharacterController2D : MonoBehaviour
         {
             keyLeft = Input.GetKey(KeyCode.A);
             keyRight = Input.GetKey(KeyCode.D);
-            keyJump = Input.GetKeyDown(KeyCode.W);
+            
+            // 🎮 NÚT NHẢY: Dùng Space (hỗ trợ cả W)
+            keyJump = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
+            
             keyBlock = Input.GetKey(KeyCode.K);
             keyDash = Input.GetKeyDown(KeyCode.L);
+            
+            // ⚔️ NÚT TUNG CHIÊU: Giữ nguyên U - I - O - P
             keyS1 = Input.GetKeyDown(KeyCode.U);
             keyS2 = Input.GetKeyDown(KeyCode.I);
             keyS3 = Input.GetKeyDown(KeyCode.O);
@@ -158,9 +159,11 @@ public class CharacterController2D : MonoBehaviour
         {
             keyLeft = Input.GetKey(KeyCode.LeftArrow);
             keyRight = Input.GetKey(KeyCode.RightArrow);
-            keyJump = Input.GetKeyDown(KeyCode.UpArrow);
+            keyJump = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Alpha0);
+            
             keyBlock = Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Alpha2);
             keyDash = Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3);
+            
             keyS1 = Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1);
             keyS2 = Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);
             keyS3 = Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5);
@@ -203,16 +206,15 @@ public class CharacterController2D : MonoBehaviour
             StartCoroutine(DashRoutine(dashDirection));
         }
 
-        // --- GỌI HÀM COMBO ---
         if (keyS1) PerformComboAttack();
         if (keyS2) TryUseSkill("Skill2", skill2Cost);
         if (keyS3) TryUseSkill("Skill3", skill3Cost);
-        if (keyS4) TryUseSkill("Skill4", skill4Cost);
+        if (keyS4) UseUltimateSkill();
     }
 
     void HandleAILogic()
     {
-        if (isDashing || isStunned) return;
+        if (isDashing || isStunned || isCastingUltimate) return;
 
         if (isBlocking)
         {
@@ -299,9 +301,7 @@ public class CharacterController2D : MonoBehaviour
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 if (anim != null) anim.SetFloat("Speed", 0f);
 
-                // --- ĐỂ CHO AI CŨNG BIẾT MÚA COMBO ---
                 PerformComboAttack();
-
                 aiCurrentStrategy = 0;
                 actionTimer = 0f;
             }
@@ -325,14 +325,16 @@ public class CharacterController2D : MonoBehaviour
                     return;
                 }
 
-                int cost = 0;
-                switch (aiCurrentStrategy)
+                if (aiCurrentStrategy == 4)
                 {
-                    case 2: cost = skill2Cost; break;
-                    case 3: cost = skill3Cost; break;
-                    case 4: cost = skill4Cost; break;
+                    UseUltimateSkill();
+                    aiCurrentStrategy = 0;
+                    actionTimer = 0f;
+                    aiIsRepositioning = false;
+                    return;
                 }
 
+                int cost = (aiCurrentStrategy == 2) ? skill2Cost : skill3Cost;
                 bool castSuccess = TryUseSkill("Skill" + aiCurrentStrategy, cost);
                 if (!castSuccess) aiCurrentStrategy = 1;
                 else { aiCurrentStrategy = 0; actionTimer = 0f; }
@@ -342,12 +344,9 @@ public class CharacterController2D : MonoBehaviour
     }
 
     [Header("Cấu Hình Độ Trễ Combo")]
-    public float attackCooldown = 0.35f; // Thời gian khựng lại giữa mỗi đòn (giây)
-    private bool isAttacking = false;   // Biến khóa để chống spam nhanh quá mức
+    public float attackCooldown = 0.35f;
+    private bool isAttacking = false;
 
-    // ==========================================
-    // HÀM MÚA COMBO ĐÁNH THƯỜNG (ĐÃ CÓ KHOÁ CHỜ)
-    // ==========================================
     private void PerformComboAttack()
     {
         if (isAttacking) return;
@@ -380,6 +379,21 @@ public class CharacterController2D : MonoBehaviour
         isAttacking = false;
     }
 
+    private void UseUltimateSkill()
+    {
+        if (TryUseSkill("Skill4", skill4Cost))
+        {
+            StartCoroutine(UltimateSuperArmorRoutine());
+        }
+    }
+
+    private IEnumerator UltimateSuperArmorRoutine()
+    {
+        isCastingUltimate = true;
+        yield return new WaitForSeconds(1.5f);
+        isCastingUltimate = false;
+    }
+
     private IEnumerator AIBlockRoutine()
     {
         isBlocking = true;
@@ -401,11 +415,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void TakeKnockback(Vector2 force, float stunTime)
     {
-        if (isBlocking)
-        {
-            rb.linearVelocity = new Vector2(force.x * 0.2f, rb.linearVelocity.y);
-            return;
-        }
+        if (isBlocking || isCastingUltimate) return;
 
         StartCoroutine(KnockbackRoutine(force, stunTime));
     }
@@ -455,14 +465,11 @@ public class CharacterController2D : MonoBehaviour
 
         foreach (Collider2D obj in hitObjects)
         {
-            // 1. Không tự đánh chính mình
             if (obj.gameObject == this.gameObject) continue;
 
-            // 2. Nếu là nhân vật đối kháng (có CharacterController2D), kiểm tra né đòn/đỡ đòn
             CharacterController2D targetObj = obj.GetComponent<CharacterController2D>();
             if (targetObj != null && (targetObj.isDashing || targetObj.isBlocking)) continue;
 
-            // 3. Xử lý sát thương quái / đối thủ
             EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
             if (enemyHealth != null && !obj.CompareTag(gameObject.tag))
             {
@@ -470,7 +477,6 @@ public class CharacterController2D : MonoBehaviour
                 hitSomeone = true;
             }
 
-            // 4. Xử lý sát thương Player (khi ở chế độ 2 người chơi)
             PlayerHealth playerHealth = obj.GetComponent<PlayerHealth>();
             if (playerHealth != null && !obj.CompareTag(gameObject.tag))
             {
@@ -479,13 +485,11 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
-        // Hồi năng lượng khi trúng bất kỳ mục tiêu nào
         if (hitSomeone && energySys != null)
         {
             energySys.AddEnergy(energyGainOnHit);
         }
 
-        // Hiệu ứng va chạm
         if (hitSomeone && GameFeelManager.instance != null)
         {
             GameFeelManager.instance.TriggerHitStop(0.05f);

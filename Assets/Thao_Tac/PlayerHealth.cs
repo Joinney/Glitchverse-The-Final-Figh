@@ -26,7 +26,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        // CẬP NHẬT TỈ LỆ MÁU TỪ SETTINGS
         float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
         maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
         currentHealth = maxHealth;
@@ -36,14 +35,10 @@ public class PlayerHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerScript = GetComponent<CharacterController2D>();
 
-        // ==========================================
-        // TỰ ĐỘNG PHÂN BIỆT THANH MÁU P1 HAY P2 / ENEMY
-        // ==========================================
         string gameMode = PlayerPrefs.GetString("GameMode", "Single");
 
         if (gameMode == "PvP")
         {
-            // Nếu là chế độ 2 người: Dựa vào playerIndex để gán thanh máu
             if (playerScript != null && playerScript.playerIndex == 2)
             {
                 GameObject barP2 = GameObject.Find("HealthBar_P2");
@@ -51,14 +46,12 @@ public class PlayerHealth : MonoBehaviour
             }
             else
             {
-                // Mặc định cho Player 1
                 GameObject barP1 = GameObject.Find("HealthBar_P1");
                 if (barP1 != null) healthBar = barP1.GetComponent<HealthBarUI>();
             }
         }
         else
         {
-            // Nếu là chế độ Chơi đơn (Singleplayer): Player dùng P1, AI dùng P2
             if (gameObject.CompareTag("Enemy"))
             {
                 GameObject barP2 = GameObject.Find("HealthBar_P2");
@@ -71,7 +64,6 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // KÍCH HOẠT HIỂN THỊ LÊN THANH MÁU TƯƠNG TỨC
         if (healthBar != null)
         {
             if (characterFace != null) healthBar.SetAvatar(characterFace);
@@ -85,10 +77,17 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth);
 
-        if (audioSource != null && hitSounds.Length > 0)
+        if (audioSource != null && hitSounds != null && hitSounds.Length > 0)
         {
             AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
-            audioSource.PlayOneShot(randomClip);
+            if (randomClip != null) audioSource.PlayOneShot(randomClip);
+        }
+
+        // 🛡️ NẾU ĐANG GỒNG CHIÊU CUỐI: Bỏ qua ngắt hoạt ảnh (Hit Trigger) và bỏ qua Stun
+        if (playerScript != null && playerScript.isCastingUltimate)
+        {
+            if (currentHealth <= 0) Die();
+            return;
         }
 
         if (anim != null) anim.SetTrigger("Hit");
@@ -140,9 +139,6 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            // ==========================================
-            // NÂNG CẤP: GỌI MATCH CONTROLLER THEO ĐÚNG CHẾ ĐỘ
-            // ==========================================
             MatchController match = FindAnyObjectByType<MatchController>();
             if (match != null)
             {
@@ -150,14 +146,11 @@ public class PlayerHealth : MonoBehaviour
                 
                 if (mode == "PvP")
                 {
-                    // Logic Đối Kháng: Ai chết thì người kia thắng!
-                    // Lấy playerIndex để biết nạn nhân là ai
                     int winner = (playerScript != null && playerScript.playerIndex == 1) ? 2 : 1;
                     match.EndPvPMatch(winner);
                 }
                 else
                 {
-                    // Logic Đi Ải (Giữ nguyên như cũ)
                     match.EndMatch(false);
                 }
             }

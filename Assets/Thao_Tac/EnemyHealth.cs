@@ -3,26 +3,26 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [Header("Thông tin UI")]
-    public Sprite characterFace;
-    public string characterName = "Name NV";
-
-    public int baseHealth = 1000;
+    [Header("Thông Tin Cơ Bản")]
+    public string characterName = "Monster";
+    public int baseHealth = 100;
     [HideInInspector] public int maxHealth;
-    public HealthBarUI healthBar;
     public int currentHealth;
+
+    [Header("Cài Đặt Thanh Máu Trên Đầu")]
+    public bool showFloatingHealthBar = true;
+    public Vector3 healthBarOffset = new Vector3(0, 1.5f, 0);
+    private FloatingHealthBar floatingBar;
+
+    [Header("Âm Thanh Bị Đánh")]
+    private AudioSource audioSource;
+    public AudioClip[] hitSounds;
 
     private Animator anim;
     private Rigidbody2D rb;
-    private CharacterController2D aiScript;
-
-    [Header("Thời gian bị choáng (giây)")]
-    public float stunDuration = 0.6f;
-    private Coroutine stunCoroutine;
-
-    [Header("Âm Thanh Đau Đớn Của AI")]
-    private AudioSource audioSource;
-    public AudioClip[] hitSounds;
+    private MinionMonsterAI minionAI;
+    private CharacterController2D aiBossCtrl;
+    private HealthBarUI bossMainHealthBar;
 
     void Start()
     {
@@ -30,107 +30,103 @@ public class EnemyHealth : MonoBehaviour
         maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
         currentHealth = maxHealth;
 
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        aiScript = GetComponent<CharacterController2D>();
-        audioSource = GetComponent<AudioSource>();
+        minionAI = GetComponent<MinionMonsterAI>();
+        aiBossCtrl = GetComponent<CharacterController2D>();
 
-        // An toàn tìm kiếm UI (Bỏ qua nếu là map đi cảnh hoặc quái nhỏ không có HealthBar_P2)
-        GameObject p2BarObj = GameObject.Find("HealthBar_P2");
-        if (p2BarObj != null)
+        // 1. Chỉ hiện thanh máu trên đầu cho quái thường và Mini Boss (không hiện cho Boss chính trong màn đấu võ)
+        bool isRealBossFight = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("Fight_Stage");
+        
+        if (showFloatingHealthBar && !isRealBossFight)
         {
-            healthBar = p2BarObj.GetComponent<HealthBarUI>();
-            if (healthBar != null && characterFace != null)
+            GameObject barObj = new GameObject(gameObject.name + "_FloatingHealth");
+            floatingBar = barObj.AddComponent<FloatingHealthBar>();
+            floatingBar.Setup(transform, currentHealth, maxHealth, healthBarOffset);
+        }
+
+        // 2. Khớp thanh máu góc trên bên phải UI cho Boss chính
+        GameObject barP2 = GameObject.Find("HealthBar_P2");
+        if (barP2 != null && !gameObject.name.Contains("Goblin") && !gameObject.name.Contains("skeleton") && !gameObject.name.Contains("DarkWolf"))
+        {
+            bossMainHealthBar = barP2.GetComponent<HealthBarUI>();
+            if (bossMainHealthBar != null)
             {
-                healthBar.SetAvatar(characterFace);
-                healthBar.SetCharacterName(characterName);
+                bossMainHealthBar.SetCharacterName(characterName);
+                bossMainHealthBar.SetHealth(currentHealth, maxHealth);
             }
         }
     }
 
     public void TakeDamage(int damage)
     {
+        if (currentHealth <= 0) return;
+
         currentHealth -= damage;
-        if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth);
+        if (currentHealth < 0) currentHealth = 0;
 
-        if (ComboManager.instance != null) ComboManager.instance.AddCombo();
+        // Bắn chữ số dame
+        DamagePopup.Create(transform.position + Vector3.up * (healthBarOffset.y * 0.7f), damage);
 
-        // 🔊 Phát âm thanh trúng đòn (Hoạt động tốt cả khi không có AudioSource trên Prefab)
-        if (hitSounds != null && hitSounds.Length > 0)
+        // Cập nhật thanh máu trên đầu
+        if (floatingBar != null)
         {
-            AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
-            if (randomClip != null)
-            {
-                AudioSource.PlayClipAtPoint(randomClip, transform.position);
-            }
+            floatingBar.UpdateHealth(currentHealth, maxHealth);
         }
 
-        if (anim != null) anim.SetTrigger("Hit");
+        // Cập nhật thanh máu UI trên cùng màn hình
+        if (bossMainHealthBar != null)
+        {
+            bossMainHealthBar.SetHealth(currentHealth, maxHealth);
+        }
 
-        // 💥 Xử lý đẩy lùi & gọi chết cho quái nhỏ (Skeleton / Goblin)
-        MinionMonsterAI minionAI = GetComponent<MinionMonsterAI>();
+        // Âm thanh
+        if (audioSource != null && hitSounds != null && hitSounds.Length > 0)
+        {
+            AudioClip clip = hitSounds[Random.Range(0, hitSounds.Length)];
+            if (clip != null) audioSource.PlayOneShot(clip);
+        }
+
+        // Đẩy lùi quái nhỏ/Mini Boss
         if (minionAI != null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                // Hướng đẩy lùi ngược chiều với hướng Player đang đứng
-                float pushDir = transform.position.x > player.transform.position.x ? 1f : -1f;
-                Vector2 knockForce = new Vector2(pushDir * 4.5f, 1.5f);
-                minionAI.TakeKnockback(knockForce);
-            }
-
-            if (currentHealth <= 0)
-            {
-                minionAI.Die();
-                return;
-            }
+            Vector2 knockbackDir = transform.localScale.x > 0 ? new Vector2(-1.2f, 0.5f) : new Vector2(1.2f, 0.5f);
+            minionAI.TakeKnockback(knockbackDir);
         }
 
-        // Xử lý choáng cho Boss / Nhân vật đối kháng
-        if (stunCoroutine != null) StopCoroutine(stunCoroutine);
-        stunCoroutine = StartCoroutine(StunRoutine());
-
-        if (currentHealth <= 0) Die();
-    }
-
-    private IEnumerator StunRoutine()
-    {
-        if (aiScript != null) aiScript.enabled = false;
-        if (rb != null) rb.linearVelocity = Vector2.zero;
-
-        yield return new WaitForSeconds(stunDuration);
-
-        if (currentHealth > 0 && aiScript != null) aiScript.enabled = true;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     void Die()
     {
-        Debug.Log(gameObject.name + " đã bị hạ gục!");
-
-        // 1. Chạy hoạt ảnh gục ngã
-        if (anim != null)
+        if (floatingBar != null)
         {
-            foreach (AnimatorControllerParameter param in anim.parameters)
-            {
-                if (param.name == "Dead") { anim.SetTrigger("Dead"); break; }
-                if (param.name == "Die") { anim.SetTrigger("Die"); break; }
-            }
+            Destroy(floatingBar.gameObject);
         }
 
-        // 2. Khóa AI di chuyển
-        if (aiScript != null) aiScript.enabled = false;
-        if (stunCoroutine != null) StopCoroutine(stunCoroutine);
+        // Nếu là quái thường hoặc Mini Boss trong map sinh tồn
+        if (minionAI != null)
+        {
+            minionAI.Die();
+            return;
+        }
 
-        // 3. Hiệu ứng hất văng
+        // 👑 XỬ LÝ KHI BOSS CHÍNH BỊ HẠ GỤC:
+        if (anim != null) anim.SetTrigger("Dead");
+        if (aiBossCtrl != null) aiBossCtrl.enabled = false;
+
+        // Văng nhẹ khi ngã gục
         if (rb != null)
         {
-            float vangX = transform.localScale.x > 0 ? -1.0f : 1.0f;
-            float vangY = 2.5f;
-            rb.linearVelocity = new Vector2(vangX, vangY);
+            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = new Vector2(transform.localScale.x > 0 ? -2f : 2f, 3f);
         }
 
-        // 4. Kết thúc trận đấu hoặc kích hoạt Cinematic
+        // 🏆 BÁO CHO MATCH CONTROLLER KÍCH HOẠT CHIẾN THẮNG (VICTORY)
         if (GameFeelManager.instance != null)
         {
             GameFeelManager.instance.TriggerCinematicFinish(this.transform, null, true);
@@ -138,9 +134,20 @@ public class EnemyHealth : MonoBehaviour
         else
         {
             MatchController match = FindAnyObjectByType<MatchController>();
-            if (match != null) match.EndMatch(true);
+            if (match != null)
+            {
+                match.EndMatch(true); // true = Player 1 Chiến Thắng!
+            }
         }
 
-        this.enabled = false;
+        Destroy(gameObject, 2.0f);
+    }
+
+    private void OnDestroy()
+    {
+        if (floatingBar != null)
+        {
+            Destroy(floatingBar.gameObject);
+        }
     }
 }

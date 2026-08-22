@@ -538,17 +538,17 @@ MonoBehaviour:
   - {fileID: 2701001394860751720, guid: a0ff347161e0a5846abb1ddb718a45f7, type: 3}
   - {fileID: 7952637622976372527, guid: c972f11119b2eb142ab6b1f277bb9a97, type: 3}
   spawnPoint: {fileID: 0}
-  groundPrefab: {fileID: 390031135497495586, guid: 755a2b6a880451e4b92d0f46073caada, type: 3}
-  pieceWidth: 20
-  initialPieces: 3
+  groundPrefab: {fileID: 7352146340770647562, guid: dc892b4b6351cbc428f0439afbaa53d3, type: 3}
+  pieceWidth: 0
   spawnDistance: 15
   totalRoadLength: 100
   minionPrefabs:
   - {fileID: 1505905564021469714, guid: fe9f6acd2d5879a45897a3c86a4a5a2d, type: 3}
   - {fileID: 8213974656607846790, guid: ac4318888d7476843887c9546b0855be, type: 3}
-  minionSpawnInterval: 2
+  minionSpawnInterval: 10
   miniBossPrefab: {fileID: 1424383095653874445, guid: 2fad0ec419ab0b546a490f8d31499f05, type: 3}
   mainBossPrefab: {fileID: 7952637622976372527, guid: c972f11119b2eb142ab6b1f277bb9a97, type: 3}
+  mainBossSpawnDistanceTrigger: 12
 --- !u!4 &1192286794
 Transform:
   m_ObjectHideFlags: 0
@@ -776,6 +776,7 @@ MonoBehaviour:
   target: {fileID: 0}
   smoothSpeed: 0.125
   offset: {x: 3, y: 3.3, z: -10}
+  isLocked: 0
 --- !u!1 &1786865495
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +981,7 @@ Transform:
   m_GameObject: {fileID: 1852710530}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 4.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

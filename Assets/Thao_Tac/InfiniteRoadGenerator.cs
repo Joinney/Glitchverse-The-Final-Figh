@@ -4,45 +4,46 @@ using UnityEngine;
 public class InfiniteRoadGenerator : MonoBehaviour
 {
     [Header("1. Danh Sách Nhân Vật Chọn Từ Menu")]
-    [Tooltip("Thứ tự Prefab phải khớp với index khi chọn ở MainMenu (0: Gojo, 1: Luffy, 2: Mihawk...)")]
     public GameObject[] characterPrefabs;
     public Transform spawnPoint;
 
     [Header("2. Cài Đặt Sinh Đường")]
     public GameObject groundPrefab;
-    public float pieceWidth = 20f;
-    public int initialPieces = 3;
-    public float spawnDistance = 15f;
-    public float totalRoadLength = 120f;
+    public float pieceWidth = 0f; 
+    public float spawnDistance = 35f;
+    public float totalRoadLength = 100f;
 
     [Header("3. Cài Đặt Quái Nhỏ")]
-    public GameObject[] minionPrefabs; // Kéo Prefab Goblin, Skeleton vào đây
-    public float minionSpawnInterval = 12f;
+    public GameObject[] minionPrefabs;
+    public float minionSpawnInterval = 14f;
     private float nextMinionX = 15f;
     private List<GameObject> spawnedMinions = new List<GameObject>();
 
     [Header("4. Cài Đặt Mini Boss (Dark Wolf)")]
-    public GameObject miniBossPrefab; // Ô kéo Prefab Sói Mini Boss
+    public GameObject miniBossPrefab;
     private GameObject activeMiniBoss;
     private bool miniBossSpawned = false;
     private bool miniBossDefeated = false;
 
     [Header("5. Cài Đặt Boss Cuối Đường")]
-    public GameObject mainBossPrefab; // Ô kéo Prefab Boss chính (Tatsumaki_AI)
+    public GameObject mainBossPrefab;
+    public float mainBossSpawnDistanceTrigger = 12f; // Khi người chơi còn cách Boss 12m thì Boss mới xuất hiện
     private bool mainBossSpawned = false;
 
     private Transform activePlayer;
     private float currentSpawnX = 0f;
+    private CameraFollow2D camFollow;
 
     void Awake()
     {
+        CalculatePieceWidth();
         SpawnSelectedPlayer();
-        CreateInvisibleWall("Wall_Start", -3f); // Tường chặn đầu map
+        CreateInvisibleWall("Wall_Start", -3f);
     }
 
     void Start()
     {
-        for (int i = 0; i < initialPieces; i++)
+        while (currentSpawnX <= totalRoadLength + pieceWidth)
         {
             SpawnGroundPiece();
         }
@@ -52,24 +53,16 @@ public class InfiniteRoadGenerator : MonoBehaviour
     {
         if (activePlayer == null) return;
 
-        // 1. Sinh đất cho tới khi vượt qua mốc kết thúc 1 mảnh
-        if (currentSpawnX - activePlayer.position.x < spawnDistance && currentSpawnX <= totalRoadLength + pieceWidth)
-        {
-            SpawnGroundPiece();
-        }
-
-        // 2. Sinh quái nhỏ dọc đường (dừng sinh trước mốc xuất hiện Mini Boss)
-        if (activePlayer.position.x > nextMinionX - 20f && nextMinionX < totalRoadLength - 25f)
+        // 1. Sinh quái nhỏ dọc đường
+        if (activePlayer.position.x > nextMinionX - 20f && nextMinionX < totalRoadLength - 30f)
         {
             SpawnMinion();
         }
 
-        // 3. Tự động loại bỏ quái đã bị tiêu diệt khỏi danh sách
         spawnedMinions.RemoveAll(m => m == null);
 
-        // 4. KIỂM TRA ĐIỀU KIỆN XUẤT HIỆN MINI BOSS:
-        // Đi gần tới cuối đường VÀ đã dọn sạch toàn bộ quái nhỏ
-        if (!miniBossSpawned && currentSpawnX >= totalRoadLength && activePlayer.position.x >= totalRoadLength - 30f)
+        // 2. ĐIỀU KIỆN SINH MINI BOSS: Đi gần tới mốc 75m VÀ dọn sạch quái thường
+        if (!miniBossSpawned && activePlayer.position.x >= totalRoadLength - 28f)
         {
             if (spawnedMinions.Count == 0)
             {
@@ -77,16 +70,45 @@ public class InfiniteRoadGenerator : MonoBehaviour
             }
         }
 
-        // 5. KIỂM TRA ĐIỀU KIỆN XUẤT HIỆN BOSS CHÍNH:
-        // Khi Mini Boss đã sinh ra và bị tiêu diệt
+        // 3. KIỂM TRA MINI BOSS ĐÃ CHẾT
         if (miniBossSpawned && !miniBossDefeated)
         {
             if (activeMiniBoss == null)
             {
                 miniBossDefeated = true;
+                UnlockArena();
+                Debug.Log("🎯 Mini Boss đã bị tiêu diệt! Hãy tiến sâu vào cuối bản đồ để tìm Boss chính.");
+            }
+        }
+
+        // 4. ĐIỀU KIỆN SINH BOSS CHÍNH:
+        // Phải thỏa mãn CẢ 2: Đã diệt xong Mini Boss VÀ Player/Camera đã đi vào vùng cuối map
+        if (miniBossDefeated && !mainBossSpawned)
+        {
+            float bossX = totalRoadLength - 4f;
+            if (activePlayer.position.x >= bossX - mainBossSpawnDistanceTrigger)
+            {
                 SpawnMainBoss();
             }
         }
+    }
+
+    void CalculatePieceWidth()
+    {
+        if (pieceWidth <= 0f && groundPrefab != null)
+        {
+            SpriteRenderer sr = groundPrefab.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null && sr.sprite != null) pieceWidth = sr.bounds.size.x;
+            else pieceWidth = 20f;
+        }
+    }
+
+    void SpawnGroundPiece()
+    {
+        GameObject newGround = Instantiate(groundPrefab, new Vector3(currentSpawnX, 0, 0), Quaternion.identity, transform);
+        SpriteRenderer sr = newGround.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null && sr.sprite != null) pieceWidth = sr.bounds.size.x;
+        currentSpawnX += pieceWidth;
     }
 
     void SpawnSelectedPlayer()
@@ -110,17 +132,11 @@ public class InfiniteRoadGenerator : MonoBehaviour
 
             if (Camera.main != null)
             {
-                CameraFollow2D camFollow = Camera.main.gameObject.GetComponent<CameraFollow2D>();
+                camFollow = Camera.main.gameObject.GetComponent<CameraFollow2D>();
                 if (camFollow == null) camFollow = Camera.main.gameObject.AddComponent<CameraFollow2D>();
                 camFollow.target = activePlayer;
             }
         }
-    }
-
-    void SpawnGroundPiece()
-    {
-        Instantiate(groundPrefab, new Vector3(currentSpawnX, 0, 0), Quaternion.identity, transform);
-        currentSpawnX += pieceWidth;
     }
 
     void SpawnMinion()
@@ -131,6 +147,8 @@ public class InfiniteRoadGenerator : MonoBehaviour
             if (minionPrefabs[randIndex] != null)
             {
                 GameObject minion = Instantiate(minionPrefabs[randIndex], new Vector3(nextMinionX, 1.2f, 0), Quaternion.identity);
+                Vector3 s = minion.transform.localScale;
+                minion.transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
                 spawnedMinions.Add(minion);
             }
         }
@@ -140,47 +158,80 @@ public class InfiniteRoadGenerator : MonoBehaviour
     void SpawnMiniBoss()
     {
         miniBossSpawned = true;
+
+        if (camFollow != null)
+        {
+            camFollow.LockCameraAtCurrentPosition();
+        }
+
         if (miniBossPrefab != null)
         {
-            float spawnX = totalRoadLength - 8f;
+            float spawnX = activePlayer.position.x + 6.5f;
             activeMiniBoss = Instantiate(miniBossPrefab, new Vector3(spawnX, 1.8f, 0), Quaternion.identity);
             activeMiniBoss.tag = "Enemy";
+
+            // Ép xoay mặt sang trái nhìn về phía Player
+            Vector3 s = activeMiniBoss.transform.localScale;
+            activeMiniBoss.transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
+
+            SpriteRenderer sr = activeMiniBoss.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null) sr.flipX = true;
+
+            BossAnnouncementUI.ShowAnnouncement("⚠️ CẢNH BÁO: MINI BOSS DARK WOLF XUẤT HIỆN! ⚠️", new Color(1f, 0.45f, 0f));
             Debug.Log("🐺 Mini Boss Dark Wolf xuất hiện!");
         }
         else
         {
-            // Nếu không gán Mini Boss thì chuyển thẳng sang Boss chính
             miniBossDefeated = true;
-            SpawnMainBoss();
+            UnlockArena();
+        }
+    }
+
+    void UnlockArena()
+    {
+        if (camFollow != null)
+        {
+            camFollow.UnlockCamera();
         }
     }
 
     void SpawnMainBoss()
     {
-        if (mainBossSpawned) return;
         mainBossSpawned = true;
 
         if (mainBossPrefab != null)
         {
-            float bossX = totalRoadLength - 5f;
+            float bossX = totalRoadLength - 4f;
             GameObject bossObj = Instantiate(mainBossPrefab, new Vector3(bossX, 2.2f, 0), Quaternion.identity);
             bossObj.tag = "Enemy";
+
+            // 🔄 Tắt FlipX và ép Scale X âm (-5) để quay mặt sang trái
+            SpriteRenderer[] allRenderers = bossObj.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer r in allRenderers)
+            {
+                r.flipX = false;
+            }
+
+            Vector3 s = bossObj.transform.localScale;
+            bossObj.transform.localScale = new Vector3(-Mathf.Abs(s.x), s.y, s.z);
 
             BossStageTrigger trigger = bossObj.GetComponent<BossStageTrigger>();
             if (trigger == null) trigger = bossObj.AddComponent<BossStageTrigger>();
             trigger.fightStageSceneName = "Fight_Stage1";
 
-            // Tạo tường chặn cuối map sau lưng Boss
             CreateInvisibleWall("Wall_End", totalRoadLength + 3f);
-            Debug.Log("👑 Boss chính đã xuất hiện! Hãy bước tới để vào trận đấu.");
+
+            BossAnnouncementUI.ShowAnnouncement("THỦ LĨNH CUỐI CÙNG ĐÃ XUẤT HIỆN!", Color.red, 3.0f);
+            Debug.Log("👑 Boss chính đã xuất hiện!");
         }
     }
 
-    void CreateInvisibleWall(string wallName, float posX)
+    GameObject CreateInvisibleWall(string wallName, float posX)
     {
         GameObject wall = new GameObject(wallName);
         wall.transform.position = new Vector3(posX, 5f, 0f);
         BoxCollider2D col = wall.AddComponent<BoxCollider2D>();
         col.size = new Vector2(1f, 20f);
+        return wall;
     }
 }

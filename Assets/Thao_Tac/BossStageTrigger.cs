@@ -5,28 +5,33 @@ public class BossStageTrigger : MonoBehaviour
 {
     [Header("1. Cấu Hình Chuyển Cảnh")]
     public string fightStageSceneName = "Fight_Stage1";
-    public float triggerDistance = 2.0f; // Khoảng cách Player chạy tới gần là chuyển màn
+    public float triggerDistance = 2.0f;
 
     private Transform playerTransform;
     private bool isTriggered = false;
+    private Vector3 originalScale;
+
+    private void Awake()
+    {
+        originalScale = transform.localScale;
+    }
 
     private void Start()
     {
-        // 1. TẮT HOÀN TOÀN CharacterController2D và EnemyHealth trên Boss để tránh bị điều khiển/bắt chước
+        // 1. Tắt AI và máu trên bản sao Trigger
         CharacterController2D charCtrl = GetComponent<CharacterController2D>();
         if (charCtrl != null)
         {
-            charCtrl.isAI = true; // Đặt là true để không bao giờ nhận phím bấm của người chơi
+            charCtrl.isAI = true;
             charCtrl.enabled = false;
         }
 
         EnemyHealth eHealth = GetComponent<EnemyHealth>();
         if (eHealth != null)
         {
-            eHealth.enabled = false; // Tắt luôn máu để không kích hoạt hàm StunRoutine bật lại script di chuyển
+            eHealth.enabled = false;
         }
 
-        // 2. Khóa vị trí đứng yên trên nền đất
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -34,15 +39,38 @@ public class BossStageTrigger : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
-        // 3. Đảm bảo đứng dáng Idle
+        // 2. Tắt toàn bộ FlipX để không bị lật kép
+        SpriteRenderer[] allRenderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer r in allRenderers)
+        {
+            r.flipX = false;
+        }
+
+        // 3. ÉP SCALE X ÂM ĐỂ QUAY MẶT SANG TRÁI NHÌN PLAYER
+        ForceFaceLeft();
+
         Animator anim = GetComponent<Animator>();
         if (anim != null)
         {
             anim.SetFloat("Speed", 0f);
         }
 
-        // 4. Tìm đối tượng Player
         FindPlayer();
+    }
+
+    private void LateUpdate()
+    {
+        // Giữ vững tư thế quay mặt sang trái, chống Animation ghi đè Scale
+        ForceFaceLeft();
+    }
+
+    private void ForceFaceLeft()
+    {
+        float targetScaleX = -Mathf.Abs(originalScale.x);
+        if (transform.localScale.x != targetScaleX)
+        {
+            transform.localScale = new Vector3(targetScaleX, originalScale.y, originalScale.z);
+        }
     }
 
     private void Update()
@@ -55,7 +83,7 @@ public class BossStageTrigger : MonoBehaviour
             return;
         }
 
-        // 💥 KIỂM TRA KHOẢNG CÁCH: Chạy tới gần là tự động chuyển Scene ngay lập tức!
+        // Chạy tới gần là chuyển sang Scene đấu Boss ngay lập tức
         float dist = Vector2.Distance(transform.position, playerTransform.position);
         if (dist <= triggerDistance)
         {
@@ -63,7 +91,6 @@ public class BossStageTrigger : MonoBehaviour
         }
     }
 
-    // Dự phòng va chạm vật lý / Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) EnterBossFight();
@@ -79,7 +106,7 @@ public class BossStageTrigger : MonoBehaviour
         if (isTriggered) return;
         isTriggered = true;
 
-        Debug.Log("🎯 Đã chạm trán Boss! Đang vào màn đấu: " + fightStageSceneName);
+        Debug.Log("🎯 Đã chạm trán Boss! Vào trận đấu: " + fightStageSceneName);
         SceneManager.LoadScene(fightStageSceneName);
     }
 
@@ -89,7 +116,6 @@ public class BossStageTrigger : MonoBehaviour
         if (p != null) playerTransform = p.transform;
     }
 
-    // Vẽ vòng bán kính nhận diện trong tab Scene để dễ quan sát
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
