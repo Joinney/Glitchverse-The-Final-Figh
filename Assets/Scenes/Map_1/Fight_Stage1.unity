@@ -7627,7 +7627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2266395591118621882, guid: 3de2564813339794688797444e58e496, type: 3}
+  m_Sprite: {fileID: -1397070750545424918, guid: 570a0705cc2ad7c46b4aabeaad96def3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8044,9 +8044,8 @@ MonoBehaviour:
   victorySprite: {fileID: 2266395591118621882, guid: 3de2564813339794688797444e58e496, type: 3}
   gameoverSprite: {fileID: 317010468468323505, guid: ab4847fbf760df046942ea4fc3cf2f00, type: 3}
   nextStageButton: {fileID: 363328202}
-  nextStageName: Fight_Stage2
+  selectMapSceneName: SampleScene
   currentStageIndex: 1
-  timeText: {fileID: 600389837}
   scoreText: {fileID: 1647838998}
   newRecordAlert: {fileID: 743212609}
   mainMenuSceneName: MainMenu

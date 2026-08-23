@@ -16,7 +16,10 @@ public class TwoPlayerCharSelection : MonoBehaviour
     [Header("UI Previews (Portraits)")]
     public Image p1PreviewImage;
     public Image p2PreviewImage;
-    public GameObject nextButton; // Nút chuyển sang chọn Map
+
+    [Header("UI Buttons Chế Độ (Hiện khi chọn xong 2 tướng)")]
+    public GameObject pvpButton; // Kéo Btn_PvP vào đây
+    public GameObject pveButton; // Kéo Btn_PvE vào đây
 
     [Header("UI Models (Animations)")]
     public Image p1ModelAnimImage;
@@ -32,7 +35,7 @@ public class TwoPlayerCharSelection : MonoBehaviour
     private int p1SelectedIndex = -1;
     private int p2SelectedIndex = -1;
 
-    // --- THÊM BIẾN KHÓA (CHỐT ĐƠN) ---
+    // --- BIẾN KHÓA (CHỐT ĐƠN) ---
     private bool isP1Locked = false;
     private bool isP2Locked = false;
 
@@ -56,11 +59,13 @@ public class TwoPlayerCharSelection : MonoBehaviour
         SetImageAlpha(p2PreviewImage, 0f);
         SetImageAlpha(p2ModelAnimImage, 0f);
 
-        if (nextButton != null) nextButton.SetActive(false);
+        // Ẩn 2 nút bắt đầu khi chưa chọn xong tướng
+        if (pvpButton != null) pvpButton.SetActive(false);
+        if (pveButton != null) pveButton.SetActive(false);
     }
 
     // ==========================================
-    // 1. RÀ CHUỘT: XEM THỬ CẢ ẢNH TO LẪN HOẠT ẢNH
+    // 1. RÀ CHUỘT: XEM THỬ ẢNH VÀ HOẠT ẢNH
     // ==========================================
     public void HoverCharacter(int characterIndex)
     {
@@ -72,7 +77,6 @@ public class TwoPlayerCharSelection : MonoBehaviour
             p1PreviewImage.sprite = characters[characterIndex].portraitSprite;
             SetImageAlpha(p1PreviewImage, 1f);
 
-            // Chạy Animation cho model nhỏ của P1
             if (p1AnimCoroutine != null) StopCoroutine(p1AnimCoroutine);
             p1AnimCoroutine = StartCoroutine(PlayModelAnimation(p1ModelAnimImage, characters[characterIndex].fightIdleSprites, 1f));
         }
@@ -85,58 +89,76 @@ public class TwoPlayerCharSelection : MonoBehaviour
             // Lật mặt model P2 quay sang trái nhìn P1
             p2ModelAnimImage.transform.localScale = new Vector3(-Mathf.Abs(p2ModelAnimImage.transform.localScale.x), p2ModelAnimImage.transform.localScale.y, p2ModelAnimImage.transform.localScale.z);
 
-            // Chạy Animation cho model nhỏ của P2
             if (p2AnimCoroutine != null) StopCoroutine(p2AnimCoroutine);
             p2AnimCoroutine = StartCoroutine(PlayModelAnimation(p2ModelAnimImage, characters[characterIndex].fightIdleSprites, 1f));
         }
     }
 
     // ==========================================
-    // 2. CLICK CHUỘT: CHỐT NHÂN VẬT VÀ KHÓA LẠI
+    // 2. CLICK CHUỘT: CHỐT NHÂN VẬT VÀ KHÓA
     // ==========================================
     public void SelectCharacter(int characterIndex)
     {
         if (characterIndex < 0 || characterIndex >= characters.Length) return;
 
-        // Lượt P1 chọn (Chỉ nhận lệnh Click khi P1 chưa khóa)
+        // Lượt P1 chọn
         if (!isP1Locked)
         {
             p1SelectedIndex = characterIndex;
-            isP1Locked = true; // KHÓA P1 LẠI NGAY LẬP TỨC
+            isP1Locked = true; // Khóa P1
 
-            // Đảm bảo ảnh hiển thị đúng nhân vật vừa chốt
             HoverCharacter(characterIndex);
-
-            Debug.Log("Player 1 ĐÃ KHÓA CHỌN: " + characters[characterIndex].characterName);
+            Debug.Log("Player 1 ĐÃ KHÓA: " + characters[characterIndex].characterName);
         }
-        // Lượt P2 chọn (Chỉ nhận lệnh Click khi P1 đã khóa và P2 chưa khóa)
+        // Lượt P2 chọn
         else if (isP1Locked && !isP2Locked)
         {
             p2SelectedIndex = characterIndex;
-            isP2Locked = true; // KHÓA P2 LẠI NGAY LẬP TỨC
+            isP2Locked = true; // Khóa P2
 
             HoverCharacter(characterIndex);
+            Debug.Log("Player 2 ĐÃ KHÓA: " + characters[characterIndex].characterName);
 
-            // Cả 2 đã khóa -> Hiện nút NEXT
-            if (nextButton != null) nextButton.SetActive(true);
-
-            Debug.Log("Player 2 ĐÃ KHÓA CHỌN: " + characters[characterIndex].characterName);
+            // Cả 2 đã khóa xong -> Hiển thị cả 2 nút PvP và PvE
+            if (pvpButton != null) pvpButton.SetActive(true);
+            if (pveButton != null) pveButton.SetActive(true);
         }
-        // Nếu cả 2 đã khóa rồi (isP1Locked = true và isP2Locked = true) thì việc bấm Click sẽ bị code ngó lơ, không thay đổi được nữa.
     }
 
     // ==========================================
-    // 3. CHUYỂN SANG BẢNG CHỌN MAP
+    // 3. XỬ LÝ 2 NÚT RẼ NHÁNH CHẾ ĐỘ CHƠI
     // ==========================================
-    public void OnNextButtonClicked()
+
+    // ⚔️ Nút 1: ĐẤU PvP (2 Người bấm 2 bàn phím)
+    public void OnStartPvPClick()
     {
-        if (!isP1Locked || !isP2Locked) return; // Phải khóa cả 2 mới được đi tiếp
+        if (!isP1Locked || !isP2Locked) return;
 
         PlayerPrefs.SetString("P1_Selection", characters[p1SelectedIndex].characterName);
         PlayerPrefs.SetString("P2_Selection", characters[p2SelectedIndex].characterName);
         PlayerPrefs.SetString("GameMode", "PvP");
+        PlayerPrefs.SetInt("IsP2AI", 0); // P2 là người thật
         PlayerPrefs.Save();
 
+        ChuyenSangBangChonMap();
+    }
+
+    // 🤖 Nút 2: ĐẤU PvE (P1 vs P2 Máy AI Tự Đánh)
+    public void OnStartPvEClick()
+    {
+        if (!isP1Locked || !isP2Locked) return;
+
+        PlayerPrefs.SetString("P1_Selection", characters[p1SelectedIndex].characterName);
+        PlayerPrefs.SetString("P2_Selection", characters[p2SelectedIndex].characterName);
+        PlayerPrefs.SetString("GameMode", "PvE");
+        PlayerPrefs.SetInt("IsP2AI", 1); // P2 là Bot AI
+        PlayerPrefs.Save();
+
+        ChuyenSangBangChonMap();
+    }
+
+    private void ChuyenSangBangChonMap()
+    {
         if (characterSelectPanel != null) characterSelectPanel.SetActive(false);
         if (mapSelectPanel != null) mapSelectPanel.SetActive(true);
     }
@@ -152,7 +174,7 @@ public class TwoPlayerCharSelection : MonoBehaviour
         {
             targetImage.sprite = sprites[frameIndex];
             frameIndex = (frameIndex + 1) % sprites.Length;
-            yield return new WaitForSeconds(0.1f); // Tốc độ chạy ảnh múa
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

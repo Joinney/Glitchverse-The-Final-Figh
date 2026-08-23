@@ -80,12 +80,22 @@ public class CharacterController2D : MonoBehaviour
         originalScale = transform.localScale;
         jumpsRemaining = maxJumps;
 
+        // 🤖 TỰ ĐỘNG NHẬN DIỆN CHẾ ĐỘ CHƠI (PvP hay PvE)
+        string gameMode = PlayerPrefs.GetString("GameMode", "Single");
+        int isP2AI = PlayerPrefs.GetInt("IsP2AI", 0);
+
+        // Nếu là Player 2 và đang chọn chế độ PvE (hoặc IsP2AI = 1) -> Biến thành Bot AI tự đánh
+        if (playerIndex == 2 && (gameMode == "PvE" || isP2AI == 1))
+        {
+            isAI = true;
+        }
+
+        // Khởi tạo mục tiêu cho AI
         if (isAI)
         {
             FindEnemyTarget();
         }
     }
-
     void Update()
     {
         // 🦘 KIỂM TRA MẶT ĐẤT & HỒI LƯỢT NHẢY
@@ -100,8 +110,20 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
-        if (!isAI) HandlePlayerInput();
-        else HandleAILogic();
+        if (!isAI)
+        {
+            HandlePlayerInput();
+        }
+        else
+        {
+            // Tự động tìm lại mục tiêu nếu bị null trước khi chạy AI
+            if (enemyTarget == null)
+            {
+                FindEnemyTarget();
+            }
+
+            HandleAILogic();
+        }
     }
 
     private void CheckGroundStatus()
@@ -433,8 +455,41 @@ public class CharacterController2D : MonoBehaviour
 
     void FindEnemyTarget()
     {
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null) enemyTarget = p.transform;
+        // 1. Nếu đang ở Map Sinh Tồn (Boss mang Tag Enemy) -> Tìm Player
+        if (gameObject.CompareTag("Enemy"))
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null) 
+            {
+                enemyTarget = p.transform;
+                return;
+            }
+        }
+
+        // 2. Nếu đang ở chế độ 1v1 Đối Kháng (PvE / PvP) -> Tìm nhân vật đối diện
+        CharacterController2D[] allChars = FindObjectsByType<CharacterController2D>(FindObjectsSortMode.None);
+        foreach (var c in allChars)
+        {
+            if (c != this)
+            {
+                // Ưu tiên tìm nhân vật khác playerIndex hoặc khác Tag
+                if (c.playerIndex != this.playerIndex || c.gameObject.tag != this.gameObject.tag)
+                {
+                    enemyTarget = c.transform;
+                    return;
+                }
+            }
+        }
+
+        // 3. Dự phòng: Nếu vẫn chưa tìm thấy, lấy bất kỳ nhân vật nào khác bản thân
+        foreach (var c in allChars)
+        {
+            if (c != this)
+            {
+                enemyTarget = c.transform;
+                break;
+            }
+        }
     }
 
     bool TryUseSkill(string skillParameterName, int cost)
