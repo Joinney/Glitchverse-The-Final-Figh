@@ -15,6 +15,10 @@ public class EnemyHealth : MonoBehaviour
     public Vector3 healthBarOffset = new Vector3(0, 1.5f, 0);
     private FloatingHealthBar floatingBar;
 
+    [Header("Cấu Hình Rớt Xu (Chỉ Áp Dụng Cho Quái Thường)")]
+    public GameObject coinPrefab;     // Kéo Prefab CoinDrop vào đây
+    public int dropCoinAmount = 15;   // Goblin: 15 xu, Skeleton: 25 xu
+
     [Header("Âm Thanh Bị Đánh")]
     private AudioSource audioSource;
     public AudioClip[] hitSounds;
@@ -27,7 +31,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Awake()
     {
-        // ⚡ TÍNH TOÁN VÀ ĐẶT ĐẦY MÁU NGAY TRONG AWAKE ĐỂ TRÁNH TRỄ NHỊP
+        // ⚡ TRẢ VỀ LƯỢNG MÁU GỐC THEO CÀI ĐẶT
         float tyLeMau = PlayerPrefs.GetFloat("HealthMultiplier", 1f);
         maxHealth = Mathf.RoundToInt(baseHealth * tyLeMau);
         currentHealth = maxHealth;
@@ -43,17 +47,21 @@ public class EnemyHealth : MonoBehaviour
 
         bool isMainBoss = (aiBossCtrl != null && minionAI == null) || gameObject.name.Contains("Tatsumaki");
 
-        if (showFloatingHealthBar && !isMainBoss)
+        // 🛑 NẾU LÀ BOSS -> TỰ ĐỘNG TẮT THANH COIN HUD ĐỂ TẬP TRUNG ĐẤU BOSS
+        if (isMainBoss)
+        {
+            if (CoinHUDManager.instance != null)
+            {
+                CoinHUDManager.instance.SetHUDActive(false);
+            }
+
+            InitBossUI();
+        }
+        else if (showFloatingHealthBar)
         {
             GameObject barObj = new GameObject(gameObject.name + "_FloatingHealth");
             floatingBar = barObj.AddComponent<FloatingHealthBar>();
             floatingBar.Setup(transform, currentHealth, maxHealth, healthBarOffset);
-        }
-
-        // 👑 ĐỒNG BỘ THANH MÁU UI GÓC PHẢI
-        if (isMainBoss)
-        {
-            InitBossUI();
         }
     }
 
@@ -119,8 +127,13 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    private bool isDead = false;
+
     void Die()
     {
+        if (isDead) return; // ✨ Chặn gọi Die nhiều lần
+        isDead = true;
+
         if (floatingBar != null)
         {
             Destroy(floatingBar.gameObject);
@@ -128,10 +141,21 @@ public class EnemyHealth : MonoBehaviour
 
         if (minionAI != null)
         {
+            if (coinPrefab != null)
+            {
+                GameObject coin = Instantiate(coinPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+                CoinPickup pickup = coin.GetComponent<CoinPickup>();
+                if (pickup != null)
+                {
+                    pickup.coinValue = dropCoinAmount;
+                }
+            }
+
             minionAI.Die();
             return;
         }
 
+        // 👑 KHU VỰC CHẾT CỦA BOSS CHÍNH / MINI BOSS (KHÔNG RỚT XU)
         if (anim != null) anim.SetTrigger("Dead");
         if (aiBossCtrl != null) aiBossCtrl.enabled = false;
 

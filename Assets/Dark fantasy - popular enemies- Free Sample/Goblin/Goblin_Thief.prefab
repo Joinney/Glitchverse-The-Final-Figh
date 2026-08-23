@@ -358,13 +358,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dcf176f529ccc41b9e96338b30e21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  characterFace: {fileID: 0}
   characterName: Goblin_Thief
+  characterFace: {fileID: 0}
   baseHealth: 50
   maxHealth: 0
-  healthBar: {fileID: 0}
   currentHealth: 0
-  stunDuration: 1.5
+  showFloatingHealthBar: 1
+  healthBarOffset: {x: 0, y: 1.5, z: 0}
+  coinPrefab: {fileID: 4336959038018652837, guid: 2ad5aca43f2752a4f8d59187d0aeda2d, type: 3}
+  dropCoinAmount: 15
   hitSounds:
   - {fileID: 8300000, guid: f50fa20085ed3d44e9979c7984f08f71, type: 3}
 --- !u!114 &787757664734925917
@@ -393,6 +395,7 @@ MonoBehaviour:
   attackPoint: {fileID: 0}
   hitRadius: 2
   damageDelay: 1
+  attackAnimationDuration: 0.6
   knockbackDuration: 0.15
   isDead: 0
 --- !u!82 &2223787630307498898

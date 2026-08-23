@@ -386,6 +386,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
+  isGrounded: 0
   dashDuration: 0.25
   isDashing: 0
   comboStep: 0
@@ -410,7 +411,9 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 850628983955983704, guid: f5745b1bae2acb44c8eea204971db033, type: 3}
   isBlocking: 0
   isStunned: 0
+  isCastingUltimate: 0
   canMoveAndFight: 0
+  rangedSkillMaxDistance: 8.5
   attackCooldown: 0.35
 --- !u!114 &7265582207138030308
 MonoBehaviour:
@@ -536,13 +539,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7dcf176f529ccc41b9e96338b30e21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  characterFace: {fileID: 8202346698720115375, guid: 37f2a2a541896e743be2acba7d5a61bd, type: 3}
   characterName: ai tatsumaki
+  characterFace: {fileID: 8202346698720115375, guid: 37f2a2a541896e743be2acba7d5a61bd, type: 3}
   baseHealth: 1000
   maxHealth: 10000
-  healthBar: {fileID: 0}
   currentHealth: 0
-  stunDuration: 0.6
+  showFloatingHealthBar: 1
+  healthBarOffset: {x: 0, y: 1.5, z: 0}
+  coinPrefab: {fileID: 0}
+  dropCoinAmount: 15
   hitSounds:
   - {fileID: 8300000, guid: d44c3c461f7306f41a913c20645099e5, type: 3}
 --- !u!1 &8802868315031271629
