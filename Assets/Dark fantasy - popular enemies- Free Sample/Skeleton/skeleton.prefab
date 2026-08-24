@@ -477,8 +477,8 @@ MonoBehaviour:
   attackDamage: 100
   attackPoint: {fileID: 0}
   hitRadius: 2
-  damageDelay: 1
-  attackAnimationDuration: 0.6
+  damageDelay: 2
+  attackAnimationDuration: 1.5
   knockbackDuration: 0.15
   isDead: 0
 --- !u!70 &3092677960371711375

@@ -243,6 +243,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  isGrounded: 0
   dashDuration: 0.25
   isDashing: 0
   comboStep: 0
@@ -267,7 +268,9 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 4298145840603222059, guid: 76a2ff1195ba0d14c89cdff0cbf66c06, type: 3}
   isBlocking: 0
   isStunned: 0
+  isCastingUltimate: 0
   canMoveAndFight: 0
+  rangedSkillMaxDistance: 8.5
   attackCooldown: 0.35
 --- !u!114 &7214994464890221625
 MonoBehaviour:
@@ -285,10 +288,11 @@ MonoBehaviour:
   characterName: Tom
   baseHealth: 3800
   maxHealth: 3800
-  healthBar: {fileID: 0}
   currentHealth: 0
   hitSounds:
-  - {fileID: 8300000, guid: 9a850634c089ffc4c987f1846fcf43f9, type: 3}
+  - {fileID: 8300000, guid: 0b330100fa915a34893e6e14f7ab34bb, type: 3}
+  dieSounds:
+  - {fileID: 8300000, guid: ec5126768314c77478d516fb6b75e367, type: 3}
   stunDuration: 1
 --- !u!82 &1639237251072188429
 AudioSource:

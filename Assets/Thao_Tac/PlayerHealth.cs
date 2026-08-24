@@ -11,9 +11,11 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector] public int maxHealth;
     public int currentHealth;
 
-    [Header("Âm Thanh Đau Đớn")]
+    [Header("Âm Thanh Chiến Đấu")]
     private AudioSource audioSource;
-    public AudioClip[] hitSounds;
+    public AudioClip[] hitSounds;      // Âm thanh khi bị đánh trúng
+    public AudioClip[] dieSounds;      // 🔊 Âm thanh khi tử trận (Die)
+
     private Animator anim;
     private Rigidbody2D rb;
     private CharacterController2D playerScript;
@@ -23,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
 
     private Coroutine stunCoroutine;
     private HealthBarUI healthBar;
+    private bool isDead = false;
 
     void Start()
     {
@@ -74,10 +77,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isDead || currentHealth <= 0) return;
+
         currentHealth -= damage;
         if (healthBar != null) healthBar.SetHealth(currentHealth, maxHealth);
 
-        if (audioSource != null && hitSounds != null && hitSounds.Length > 0)
+        // Phát âm thanh trúng đòn
+        if (audioSource != null && hitSounds != null && hitSounds.Length > 0 && currentHealth > 0)
         {
             AudioClip randomClip = hitSounds[Random.Range(0, hitSounds.Length)];
             if (randomClip != null) audioSource.PlayOneShot(randomClip);
@@ -110,7 +116,17 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
         Debug.Log(gameObject.name + " đã tử trận!");
+
+        // 🔊 PHÁT ÂM THANH KHI CHẾT
+        if (audioSource != null && dieSounds != null && dieSounds.Length > 0)
+        {
+            AudioClip randomDieClip = dieSounds[Random.Range(0, dieSounds.Length)];
+            if (randomDieClip != null) audioSource.PlayOneShot(randomDieClip);
+        }
 
         if (anim != null)
         {
