@@ -355,6 +355,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  isGrounded: 0
   dashDuration: 0.25
   isDashing: 0
   comboStep: 0
@@ -379,8 +380,15 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 850628983955983704, guid: f5745b1bae2acb44c8eea204971db033, type: 3}
   isBlocking: 0
   isStunned: 0
+  isCastingUltimate: 0
   canMoveAndFight: 0
+  rangedSkillMaxDistance: 8.5
   attackCooldown: 0.35
+  attackIcon: {fileID: 1260995094788861710, guid: 3fd1e8880b8f9c34cbf1358d223c9845, type: 3}
+  skill2Icon: {fileID: 5796440093247717129, guid: d0dbc4c091be1964eb710f874f197020, type: 3}
+  skill3Icon: {fileID: 8829842313075077608, guid: de41de3be842f474e834aa3a43df24eb, type: 3}
+  skill4Icon: {fileID: 5445446417539986014, guid: 387e2c41cd2e8c54dbb22590a0a0686e, type: 3}
+  dashIcon: {fileID: -3735315475018893018, guid: 50e5d67c55b4dfe418383e329364c6f9, type: 3}
 --- !u!114 &3226569249232862520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +408,7 @@ MonoBehaviour:
   currentHealth: 0
   hitSounds:
   - {fileID: 8300000, guid: d44c3c461f7306f41a913c20645099e5, type: 3}
+  dieSounds: []
   stunDuration: 1
 --- !u!114 &7265582207138030308
 MonoBehaviour:

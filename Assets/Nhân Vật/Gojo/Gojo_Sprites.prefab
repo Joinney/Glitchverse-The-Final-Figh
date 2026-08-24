@@ -322,8 +322,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  isGrounded: 0
   dashDuration: 0.25
   isDashing: 0
+  comboStep: 0
+  comboWindow: 0.8
   skill1Cost: 0
   skill2Cost: 25
   skill3Cost: 50
@@ -344,7 +347,15 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 300300766827724240, guid: d2b4c0d362c284241b4ae9d762777944, type: 3}
   isBlocking: 0
   isStunned: 0
+  isCastingUltimate: 0
   canMoveAndFight: 0
+  rangedSkillMaxDistance: 8.5
+  attackCooldown: 0.35
+  attackIcon: {fileID: 1260995094788861710, guid: 88d32adc204f60247ba3689f5cbb8792, type: 3}
+  skill2Icon: {fileID: 5796440093247717129, guid: 0072fee21da41094b91768d5cc833330, type: 3}
+  skill3Icon: {fileID: 8829842313075077608, guid: 1df3cd7c6b37d68488ee9cf33c3e4c54, type: 3}
+  skill4Icon: {fileID: -2416734031943487014, guid: afb36dee365edb749b09dd93fc82045b, type: 3}
+  dashIcon: {fileID: -3735315475018893018, guid: aa67018bd83abc54c892cb4672697120, type: 3}
 --- !u!114 &3268877413582775157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,9 +372,10 @@ MonoBehaviour:
   characterName: Gojo Satoru
   baseHealth: 3800
   maxHealth: 3800
-  healthBar: {fileID: 0}
+  currentHealth: 0
   hitSounds:
   - {fileID: 8300000, guid: f50fa20085ed3d44e9979c7984f08f71, type: 3}
+  dieSounds: []
   stunDuration: 0.5
 --- !u!114 &2868520945918245533
 MonoBehaviour:

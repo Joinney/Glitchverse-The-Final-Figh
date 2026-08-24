@@ -272,6 +272,11 @@ MonoBehaviour:
   canMoveAndFight: 0
   rangedSkillMaxDistance: 8.5
   attackCooldown: 0.35
+  attackIcon: {fileID: -5095680471160294710, guid: 1b95d9ff595f17948b30b01a0f1665f5, type: 3}
+  skill2Icon: {fileID: 5796440093247717129, guid: 085d86167da6fab47b8a654655cd826b, type: 3}
+  skill3Icon: {fileID: 8829842313075077608, guid: b316762c506293c4da85d3731c67b3a6, type: 3}
+  skill4Icon: {fileID: -2416734031943487014, guid: 60ee8bdf05dff0045a71d1a37dfb0d08, type: 3}
+  dashIcon: {fileID: -3735315475018893018, guid: dd0cf4c79ec7b9a4dbea5d70ef0afd78, type: 3}
 --- !u!114 &7214994464890221625
 MonoBehaviour:
   m_ObjectHideFlags: 0

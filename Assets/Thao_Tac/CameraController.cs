@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+
     [Header("Mục tiêu bám theo")]
     public Transform player1;
     public Transform player2;
 
     [Header("Cài đặt Camera")]
     public float smoothSpeed = 5f; 
-    public Vector3 offset = new Vector3(0f, 2f, -10f); 
+    public Vector3 offset = new Vector3(0f, 1.5f, -10f); 
 
-    [Header("Cấu hình Tự Động Zoom")]
-    public float minZoom = 5f;            // Kích thước camera tối thiểu khi 2 đứa đứng sát nhau
-    public float maxZoom = 7.5f;          // Kích thước camera tối đa khi ra xa nhau
-    public float zoomFactor = 0.25f;      // Độ nhạy của zoom
-    private Camera cam;                   // Biến nội bộ để điều khiển component Camera
+    [Header("Cấu hình Kích Thước Camera")]
+    public float defaultZoom = 6f;      // Kích thước camera cố định khi đang thi đấu bình thường
+    public float deathZoom = 3.2f;      // Kích thước phóng to cận cảnh khi có đứa chết
+    public float deathZoomSpeed = 3.5f; // Tốc độ zoom khi kết liễu
+    private Camera cam;
 
     [Header("Khóa Tầm Nhìn (Tránh lòi viền đen)")]
     public float minX = -20f; 
@@ -22,10 +24,27 @@ public class CameraController : MonoBehaviour
     public float minY = 0f;  
     public float maxY = 3f;  
 
+    private bool isCinematicDeath = false;
+    private Transform deathTarget;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         cam = GetComponent<Camera>();
+        if (cam != null)
+        {
+            cam.orthographicSize = defaultZoom;
+        }
 
+        FindPlayers();
+    }
+
+    void FindPlayers()
+    {
         if (player1 == null)
         {
             GameObject p1Obj = GameObject.FindWithTag("Player");
@@ -39,48 +58,66 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    // 🎬 HÀM GỌI KHI CÓ NHÂN VẬT TỬ TRẬN
+    public void TriggerDeathZoom(Transform deadTarget)
+    {
+        isCinematicDeath = true;
+        deathTarget = deadTarget;
+    }
+
     void LateUpdate()
     {
-        if (player1 == null)
+        // -------------------------------------------------------------
+        // 1. CHẾ ĐỘ ZOOM CẬN CẢNH KHI CHẾT (CINEMATIC FINISH)
+        // -------------------------------------------------------------
+        if (isCinematicDeath && deathTarget != null)
         {
-            GameObject p1Obj = GameObject.FindWithTag("Player");
-            if (p1Obj != null) player1 = p1Obj.transform;
+            Vector3 targetPos = deathTarget.position + offset;
+            targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
+            targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
+
+            transform.position = Vector3.Lerp(transform.position, targetPos, deathZoomSpeed * Time.deltaTime);
+
+            if (cam != null)
+            {
+                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, deathZoom, deathZoomSpeed * Time.deltaTime);
+            }
+            return;
         }
-        if (player2 == null)
+
+        // -------------------------------------------------------------
+        // 2. CHẾ ĐỘ BÌNH THƯỜNG TRONG TRẬN ĐẤU (KHÔNG TỰ CO GIÃN ZOOM)
+        // -------------------------------------------------------------
+        FindPlayers();
+
+        if (player1 == null && player2 == null) return;
+
+        Vector3 targetPosition;
+
+        if (player1 != null && player2 != null)
         {
-            GameObject p2Obj = GameObject.FindWithTag("Enemy");
-            if (p2Obj != null) player2 = p2Obj.transform;
+            // Đi theo tâm điểm giữa 2 người chơi
+            Vector3 middlePoint = (player1.position + player2.position) / 2f;
+            targetPosition = middlePoint + offset;
         }
-
-        if (player1 == null || player2 == null) return;
-
-        // 1. Tính toán khoảng cách ngang giữa 2 nhân vật
-        float distance = Mathf.Abs(player1.position.x - player2.position.x);
-
-        // =========================================================================
-        // 💡 XỬ LÝ THÔNG MINH CHO LỖI MẤT CHÂN KHI LẠI GẦN:
-        // Khi 2 nhân vật lại gần nhau (distance nhỏ), ta tự động cộng thêm chiều cao 
-        // vào offset.y để camera ngước lên trên, giữ trọn chân nhân vật trong khung hình.
-        // =========================================================================
-        float dynamicYOffset = offset.y + Mathf.Lerp(1.5f, 0f, distance / 5f); 
-        Vector3 dynamicOffset = new Vector3(offset.x, dynamicYOffset, offset.z);
-
-        // 2. Logic di chuyển camera theo điểm chính giữa kết hợp offset động
-        Vector3 middlePoint = (player1.position + player2.position) / 2f;
-        Vector3 targetPosition = middlePoint + dynamicOffset;
+        else if (player1 != null)
+        {
+            targetPosition = player1.position + offset;
+        }
+        else
+        {
+            targetPosition = player2.position + offset;
+        }
 
         targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY + 1.5f); // Cho phép nhỉnh lên một chút khi cận chiến
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
 
-        // 3. LOGIC TỰ ĐỘNG ZOOM THEO KHOẢNG CÁCH
-        if (cam != null)
+        // Giữ camera ở kích thước tiêu chuẩn
+        if (cam != null && Mathf.Abs(cam.orthographicSize - defaultZoom) > 0.01f)
         {
-            float targetZoom = minZoom + (distance * zoomFactor);
-            targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
-
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, smoothSpeed * Time.deltaTime);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, defaultZoom, smoothSpeed * Time.deltaTime);
         }
     }
 }

@@ -212,8 +212,9 @@ public class CharacterController2D : MonoBehaviour
             return;
         }
 
-        if (keyLeft) horizontalInput = -1f;
-        else if (keyRight) horizontalInput = 1f;
+        // 🕹️ KẾT HỢP CẢ PHÍM BÀN PHÍM VÀ NÚT BẤM UI TOUCH
+        if (keyLeft || uiMoveLeft) horizontalInput = -1f;
+        else if (keyRight || uiMoveRight) horizontalInput = 1f;
         else horizontalInput = 0f;
 
         rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
@@ -586,5 +587,75 @@ public class CharacterController2D : MonoBehaviour
             }
         }
         bullet.tag = gameObject.tag;
+    }
+
+    [Header("Icon Kỹ Năng Nhân Vật (Gán ảnh riêng cho từng tướng)")]
+    public Sprite attackIcon;    // Ảnh đấm thường / chém
+    public Sprite skill2Icon;    // Ảnh skill 2
+    public Sprite skill3Icon;    // Ảnh skill 3
+    public Sprite skill4Icon;    // Ảnh Ulti
+    public Sprite dashIcon;
+
+    // ==========================================
+    // 🕹️ CÁC HÀM GỌI TỪ NÚT BẤM UI / TOUCH
+    // ==========================================
+    private bool uiMoveLeft = false;
+    private bool uiMoveRight = false;
+
+    public void OnPointerDownLeft() => uiMoveLeft = true;
+    public void OnPointerUpLeft() => uiMoveLeft = false;
+    public void OnPointerDownRight() => uiMoveRight = true;
+    public void OnPointerUpRight() => uiMoveRight = false;
+
+    public void TriggerJump()
+    {
+        if (jumpsRemaining > 0 && !isDashing && !isStunned && !isCastingUltimate)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            if (anim != null) anim.SetTrigger("Jump");
+            jumpsRemaining--;
+        }
+    }
+
+    public void TriggerDash()
+    {
+        if (!isDashing && !isStunned && !isCastingUltimate)
+        {
+            float dashDirection = transform.localScale.x > 0 ? 1 : -1;
+            StartCoroutine(DashRoutine(dashDirection));
+        }
+    }
+
+    public void TriggerAttack()
+    {
+        if (!isDashing && !isStunned && !isCastingUltimate)
+        {
+            PerformComboAttack();
+        }
+    }
+
+    public void TriggerSkill2()
+    {
+        if (!isDashing && !isStunned && !isCastingUltimate)
+        {
+            TryUseSkill("Skill2", skill2Cost);
+        }
+    }
+
+    public void TriggerSkill3()
+    {
+        if (!isDashing && !isStunned && !isCastingUltimate)
+        {
+            TryUseSkill("Skill3", skill3Cost);
+        }
+    }
+
+    public void TriggerSkill4()
+    {
+        if (!isDashing && !isStunned && !isCastingUltimate)
+        {
+            UseUltimateSkill();
+        }
     }
 }
