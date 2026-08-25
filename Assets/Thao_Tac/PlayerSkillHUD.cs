@@ -5,9 +5,14 @@ using TMPro;
 
 public class PlayerSkillHUD : MonoBehaviour
 {
+    public static PlayerSkillHUD instance;
+
     [Header("Cài Đặt Phím Tắt Ẩn/Hiện")]
-    public KeyCode toggleKey = KeyCode.F1; // ⌨️ Phím F1 để bật/tắt HUD
-    public CanvasGroup canvasGroup;       // (Tùy chọn) Để ẩn/hiện mượt mà hoặc tắt trực tiếp
+    public KeyCode toggleKey = KeyCode.F1;
+    public CanvasGroup canvasGroup;
+
+    [Header("Bảng Kết Thúc Trận (Tự động ẩn khi bảng này bật lên)")]
+    public GameObject gameOverPanel;
 
     [Header("Nút Tấn Công & Kỹ Năng")]
     public Button attackBtn;
@@ -36,11 +41,32 @@ public class PlayerSkillHUD : MonoBehaviour
 
     private CharacterController2D playerCtrl;
     private EnergySystem playerEnergy;
+    private bool isGameOver = false;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
         FindPlayer();
         SetupButtonEvents();
+        FindGameOverPanel();
+    }
+
+    void FindGameOverPanel()
+    {
+        if (gameOverPanel == null)
+        {
+            // Tìm tất cả GameObject trong Canvas kể cả đang bị Inactive (Ẩn)
+            Transform canvasTrans = transform.parent;
+            if (canvasTrans != null)
+            {
+                Transform found = canvasTrans.Find("GameOverPanel");
+                if (found != null) gameOverPanel = found.gameObject;
+            }
+        }
     }
 
     void FindPlayer()
@@ -97,7 +123,23 @@ public class PlayerSkillHUD : MonoBehaviour
 
     void Update()
     {
-        // ⌨️ BẤM F1 ĐỂ BẬT / TẮT ẨN GIAO DIỆN NÚT BẤM
+        // 🏁 1. KIỂM TRA BẢNG KẾT QUẢ KHI CHIẾN THẮNG / THẤT BẠI
+        if (!isGameOver)
+        {
+            if (gameOverPanel == null) FindGameOverPanel();
+
+            if (gameOverPanel != null && gameOverPanel.activeInHierarchy)
+            {
+                HideHUD();
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+
+        // ⌨️ BẤM F1 ĐỂ BẬT / TẮT HUD
         if (Input.GetKeyDown(toggleKey))
         {
             ToggleHUD();
@@ -116,26 +158,31 @@ public class PlayerSkillHUD : MonoBehaviour
         UpdateSkillColor(skill4Btn, skill4IconImg, curEnergy >= playerCtrl.skill4Cost);
     }
 
-    // Hàm chuyển đổi bật / tắt hiển thị
+    // 🛑 HÀM TẮT TOÀN BỘ GIAO DIỆN NÚT KHI HẾT TRẬN
+    public void HideHUD()
+    {
+        isGameOver = true;
+        
+        // Ẩn cả GameObject BattleControlHUD
+        gameObject.SetActive(false);
+
+        // Ẩn thêm PotionHUD và nút Pause nếu có trên màn hình
+        GameObject potion = GameObject.Find("PotionHUD");
+        if (potion != null) potion.SetActive(false);
+
+        GameObject pauseBtn = GameObject.Find("Btn_PauseSettings");
+        if (pauseBtn != null) pauseBtn.SetActive(false);
+    }
+
     public void ToggleHUD()
     {
-        // Cách 1: Dùng CanvasGroup nếu có gán
-        if (canvasGroup != null)
-        {
-            bool isVisible = canvasGroup.alpha > 0;
-            canvasGroup.alpha = isVisible ? 0 : 1;
-            canvasGroup.interactable = !isVisible;
-            canvasGroup.blocksRaycasts = !isVisible;
-        }
-        else
-        {
-            // Cách 2: Bật tắt trực tiếp các nhóm nút con bên trong
-            Transform leftGroup = transform.Find("LeftControlGroup");
-            Transform rightGroup = transform.Find("RightSkillGroup");
+        if (isGameOver) return;
 
-            if (leftGroup != null) leftGroup.gameObject.SetActive(!leftGroup.gameObject.activeSelf);
-            if (rightGroup != null) rightGroup.gameObject.SetActive(!rightGroup.gameObject.activeSelf);
-        }
+        Transform leftGroup = transform.Find("LeftControlGroup");
+        Transform rightGroup = transform.Find("RightSkillGroup");
+
+        if (leftGroup != null) leftGroup.gameObject.SetActive(!leftGroup.gameObject.activeSelf);
+        if (rightGroup != null) rightGroup.gameObject.SetActive(!rightGroup.gameObject.activeSelf);
     }
 
     void UpdateSkillColor(Button btn, Image icon, bool canCast)

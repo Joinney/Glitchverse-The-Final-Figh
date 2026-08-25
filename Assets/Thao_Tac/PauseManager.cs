@@ -1,29 +1,36 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro; // BẮT BUỘC THÊM ĐỂ NHẬN CHỮ TMP
+using TMPro;
 
 public class PauseManager : MonoBehaviour
 {
     [Header("Các Bảng Giao Diện")]
     public GameObject pausePanel;
     public GameObject settingsPanel;
+    public Button pauseButton; // ⚙️ Nút icon cài đặt / tạm dừng trên màn hình
 
     [Header("Cài đặt Âm thanh")]
     public Slider volumeSlider;
-    public TMP_Text volumeText; // Ô chứa chữ số % (Thêm mới)
+    public TMP_Text volumeText;
 
     private bool isPaused = false;
 
     void Start()
     {
+        // Gán sự kiện bấm nút Pause trên màn hình cho điện thoại
+        if (pauseButton != null)
+        {
+            pauseButton.onClick.AddListener(PauseGame);
+        }
+
         // 1. Cập nhật Âm thanh
         if (volumeSlider != null)
         {
             float savedVolume = PlayerPrefs.GetFloat("GameVolume", 1f);
-            volumeSlider.value = savedVolume; // Kéo thanh trượt về đúng chỗ
+            volumeSlider.value = savedVolume;
             AudioListener.volume = savedVolume;
-            UpdateVolumeText(savedVolume); // Đổi số %
+            UpdateVolumeText(savedVolume);
         }
 
         // 2. Cập nhật Đồ họa
@@ -46,6 +53,7 @@ public class PauseManager : MonoBehaviour
         isPaused = true;
         if (pausePanel != null) pausePanel.SetActive(true);
         if (settingsPanel != null) settingsPanel.SetActive(false);
+        if (pauseButton != null) pauseButton.gameObject.SetActive(false); // Ẩn nút pause khi đang mở bảng
     }
 
     public void ResumeGame()
@@ -54,6 +62,7 @@ public class PauseManager : MonoBehaviour
         isPaused = false;
         if (pausePanel != null) pausePanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
+        if (pauseButton != null) pauseButton.gameObject.SetActive(true); // Hiện lại nút pause khi tiếp tục chơi
     }
 
     public void GoToMainMenu()
@@ -74,22 +83,17 @@ public class PauseManager : MonoBehaviour
         if (pausePanel != null) pausePanel.SetActive(true);
     }
 
-    // ===================================
-    // KHI KÉO THANH VOLUME NÓ SẼ CHẠY HÀM NÀY
-    // ===================================
     public void SetVolume(float volumeValue)
     {
         AudioListener.volume = volumeValue;
         PlayerPrefs.SetFloat("GameVolume", volumeValue);
-        UpdateVolumeText(volumeValue); // Kéo tới đâu số đổi tới đó
+        UpdateVolumeText(volumeValue);
     }
 
-    // HÀM HIỂN THỊ SỐ %
     private void UpdateVolumeText(float vol)
     {
         if (volumeText != null)
         {
-            // Biến số từ 0.0 -> 1.0 thành 0 -> 100
             int percentage = Mathf.RoundToInt(vol * 100);
             volumeText.text = percentage.ToString() + "%";
         }
