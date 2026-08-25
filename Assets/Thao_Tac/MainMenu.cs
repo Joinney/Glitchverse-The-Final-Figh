@@ -30,18 +30,17 @@ public class MainMenu : MonoBehaviour
         if (continueButton != null) continueButton.interactable = hasSavedGame;
 
         // ==========================================
-        // 💡 XỬ LÝ LỜI NHẮN QUAY LẠI TỪ TRONG GAME (ĐÃ ĐỒNG BỘ CHỮ)
+        // 💡 XỬ LÝ QUAY LẠI TỪ TRONG GAME HOẶC TIẾP TỤC
         // ==========================================
         if (PlayerPrefs.GetInt("BackToCharSelect", 0) == 1)
         {
-            PlayerPrefs.SetInt("BackToCharSelect", 0); // Xé thư
+            PlayerPrefs.SetInt("BackToCharSelect", 0);
 
             if (startMenuPanel != null) startMenuPanel.SetActive(false);
             if (modeMenuPanel != null) modeMenuPanel.SetActive(false);
             if (difficultyPanel != null) difficultyPanel.SetActive(false);
             if (gokuButtonsContainer != null) gokuButtonsContainer.SetActive(false);
 
-            // ĐỌC BẰNG CHỮ THAY VÌ SỐ ĐỂ TRÁNH XUNG ĐỘT
             string gameMode = PlayerPrefs.GetString("GameMode", "Single");
 
             if (gameMode == "Single" && singlePlayerPanel != null)
@@ -93,12 +92,22 @@ public class MainMenu : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Has_Saved_Game", 0) == 1)
         {
-            // Bấm Continue thì mặc định là đang chơi Single
+            // 1. Xác nhận chế độ chơi đơn
             PlayerPrefs.SetString("GameMode", "Single");
-            
-            int currentStage = PlayerPrefs.GetInt("Current_Stage_Index", 1);
-            string savedSceneName = "Fight_Stage" + currentStage;
-            SceneManager.LoadScene(savedSceneName);
+            PlayerPrefs.Save();
+
+            // 2. Ẩn menu chính và các bảng phụ
+            if (startMenuPanel != null) startMenuPanel.SetActive(false);
+            if (modeMenuPanel != null) modeMenuPanel.SetActive(false);
+            if (difficultyPanel != null) difficultyPanel.SetActive(false);
+            if (gokuButtonsContainer != null) gokuButtonsContainer.SetActive(false);
+            if (scoreboardPanel != null) scoreboardPanel.SetActive(false);
+
+            // 3. Mở thẳng bảng chọn nhân vật
+            if (singlePlayerPanel != null)
+            {
+                singlePlayerPanel.SetActive(true);
+            }
         }
     }
 
