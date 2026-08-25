@@ -200,4 +200,20 @@ public class MainMenu : MonoBehaviour
         if (modeMenuPanel != null) modeMenuPanel.SetActive(true);
         if (gokuButtonsContainer != null) gokuButtonsContainer.SetActive(true);
     }
+
+    // ==========================================
+    // 💡 HÀM THOÁT GAME (Dùng cho cả Editor & Bản Build)
+    // ==========================================
+    public void QuitGame()
+    {
+        Debug.Log("Đang thoát game...");
+
+        // Nếu đang chạy trong Unity Editor thì dừng Play mode
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        // Khi build ra file .exe (Windows) hoặc chạy thực tế
+        Application.Quit();
+        #endif
+    }
 }
