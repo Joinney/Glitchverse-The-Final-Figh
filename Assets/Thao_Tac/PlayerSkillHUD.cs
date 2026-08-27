@@ -138,6 +138,8 @@ public class PlayerSkillHUD : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
+    private bool isManuallyHidden = false; // 👁️ Biến nhớ trạng thái tắt thủ công bằng F1
+
     void Update()
     {
         // 🏁 1. KIỂM TRA HẾT TRẬN (GameOver) -> TẮT HẲN
@@ -154,7 +156,13 @@ public class PlayerSkillHUD : MonoBehaviour
             return;
         }
 
-        // ⏸️ 2. KIỂM TRA ĐANG MỞ PAUSE HOẶC SETTINGS -> TẠM THỜI ẨN CỤM NÚT
+        // ⌨️ 2. BẤM F1 ĐỂ BẬT / TẮT THỦ CÔNG
+        if (Input.GetKeyDown(toggleKey))
+        {
+            ToggleHUD();
+        }
+
+        // ⏸️ 3. KIỂM TRA ĐANG MỞ PAUSE HOẶC SETTINGS
         bool isMenuOpen = (pausePanel != null && pausePanel.activeInHierarchy) || 
                          (settingsPanel != null && settingsPanel.activeInHierarchy);
 
@@ -165,13 +173,11 @@ public class PlayerSkillHUD : MonoBehaviour
         }
         else
         {
-            SetControlsVisible(true);
-        }
-
-        // ⌨️ 3. BẤM F1 ĐỂ BẬT / TẮT THỦ CÔNG
-        if (Input.GetKeyDown(toggleKey))
-        {
-            ToggleHUD();
+            // Chỉ hiện lại nếu người chơi KHÔNG bấm F1 để ẩn trước đó
+            if (!isManuallyHidden)
+            {
+                SetControlsVisible(true);
+            }
         }
 
         // 4. KIỂM TRA VÀ CẬP NHẬT MÀU SẮC SKILL THEO NĂNG LƯỢNG
@@ -214,8 +220,8 @@ public class PlayerSkillHUD : MonoBehaviour
     {
         if (isGameOver) return;
 
-        if (leftGroup != null) leftGroup.gameObject.SetActive(!leftGroup.gameObject.activeSelf);
-        if (rightGroup != null) rightGroup.gameObject.SetActive(!rightGroup.gameObject.activeSelf);
+        isManuallyHidden = !isManuallyHidden;
+        SetControlsVisible(!isManuallyHidden);
     }
 
     void UpdateSkillColor(Button btn, Image icon, bool canCast)

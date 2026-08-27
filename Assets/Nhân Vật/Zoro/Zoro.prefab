@@ -256,6 +256,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  isGrounded: 0
   dashDuration: 0.25
   isDashing: 0
   comboStep: 0
@@ -280,8 +281,15 @@ MonoBehaviour:
   skill4ProjectilePrefab: {fileID: 0}
   isBlocking: 0
   isStunned: 0
+  isCastingUltimate: 0
   canMoveAndFight: 0
+  rangedSkillMaxDistance: 8.5
   attackCooldown: 0.35
+  attackIcon: {fileID: 0}
+  skill2Icon: {fileID: 0}
+  skill3Icon: {fileID: 0}
+  skill4Icon: {fileID: 0}
+  dashIcon: {fileID: 0}
 --- !u!114 &8227367587030349323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,9 +306,9 @@ MonoBehaviour:
   characterName: Roronoa Zoro
   baseHealth: 3800
   maxHealth: 3800
-  healthBar: {fileID: 0}
   currentHealth: 0
   hitSounds: []
+  dieSounds: []
   stunDuration: 0.5
 --- !u!1 &8611812724070034909
 GameObject:

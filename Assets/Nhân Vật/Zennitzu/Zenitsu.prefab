@@ -344,8 +344,17 @@ MonoBehaviour:
   dashForce: 15
   attackRange: 500
   timeBetweenActions: 2.5
+  maxJumps: 2
+  groundCheck: {fileID: 0}
+  groundCheckRadius: 0.25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isGrounded: 0
   dashDuration: 0.25
   isDashing: 0
+  comboStep: 0
+  comboWindow: 0.8
   skill1Cost: 0
   skill2Cost: 25
   skill3Cost: 50
@@ -364,7 +373,17 @@ MonoBehaviour:
   skill2ProjectilePrefab: {fileID: 0}
   skill3ProjectilePrefab: {fileID: 0}
   skill4ProjectilePrefab: {fileID: 0}
+  isBlocking: 0
   isStunned: 0
+  isCastingUltimate: 0
+  canMoveAndFight: 1
+  rangedSkillMaxDistance: 8.5
+  attackCooldown: 0.35
+  attackIcon: {fileID: 0}
+  skill2Icon: {fileID: 0}
+  skill3Icon: {fileID: 0}
+  skill4Icon: {fileID: 0}
+  dashIcon: {fileID: 0}
 --- !u!114 &8585186084491431671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,9 +398,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   characterFace: {fileID: -8521216810787373871, guid: b2e1639531ee4b943bbdd1f003208f74, type: 3}
   characterName: Zenitsu
+  baseHealth: 3800
   maxHealth: 3800
-  healthBar: {fileID: 0}
+  currentHealth: 0
   hitSounds: []
+  dieSounds: []
   stunDuration: 0.5
 --- !u!114 &1936521401050035521
 MonoBehaviour:
